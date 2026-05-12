@@ -46,6 +46,8 @@ function preferredTheme() {
 
 function applyTheme(theme, persist = false) {
   document.documentElement.dataset.theme = theme;
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add(`theme-${theme}`);
   document.querySelectorAll('[data-theme-toggle]').forEach(button => {
     button.textContent = theme === 'dark' ? '浅色模式' : '夜间模式';
     button.setAttribute('aria-pressed', String(theme === 'dark'));

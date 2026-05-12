@@ -68,7 +68,7 @@ function pageFor(product) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(product.title)} 接入教程｜词元.fast</title>
   <meta name="description" content="${escapeHtml(product.title)} 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles.css?v=20260512-theme">
 </head>
 <body class="doc-page">
   <div class="shell">
@@ -100,7 +100,7 @@ function pageFor(product) {
     <img alt="">
     <div class="lightbox-caption"></div>
   </div>
-  <script src="../docs.js"></script>
+  <script src="../docs.js?v=20260512-theme"></script>
 </body>
 </html>
 `;

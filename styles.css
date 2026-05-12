@@ -1392,3 +1392,57 @@
       color: #dbe9e1;
       border-color: rgba(148, 180, 164, 0.22);
     }
+
+    body.theme-dark {
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(255, 214, 118, 0.12), transparent 28rem),
+        radial-gradient(circle at 100% 8%, rgba(122, 217, 179, 0.14), transparent 32rem),
+        linear-gradient(135deg, #08111f 0%, #101827 48%, #13231d 100%);
+    }
+
+    body.theme-dark .topbar,
+    body.theme-dark .hero-card,
+    body.theme-dark .workspace,
+    body.theme-dark .nav-panel,
+    body.theme-dark .content-panel,
+    body.theme-dark .doc,
+    body.theme-dark .toc-panel {
+      background: rgba(10, 18, 30, 0.86);
+      border-color: rgba(148, 180, 164, 0.18);
+      box-shadow: var(--shadow);
+    }
+
+    body.theme-dark .theme-toggle {
+      background: rgba(122, 217, 179, 0.12) !important;
+      border-color: rgba(122, 217, 179, 0.42) !important;
+      color: var(--ink) !important;
+      cursor: pointer !important;
+    }
+
+    body.theme-dark .theme-toggle:hover,
+    body.theme-dark .theme-toggle:focus-visible {
+      background: rgba(255, 214, 118, 0.20) !important;
+      border-color: rgba(255, 214, 118, 0.72) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 3px rgba(255, 214, 118, 0.12), 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    body.theme-dark .hero-finder,
+    body.theme-dark .search-box,
+    body.theme-dark .hero-chip,
+    body.theme-dark .pill,
+    body.theme-dark .button.ghost,
+    body.theme-dark .category-tab,
+    body.theme-dark .product-tab,
+    body.theme-dark .product-card,
+    body.theme-dark .api-badge,
+    body.theme-dark .tag,
+    body.theme-dark .resource-link,
+    body.theme-dark .tutorial-step,
+    body.theme-dark .shot,
+    body.theme-dark .callout {
+      background: rgba(255, 255, 255, 0.055);
+      border-color: rgba(148, 180, 164, 0.18);
+      color: var(--ink);
+    }

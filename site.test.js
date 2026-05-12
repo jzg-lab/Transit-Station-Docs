@@ -33,7 +33,7 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
-  assert.match(html, /<script src="app\.js"><\/script>/);
+  assert.match(html, /<script src="app\.js\?v=20260512-theme"><\/script>/);
   for (const product of expectedProducts) {
     assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
@@ -140,10 +140,13 @@ test('site supports dark theme and embedded theme control', () => {
   assert.match(app, /localStorage\.getItem\(themeStorageKey\)/);
   assert.match(app, /function setStoredTheme/);
   assert.match(app, /document\.documentElement\.dataset\.theme = theme/);
+  assert.match(app, /document\.body\.classList\.add\(`theme-\$\{theme\}`\)/);
   assert.match(app, /function closestThemeToggle/);
   assert.match(app, /if \(themeMedia\.addEventListener\)/);
   assert.match(app, /themeMedia\.addListener/);
   assert.match(css, /:root\[data-theme="dark"\]/);
+  assert.match(css, /body\.theme-dark/);
+  assert.match(html, /styles\.css\?v=20260512-theme/);
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /\.theme-toggle/);
 });
