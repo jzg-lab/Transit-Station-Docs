@@ -34,8 +34,9 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
-  assert.match(html, /<script src="theme\.js\?v=20260512-theme"><\/script>/);
-  assert.match(html, /<script src="app\.js\?v=20260512-theme"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="styles\.css\?v=20260512-map-fix">/);
+  assert.match(html, /<script src="theme\.js\?v=20260512-map-fix"><\/script>/);
+  assert.match(html, /<script src="app\.js\?v=20260512-map-fix"><\/script>/);
   for (const product of expectedProducts) {
     assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
