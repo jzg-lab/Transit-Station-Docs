@@ -69,3 +69,17 @@ test('tutorials are beginner friendly and support image zoom', () => {
   assert.match(html, /step\.detail/);
   assert.doesNotMatch(html, /看不清时点击图片放大查看/);
 });
+
+test('codex openclaw and async image docs follow the latest source material', () => {
+  const html = readFileSync('index.html', 'utf8');
+  assert.match(html, /gpt-5\.5/);
+  assert.match(html, /auth\.json/);
+  assert.match(html, /config\.toml/);
+  assert.match(html, /CLI 和客户端都是这个流程/);
+  assert.match(html, /OpenClaw 安装向导里填写 URL 时不要加 \/v1/);
+  assert.match(html, /https:\/\/ciyuan\.fast，不是 https:\/\/ciyuan\.fast\/v1/);
+  assert.match(html, /images\/openclaw-guide\/image/);
+  assert.match(html, /异步生图接口/);
+  assert.match(html, /https:\/\/img\.ciyuan\.fast/);
+  assert.match(html, /可以直接丢给 AI 助手/);
+});

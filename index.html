@@ -804,7 +804,7 @@
       { id: 'desktop', label: '桌面客户端', intro: '本地工作台' },
       { id: 'bot', label: '机器人平台', intro: 'IM 与 Agent' },
       { id: 'reading', label: '阅读翻译', intro: '双语阅读' },
-      { id: 'hub', label: '部署中枢', intro: '自托管网关' }
+      { id: 'hub', label: '部署中枢', intro: '自托管与 API' }
     ];
 
     const commonSetup = `
@@ -826,6 +826,18 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { label: '官网', title: 'openclaw.ai', href: 'https://openclaw.ai' },
         { label: '文档', title: 'docs.openclaw.ai', href: 'https://docs.openclaw.ai' },
         { label: 'GitHub', title: 'openclaw/openclaw', href: 'https://github.com/openclaw/openclaw' }
+      ],
+      'openclaw': [
+        { title: '打开安装向导', detail: 'Windows 用户建议先进入 WSL2；Mac、Linux、WSL2 用户打开终端执行官方一键安装脚本。脚本会自动安装依赖并进入新手引导。', src: 'images/openclaw-guide/image1.png', alt: 'OpenClaw 安装入口' },
+        { title: '选择快速开始', detail: '安装脚本进入引导后，遇到是否继续、是否快速开始这类问题，小白直接选择 yes 或 Quick Start。', src: 'images/openclaw-guide/image2.png', alt: 'OpenClaw 快速开始' },
+        { title: '选择自定义模型厂商', detail: '模型厂商选择 Custom Provider 或自定义提供商。这里不是选 OpenAI 官方账号，而是把词元.fast 当成兼容模型网关接入。', src: 'images/openclaw-guide/image3.png', alt: '选择自定义模型厂商' },
+        { title: '填写词元.fast URL，注意不要加 /v1', detail: 'OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 https://ciyuan.fast，不是 https://ciyuan.fast/v1。这一点和很多 OpenAI 兼容客户端不同。', src: 'images/openclaw-guide/image4.png', alt: '填写词元.fast URL' },
+        { title: '粘贴 API Key', detail: '把第 1 步从词元.fast 创建并复制的 API Key 粘贴进去。粘贴时终端可能不显示字符，这是正常的。', src: 'images/openclaw-guide/image5.png', alt: '填写 OpenClaw API Key' },
+        { title: '选择 OpenAI 格式', detail: '接口格式选择 OpenAI compatible 或 OpenAI 格式，让 OpenClaw 按兼容协议调用词元.fast。', src: 'images/openclaw-guide/image6.png', alt: '选择 OpenAI 格式' },
+        { title: '填写模型名称', detail: '模型名称填写你要使用的模型，例如 gpt-5.5。后面两个代号字段可以按向导提示填写，主要用于本地识别。', src: 'images/openclaw-guide/image7.png', alt: '填写模型名称' },
+        { title: '跳过或选择连接 App', detail: '如果只是先验证 OpenClaw 能跑起来，连接 Telegram、Discord、飞书等 App 的步骤可以先跳过，后面再配置。', src: 'images/openclaw-guide/image8.png', alt: '选择连接 App' },
+        { title: '选择官方技能', detail: '进入技能选择页后，小白可以先选择推荐的核心技能。等能正常对话后，再回头研究每个技能的作用。', src: 'images/openclaw-guide/image9.png', alt: '选择 OpenClaw 技能' },
+        { title: '完成后重启并进入对话', detail: '向导结束后按提示 restart，随后打开 dashboard 或对话入口，先发送一句简单消息确认模型能回复。', src: 'images/openclaw-guide/image10.png', alt: 'OpenClaw 完成配置' }
       ],
       'claude-code': [
         { label: '官网', title: 'Anthropic Claude Code', href: 'https://www.anthropic.com/claude-code' },
@@ -862,6 +874,11 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { label: '官网', title: 'FluentRead 项目主页', href: 'https://fluent.thinkstu.com' },
         { label: '下载', title: '浏览器扩展安装', href: 'https://github.com/Bistutu/FluentRead/releases' }
       ],
+      'async-image-api': [
+        { label: '服务地址', title: 'img.ciyuan.fast', href: 'https://img.ciyuan.fast' },
+        { label: '文生图', title: 'POST /v1/images/generations', href: 'https://img.ciyuan.fast/v1/images/generations' },
+        { label: '任务查询', title: 'GET /v1/image-jobs/:jobId', href: 'https://img.ciyuan.fast/v1/image-jobs/' }
+      ],
       'langbot': [
         { label: '官网', title: 'langbot.app', href: 'https://langbot.app' },
         { label: '下载', title: 'LangBot Releases', href: 'https://github.com/langbot-app/LangBot/releases' },
@@ -882,10 +899,10 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { title: 'macOS/Linux 填入词元.fast 配置', detail: 'macOS 或 Linux 用户在终端里设置环境变量。设置完成后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
       ],
       'codex-cli': [
-        { title: '确认 Codex CLI 使用场景', detail: '先看 Codex CLI 的工作方式：它在终端里读项目、改文件、运行命令，适合开发者做真实代码任务。', src: 'images/codex-cli/introduce-01.webp', alt: 'Codex CLI 使用演示' },
-        { title: 'Windows 打开终端', detail: 'Windows 用户先打开 PowerShell、Windows Terminal 或命令提示符。后续安装和配置命令都在这里输入。', src: 'images/codex-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
-        { title: 'Windows 配置 Codex CLI', detail: '把 OPENAI_API_KEY 设置成第 1 步复制的词元.fast 密钥，把 OPENAI_BASE_URL 设置成 https://ciyuan.fast/v1。', src: 'images/codex-cli/windows_configure.webp', alt: 'Windows 配置 Codex CLI' },
-        { title: 'macOS/Linux 配置 Codex CLI', detail: 'macOS 或 Linux 用户在终端导出 OPENAI_API_KEY 和 OPENAI_BASE_URL，配置后再运行 codex。', src: 'images/codex-cli/macos_configure.webp', alt: 'macOS 配置 Codex CLI' }
+        { title: '安装或打开 Codex', detail: 'CLI 和客户端都是这个流程：先确保已经安装 Codex CLI 或 VS Code Codex 插件。两者都会读取用户目录下的 .codex 配置。', src: 'images/codex-cli/introduce-01.webp', alt: 'Codex 使用演示' },
+        { title: '找到 .codex 配置目录', detail: '在用户主目录创建或打开 .codex 文件夹。Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。', src: 'images/codex-cli/windows_open_terminal.webp', alt: '打开终端定位 .codex' },
+        { title: '在 auth.json 写入 API Key', detail: '新建 auth.json，把词元.fast API Key 写入 OPENAI_API_KEY 字段。客户端和 CLI 都会复用这个密钥，不需要分别配置。', src: 'images/ciyuan-api-key.png', alt: '创建词元.fast API Key' },
+        { title: '在 config.toml 写入 provider 和模型', detail: '新建或编辑 config.toml，model 写 gpt-5.5，provider 指向词元.fast。保存后重新打开 CLI 或客户端让配置生效。', src: 'images/codex-cli/windows_configure.webp', alt: '配置 Codex config.toml' }
       ],
       'factory-droid-cli': [
         { title: '认识 Droid 的命令行界面', detail: '先看示例图，确认后续安装成功后会在终端里和 Droid 交互。', src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
@@ -930,33 +947,26 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
 
     const products = [
       {
-        id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
-        summary: '把 Telegram、Discord、WhatsApp、iMessage 等入口连接到你自己的 AI 助手。适合重视数据控制权和长期自动化的人。',
+        id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '图文部署', 'Gateway'],
+        summary: '按图文向导在 Mac、Linux、WSL2 或 Windows PowerShell 中部署 OpenClaw，并接入词元.fast。注意 OpenClaw URL 不带 /v1。',
         body: `
-          <h2>OpenClaw - 自托管 AI 智能助手平台</h2>
-          <p class="lead">OpenClaw 是开源的个人 AI 助手平台，可以把消息应用、Gateway 和本地/服务器上的 AI Agent 连接起来。接入词元.fast 后，你可以把默认模型切到统一的兼容 OpenAI 网关。</p>
-          <h3>核心特性</h3>
-          <ul><li>支持 Telegram、Discord、WhatsApp、iMessage 等多渠道接入。</li><li>Gateway 统一管理入口，适合长期运行的个人助手。</li><li>支持持久记忆、定时任务、多代理路由、工具调用与代码执行。</li><li>自托管部署，数据和配置掌握在自己手里。</li></ul>
-          <h3>接入前准备</h3>
-          ${commonSetup}
-          <h3>安装与启动</h3>
-          <pre><code>curl -fsSL https://openclaw.ai/install.sh | bash
-openclaw onboard --install-daemon
-openclaw gateway status
+          <h2>OpenClaw - 图文部署详细指南</h2>
+          <p class="lead">OpenClaw 是开源、自托管的个人 AI 助手平台。这里按你提供的图文版部署文档重写，面向小白从安装、选择模型厂商、填写词元.fast 到验证运行一步步走。特别注意：OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 <code>https://ciyuan.fast</code>，不是 <code>https://ciyuan.fast/v1</code>。</p>
+          <h3>项目地址</h3><p>项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
+          <h3>推荐安装方式</h3>
+          <p>Mac、Linux、WSL2 推荐使用官方一键脚本。Windows 用户如果熟悉 WSL2，建议优先在 WSL2 里安装；也可以使用 PowerShell 安装脚本。</p>
+          <pre><code># Mac / Linux / WSL2
+curl -fsSL https://openclaw.ai/install.sh | bash
+
+# Windows PowerShell
+iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre>
+          <h3>词元.fast 配置重点</h3>
+          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>模型厂商</td><td>自定义提供商 / Custom Provider</td></tr><tr><td>URL</td><td><strong>https://ciyuan.fast</strong>，不要加 <code>/v1</code></td></tr><tr><td>API Key</td><td>词元.fast 控制台创建的密钥</td></tr><tr><td>接口格式</td><td>OpenAI 格式 / OpenAI compatible</td></tr><tr><td>模型名</td><td>例如 <code>gpt-5.5</code>，以控制台可用模型为准</td></tr></table>
+          <h3>安装后验证</h3>
+          <pre><code>openclaw doctor
+openclaw status
 openclaw dashboard</code></pre>
-          <h3>配置词元.fast Provider</h3>
-          <p>在 OpenClaw 配置中新增一个 OpenAI 兼容 provider，把 <code>baseUrl</code> 指向词元.fast，并把默认模型引用到该 provider 下的模型 ID。</p>
-          <pre><code>models:
-  providers:
-    ciyuan:
-      api: openai-completions
-      baseUrl: https://ciyuan.fast/v1
-      apiKey: ${'${NEWAPI_API_KEY}'}
-      models:
-        - id: gpt-4.1
-  default: ciyuan/gpt-4.1</code></pre>
-          <h3>验收标准</h3>
-          <ol><li>Control UI 能正常打开。</li><li>Gateway 状态正常。</li><li>用默认 Agent 发起一次对话，确认调用的是词元.fast 中的模型。</li></ol>
+          <h3>日常命令</h3><ul><li>打开可视化面板：<code>openclaw dashboard</code></li><li>重新配置：<code>openclaw onboard</code></li><li>重启网关：<code>openclaw gateway restart</code></li><li>升级：<code>openclaw update</code></li><li>安全检查：<code>openclaw security audit</code></li></ul>
         `
       },
       {
@@ -979,22 +989,31 @@ $env:ANTHROPIC_MODEL="claude-sonnet-4-5"</code></pre>
         `
       },
       {
-        id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['CLI', '沙箱', '补丁'],
-        summary: '适合在本地仓库中让 AI 代理读代码、改文件、执行命令。词元.fast 可作为兼容 OpenAI 的模型入口。',
+        id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI / 客户端', subtitle: 'CLI 和客户端同一套配置流程', tags: ['CLI', '客户端', 'gpt-5.5'],
+        summary: '以知乎详细教程思路重写：auth.json 放密钥，config.toml 放 provider 和模型。CLI 和客户端都是这个流程，模型统一用 gpt-5.5。',
         body: `
-          <h2>OpenAI Codex CLI - 终端 AI 编程助手</h2>
-          <p class="lead">Codex CLI 面向真实代码库工作，强调命令执行、沙箱策略和可审查补丁。接入词元.fast 时，把 OpenAI 兼容地址与 Key 写入配置即可。</p>
-          <h3>能力速览</h3><ul><li>阅读项目结构并定位问题。</li><li>生成原子补丁，便于代码审查。</li><li>在受控权限下执行测试、构建和脚本。</li></ul>
-          <h3>接入配置</h3>${commonSetup}
-          <pre><code>export OPENAI_API_KEY="你的词元.fast API Key"
-export OPENAI_BASE_URL="https://ciyuan.fast/v1"
-codex</code></pre>
-          <h3>配置文件思路</h3><p>如果使用配置文件，建议把 provider 单独命名为 <code>ciyuan</code>，方便后续在多个模型网关之间切换。</p>
-          <pre><code>[model_providers.ciyuan]
+          <h2>OpenAI Codex CLI / 客户端接入词元.fast</h2>
+          <p class="lead">这版以你提供的知乎 Codex 详细教程为主重写。核心原则很简单：CLI 和客户端都是这个流程，都读取用户目录下的 <code>.codex</code> 配置；<code>auth.json</code> 保存 API Key，<code>config.toml</code> 保存 provider、base_url 和模型。模型使用 <code>gpt-5.5</code>。</p>
+          <h3>第一步：创建 .codex 目录</h3>
+          <p>Windows 一般是 <code>C:\Users\你的用户名\.codex</code>，macOS/Linux 一般是 <code>~/.codex</code>。如果没有这个文件夹，就手动创建一个。</p>
+          <h3>第二步：写 auth.json</h3>
+          <p>在 <code>.codex</code> 目录中新建 <code>auth.json</code>，把词元.fast API Key 写进去。</p>
+          <pre><code>{
+  "OPENAI_API_KEY": "你的词元.fast API Key"
+}</code></pre>
+          <h3>第三步：写 config.toml</h3>
+          <p>在同一个 <code>.codex</code> 目录中新建或编辑 <code>config.toml</code>。模型固定写 <code>gpt-5.5</code>，provider 指向词元.fast。</p>
+          <pre><code>model = "gpt-5.5"
+model_provider = "ciyuan"
+
+[model_providers.ciyuan]
 name = "词元.fast"
 base_url = "https://ciyuan.fast/v1"
-env_key = "OPENAI_API_KEY"</code></pre>
-          <h3>风险控制</h3><ol><li>不要把生产密钥写进仓库。</li><li>让代理修改前先说明计划。</li><li>大范围重构前先建立测试基线。</li></ol>
+env_key = "OPENAI_API_KEY"
+wire_api = "responses"</code></pre>
+          <h3>第四步：CLI 和客户端都重启</h3>
+          <p>保存两个文件后，关闭并重新打开 Codex CLI 或 VS Code Codex 客户端。因为 CLI 和客户端都是这个流程，所以不用分别填两套 Key。</p>
+          <h3>排错</h3><ul><li>报 401：检查 <code>auth.json</code> 里的 API Key 是否复制完整。</li><li>报模型不存在：检查 <code>gpt-5.5</code> 是否在词元.fast 控制台可用。</li><li>客户端没生效：关闭 VS Code/Codex 客户端后重新打开。</li></ul>
         `
       },
       {
@@ -1059,6 +1078,46 @@ model = "选择控制台中的模型 ID"</code></pre>
           <h3>手动配置</h3>${commonSetup}
           <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>翻译服务</td><td>NewAPI 或 OpenAI 兼容</td></tr><tr><td>访问令牌</td><td>词元.fast API Key</td></tr><tr><td>接口地址</td><td>https://ciyuan.fast</td></tr><tr><td>模型</td><td>选择或手动输入模型 ID</td></tr></table>
           <h3>验收方式</h3><ol><li>打开一篇外文网页。</li><li>触发划词或全文翻译。</li><li>如果返回 401，检查 Key；如果返回模型不存在，检查模型 ID。</li></ol>
+        `
+      },
+      {
+        id: 'async-image-api', category: 'hub', title: '异步生图接口', subtitle: '文生图、图生图与任务轮询', tags: ['API', '生图', '可交给 AI'],
+        summary: '词元.fast 异步生图接口文档。可以直接丢给 AI 助手，让它按接口说明帮你写接入代码。',
+        body: `
+          <h2>异步生图接口使用说明</h2>
+          <p class="lead">服务地址：<code>https://img.ciyuan.fast</code>。这份接口说明可以直接丢给 AI 助手，让它根据你的语言和框架生成接入代码。接口是异步流程：先创建任务，拿到 <code>job_id</code>，再轮询任务状态，成功后读取图片 URL。</p>
+          <h3>接口概览</h3><table><tr><th>能力</th><th>接口</th><th>用途</th></tr><tr><td>文生图</td><td><code>POST /v1/images/generations</code></td><td>根据提示词创建生图任务</td></tr><tr><td>修改图片 / 图生图</td><td><code>POST /v1/images/edits</code></td><td>上传图片或传图片 URL 进行修改</td></tr><tr><td>查询任务</td><td><code>GET /v1/image-jobs/:jobId</code></td><td>查询 queued、running、succeeded、failed</td></tr></table>
+          <h3>鉴权方式</h3><pre><code>Authorization: Bearer &lt;你的API Key&gt;</code></pre><p>创建任务和查询任务必须使用同一个 API Key。</p>
+          <h3>文生图最简示例</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/images/generations \
+  -H "Authorization: Bearer &lt;你的API Key&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-image-1",
+    "prompt": "a clean product photo of a white ceramic mug",
+    "size": "1024x1024",
+    "n": 1
+  }'</code></pre>
+          <h3>查询任务</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/image-jobs/imgjob_xxx \
+  -H "Authorization: Bearer &lt;同一个API Key&gt;"</code></pre>
+          <h3>成功结果位置</h3><p>当 <code>status</code> 为 <code>succeeded</code> 时，图片地址在 <code>result.data[0].url</code>。</p>
+          <pre><code>{
+  "status": "succeeded",
+  "result": {
+    "data": [
+      { "url": "https://img.ciyuan.fast/chat-assets/images/xxxx.png" }
+    ]
+  }
+}</code></pre>
+          <h3>图生图 / 修改图片</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/images/edits \
+  -H "Authorization: Bearer &lt;你的API Key&gt;" \
+  -F "model=gpt-image-1" \
+  -F "prompt=make the background white" \
+  -F "size=1024x1024" \
+  -F "image[]=@./input.png"</code></pre>
+          <h3>轮询建议</h3><p>建议每 2 到 5 秒查询一次任务状态，不要高频轮询。如果系统需要稳定保存图片，拿到 URL 后建议立即下载并转存。</p>
         `
       },
       {
