@@ -52,6 +52,7 @@ test('old provider branding and endpoints are not shipped', () => {
   ].filter(existsSync)];
   for (const file of files) {
     assert.doesNotMatch(readFileSync(file, 'utf8'), /木瓜AI|mooko\.ai|api\.mooko\.ai/i, `${file} should not ship old provider branding`);
+    assert.doesNotMatch(readFileSync(file, 'utf8'), /词元\.fast AI 应用部署中转站/, `${file} should not ship stale docs branding`);
   }
 });
 

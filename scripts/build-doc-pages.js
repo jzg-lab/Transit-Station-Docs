@@ -64,7 +64,7 @@ function pageFor(product) {
 <body class="doc-page">
   <div class="shell">
     <header class="topbar">
-      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast文档</span></a>
       <nav class="top-links" aria-label="教程导航">
         <a class="pill" href="../index.html#docs">返回应用地图</a>
         <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
