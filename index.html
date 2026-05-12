@@ -22,7 +22,7 @@
     </header>
 
     <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" data-page="intro" aria-labelledby="hero-title">
         <div class="hero-card">
           <p class="eyebrow">词元.fast 文档</p>
           <h1 id="hero-title">AI 工具接入，一页找到答案。</h1>
@@ -60,7 +60,7 @@
         </aside>
       </section>
 
-      <section id="docs" class="workspace" aria-label="AI 应用部署文档">
+      <section id="docs" class="workspace" data-page="map" aria-label="AI 应用部署文档">
         <div class="guide-layout">
           <aside class="nav-panel">
             <div class="selector-head">
@@ -1055,6 +1055,40 @@ codex
       renderCards();
     }
 
+    let currentLandingPage = 'intro';
+    let landingSwitchLocked = false;
+
+    function syncLandingPage(page) {
+      currentLandingPage = page;
+      document.body.classList.toggle('landing-intro', page === 'intro');
+      document.body.classList.toggle('landing-map', page === 'map');
+      document.body.classList.toggle('map-visible', page === 'map');
+    }
+
+    function switchLandingPage(page, options = {}) {
+      if (landingSwitchLocked || page === currentLandingPage) return;
+      if (options.category) setCategory(options.category);
+      if (typeof options.search === 'string') setSearchTerm(options.search);
+
+      landingSwitchLocked = true;
+      document.body.classList.add('map-entering');
+      syncLandingPage(page);
+      document.querySelector(page === 'map' ? '#docs' : '#top').scrollIntoView({ behavior: 'auto', block: 'start' });
+
+      setTimeout(() => {
+        document.body.classList.remove('map-entering');
+        landingSwitchLocked = false;
+      }, 720);
+    }
+
+    function handleLandingWheel(event) {
+      if (Math.abs(event.deltaY) < 16 || event.ctrlKey) return;
+      const nextPage = event.deltaY > 0 ? 'map' : 'intro';
+      if (nextPage === currentLandingPage) return;
+      event.preventDefault();
+      switchLandingPage(nextPage);
+    }
+
     document.addEventListener('click', event => {
       const categoryButton = event.target.closest('[data-category].category-tab');
       if (categoryButton) setCategory(categoryButton.dataset.category);
@@ -1065,13 +1099,7 @@ codex
     });
 
     function showMapTransition(options = {}) {
-      if (options.category) setCategory(options.category);
-      if (typeof options.search === 'string') setSearchTerm(options.search);
-      document.body.classList.add('map-entering');
-      setTimeout(() => {
-        document.body.classList.add('map-visible');
-        document.body.classList.remove('map-entering');
-      }, 520);
+      switchLandingPage('map', options);
     }
 
     document.querySelectorAll('.page-jump[href="#docs"]').forEach(link => {
@@ -1081,25 +1109,25 @@ codex
           category: link.dataset.heroCategory,
           search: link.closest('.hero-finder') ? heroSearchInput.value : undefined
         });
-        setTimeout(() => document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
       });
     });
 
     heroSearchInput.addEventListener('keydown', event => {
       if (event.key !== 'Enter') return;
       showMapTransition({ search: heroSearchInput.value });
-      setTimeout(() => document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     });
+
+    window.addEventListener('wheel', handleLandingWheel, { passive: false });
 
     if ('IntersectionObserver' in window) {
       const mapObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) document.body.classList.add('map-visible');
+          if (entry.isIntersecting) syncLandingPage('map');
         });
       }, { threshold: 0.22 });
       mapObserver.observe(document.querySelector('#docs'));
     } else {
-      document.body.classList.add('map-visible');
+      syncLandingPage('intro');
     }
 
     document.addEventListener('keydown', event => {
@@ -1109,6 +1137,7 @@ codex
     });
 
     renderAll();
+    syncLandingPage('intro');
   </script>
 </body>
 </html>

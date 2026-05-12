@@ -16,7 +16,7 @@
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; }
 
     body {
       margin: 0;
@@ -123,6 +123,10 @@
       align-items: stretch;
       min-height: calc(100vh - 140px);
       margin-bottom: 34px;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      transition: opacity 0.62s ease, transform 0.62s ease, filter 0.62s ease;
     }
 
     .hero-card, .signal-card, .workspace {
@@ -329,23 +333,34 @@
       min-height: calc(100vh - 92px);
       scroll-margin-top: 22px;
       opacity: 0;
-      transform: translateY(28px) scale(0.985);
-      filter: blur(8px);
-      transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+      transform: translateY(42px) scale(0.965);
+      filter: blur(10px);
+      pointer-events: none;
+      transition: opacity 0.68s ease, transform 0.68s ease, filter 0.68s ease;
     }
 
+    body.landing-map .hero,
     body.map-entering .hero {
       opacity: 0;
-      transform: translateY(-18px) scale(0.985);
-      filter: blur(8px);
-      transition: opacity 0.58s ease, transform 0.58s ease, filter 0.58s ease;
+      transform: translateY(-42px) scale(0.965);
+      filter: blur(10px);
+      pointer-events: none;
     }
 
+    body.landing-intro .workspace {
+      opacity: 0;
+      transform: translateY(42px) scale(0.965);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    body.landing-map .workspace,
     body.map-visible .workspace,
     body.map-entering .workspace {
       opacity: 1;
       transform: translateY(0) scale(1);
       filter: blur(0);
+      pointer-events: auto;
     }
 
     .route-steps {

@@ -102,6 +102,22 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(html, /IntersectionObserver/);
 });
 
+test('landing page supports wheel-driven full-page switching', () => {
+  const html = readFileSync('index.html', 'utf8');
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(html, /data-page="intro"/);
+  assert.match(html, /data-page="map"/);
+  assert.match(html, /let currentLandingPage = 'intro'/);
+  assert.match(html, /function switchLandingPage/);
+  assert.match(html, /handleLandingWheel/);
+  assert.match(html, /event\.deltaY > 0/);
+  assert.match(html, /window\.addEventListener\('wheel', handleLandingWheel, \{ passive: false \}\)/);
+  assert.match(css, /body\.landing-map \.hero/);
+  assert.match(css, /body\.landing-map \.workspace/);
+  assert.match(css, /body\.landing-intro \.workspace/);
+  assert.match(css, /scroll-behavior: auto/);
+});
+
 test('product tutorials are published as independent pages', () => {
   const html = readFileSync('index.html', 'utf8');
   assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);
