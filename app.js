@@ -932,6 +932,7 @@ function injectInlineSteps(product) {
 }
 
 function setCategory(categoryId) {
+  if (categoryId === activeCategory) return;
   activeCategory = categoryId;
   const visible = filteredProducts();
   if (visible.length && !visible.some(product => product.id === activeProduct)) activeProduct = visible[0].id;
@@ -939,7 +940,9 @@ function setCategory(categoryId) {
 }
 
 function setSearchTerm(value) {
-  searchTerm = value.trim();
+  const nextSearchTerm = value.trim();
+  if (nextSearchTerm === searchTerm) return;
+  searchTerm = nextSearchTerm;
   searchInput.value = searchTerm;
   heroSearchInput.value = searchTerm;
   renderProductList();

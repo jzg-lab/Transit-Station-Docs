@@ -303,20 +303,32 @@ test('landing map switch slides without scaling the layout', () => {
   assert.match(css, /body\.map-preparing \.workspace,[\s\S]*?transform: translate3d\(0, 34px, 0\)/);
   assert.match(css, /body\.landing-map \.hero,[\s\S]*?transform: translate3d\(0, -34px, 0\)/);
   assert.doesNotMatch(css, /body\.(?:map-preparing|intro-entering|landing-map|map-entering)[\s\S]{0,180}scale\(/);
-  assert.match(css, /body\.map-entering \.product-card[\s\S]*?animation: none/);
+  assert.match(css, /\.product-card[\s\S]*?animation: riseIn 0\.56s ease both/);
+  assert.doesNotMatch(css, /body\.(?:map-entering|intro-entering) \.product-card[\s\S]*?animation: none/);
 });
 
-test('map jump clicks scroll smoothly and unlock after the transition', () => {
+test('map jump clicks scroll smoothly without rebuilding stable cards', () => {
   const app = readFileSync('app.js', 'utf8');
+  const trackedHtmlElement = () => ({
+    writes: 0,
+    value: '',
+    get innerHTML() {
+      return this.value;
+    },
+    set innerHTML(value) {
+      this.writes += 1;
+      this.value = value;
+    }
+  });
   const listeners = {};
   const bodyClasses = new Set();
   const rootStyle = new Map();
   const windowListeners = {};
   const timeouts = [];
   const scrollCalls = [];
-  const categoryTabs = { innerHTML: '' };
-  const productList = { innerHTML: '' };
-  const cards = { innerHTML: '' };
+  const categoryTabs = trackedHtmlElement();
+  const productList = trackedHtmlElement();
+  const cards = trackedHtmlElement();
   const searchInput = { value: '', addEventListener(type, handler) { listeners.search = { type, handler }; } };
   const heroSearchInput = { value: '', addEventListener(type, handler) { listeners.heroKey = { type, handler }; } };
   const docsElement = { offsetTop: 780, parentElement: null };
@@ -400,11 +412,15 @@ test('map jump clicks scroll smoothly and unlock after the transition', () => {
   };
   vm.runInNewContext(app, context);
 
+  const productListWrites = productList.writes;
+  const cardWrites = cards.writes;
   listeners.pageJump.handler({ preventDefault() {} });
 
   assert.equal(scrollCalls.at(-1).behavior, 'smooth');
   assert.equal(scrollCalls.at(-1).top, 662);
   assert.equal(timeouts.at(-1).delay, 460);
+  assert.equal(productList.writes, productListWrites);
+  assert.equal(cards.writes, cardWrites);
   assert.equal(bodyClasses.has('map-entering'), true);
   timeouts.at(-1).handler();
   assert.equal(bodyClasses.has('map-entering'), false);

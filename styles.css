@@ -408,11 +408,6 @@
       pointer-events: auto;
     }
 
-    body.map-entering .product-card,
-    body.intro-entering .product-card {
-      animation: none;
-    }
-
     .route-steps {
       display: flex;
       flex-wrap: wrap;
