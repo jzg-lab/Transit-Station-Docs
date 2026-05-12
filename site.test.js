@@ -17,6 +17,11 @@ const expectedProducts = [
 
 test('landing page carries the ciyuan.fast documentation hub content', () => {
   const html = readFileSync('index.html', 'utf8');
+  assert.match(html, /<title>词元\.fast文档<\/title>/);
+  assert.match(html, />词元\.fast文档<\/span>/);
+  assert.match(html, /AI 工具接入，一页找到答案。/);
+  assert.match(html, /选择应用，复制配置，快速接入词元\.fast。/);
+  assert.doesNotMatch(html, /把好用的 AI 工具，接到同一个词元\.fast 中转站。/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
   for (const product of expectedProducts) {
@@ -54,8 +59,7 @@ test('page exposes category navigation and grouped cards', () => {
 test('layout separates entry discovery from focused reading', () => {
   const html = readFileSync('index.html', 'utf8');
   assert.match(html, /class="guide-layout"/);
-  assert.match(html, /class="docs-intro"/);
-  assert.match(html, /class="route-steps"/);
+  assert.match(html, /class="route-steps hero-route"/);
   assert.match(html, /class="selector-head"/);
   assert.match(html, /class="search-box nav-search"/);
   assert.match(html, /id="searchInput"/);
@@ -75,14 +79,18 @@ test('left selector uses compact categories with counts', () => {
 });
 
 test('landing page includes gentle interaction polish', () => {
+  const html = readFileSync('index.html', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(css, /@keyframes riseIn/);
   assert.match(css, /--stagger/);
   assert.match(css, /prefers-reduced-motion/);
-  assert.match(css, /\.docs-intro/);
   assert.match(css, /\.route-step/);
   assert.match(css, /\.product-card::after/);
   assert.match(css, /\.content-panel::before/);
+  assert.match(css, /body\.map-entering \.hero/);
+  assert.match(css, /body\.map-visible \.workspace/);
+  assert.match(html, /function showMapTransition/);
+  assert.match(html, /IntersectionObserver/);
 });
 
 test('product tutorials are published as independent pages', () => {

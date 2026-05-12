@@ -25,11 +25,13 @@ const noopElement = () => ({
 const sandbox = {
   console,
   document: {
+    body: noopElement(),
     querySelector: () => noopElement(),
     querySelectorAll: () => [],
     addEventListener() {}
   },
   navigator: { clipboard: { writeText: async () => {} } },
+  window: {},
   setTimeout
 };
 vm.createContext(sandbox);

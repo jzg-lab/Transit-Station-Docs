@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>词元.fast AI 应用部署中转站</title>
+  <title>词元.fast文档</title>
   <meta name="description" content="词元.fast AI 应用部署文档中转站，覆盖编程助手、桌面客户端、机器人平台、阅读翻译与自托管 AI 应用。">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,10 +12,10 @@
     <header class="topbar">
       <a class="brand" href="#top" aria-label="词元.fast 文档首页">
         <span class="brand-mark">词</span>
-        <span>词元.fast AI 应用部署中转站</span>
+        <span>词元.fast文档</span>
       </a>
       <nav class="top-links" aria-label="顶部导航">
-        <a class="pill" href="#docs">应用文档</a>
+        <a class="pill page-jump" href="#docs">应用文档</a>
         <a class="pill" href="https://ciyuan.fast" target="_blank" rel="noreferrer">打开词元.fast</a>
         <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
       </nav>
@@ -24,32 +24,24 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-card">
-          <p class="eyebrow">AI Gateway Playbook</p>
-          <h1 id="hero-title">把好用的 AI 工具，接到同一个词元.fast 中转站。</h1>
-          <p>这里整理了从编程助手、桌面客户端到机器人平台的部署与接入路径。页面以“先选场景，再看工具，再复制配置”为主线重排，减少来回翻找，让用户更快完成 API 地址、密钥和模型配置。</p>
+          <p class="eyebrow">词元.fast 文档</p>
+          <h1 id="hero-title">AI 工具接入，一页找到答案。</h1>
+          <p>选择应用，复制配置，快速接入词元.fast。</p>
           <div class="hero-actions">
-            <a class="button" href="#docs">浏览部署教程</a>
+            <a class="button page-jump" href="#docs">浏览部署教程</a>
             <a class="button ghost" href="https://ciyuan.fast" target="_blank" rel="noreferrer">访问 https://ciyuan.fast</a>
           </div>
         </div>
         <aside class="signal-card" aria-label="站点概览">
-          <div class="metric"><strong>10</strong><span>覆盖 10 个常见 AI 应用和开发工具</span></div>
-          <div class="metric"><strong>5</strong><span>按编程、桌面、机器人、翻译、部署中枢分组</span></div>
-          <div class="metric"><strong>/v1</strong><span>OpenAI 兼容工具优先使用 <code>https://ciyuan.fast/v1</code></span></div>
+          <div class="metric"><strong>10</strong><span>常用 AI 应用接入教程</span></div>
+          <div class="metric"><strong>5</strong><span>按使用场景快速筛选</span></div>
+          <div class="metric"><strong>/v1</strong><span>兼容工具默认使用 <code>https://ciyuan.fast/v1</code></span></div>
+          <div class="route-steps hero-route" aria-label="接入流程">
+            <span class="route-step"><strong>01</strong>选场景</span>
+            <span class="route-step"><strong>02</strong>找应用</span>
+            <span class="route-step"><strong>03</strong>进教程</span>
+          </div>
         </aside>
-      </section>
-
-      <section class="docs-intro" aria-label="接入路径说明">
-        <div>
-          <p class="eyebrow">Choose your route</p>
-          <h2>不用先读长文，先选你现在要接入的应用。</h2>
-          <p>下面的地图更像一个分流台：按场景缩小范围，搜索目标工具，再进入单独教程页完成配置。</p>
-        </div>
-        <div class="route-steps" aria-label="接入流程">
-          <span class="route-step"><strong>01</strong>选场景</span>
-          <span class="route-step"><strong>02</strong>找应用</span>
-          <span class="route-step"><strong>03</strong>进教程</span>
-        </div>
       </section>
 
       <section id="docs" class="workspace" aria-label="AI 应用部署文档">
@@ -1052,6 +1044,33 @@ codex
     searchInput.addEventListener('input', event => {
       setSearchTerm(event.target.value);
     });
+
+    function showMapTransition() {
+      document.body.classList.add('map-entering');
+      setTimeout(() => {
+        document.body.classList.add('map-visible');
+        document.body.classList.remove('map-entering');
+      }, 520);
+    }
+
+    document.querySelectorAll('.page-jump[href="#docs"]').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        showMapTransition();
+        setTimeout(() => document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const mapObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) document.body.classList.add('map-visible');
+        });
+      }, { threshold: 0.22 });
+      mapObserver.observe(document.querySelector('#docs'));
+    } else {
+      document.body.classList.add('map-visible');
+    }
 
     document.addEventListener('keydown', event => {
       if (event.key !== 'Enter') return;
