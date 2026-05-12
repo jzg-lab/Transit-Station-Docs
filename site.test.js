@@ -48,7 +48,8 @@ test('tutorials include local screenshots and project resource links', () => {
   assert.match(html, /<img src="\$\{step\.src\}"/);
   for (const image of [
     'images/claude-code/introduce-01.webp',
-    'images/codex-cli/introduce-01.webp',
+    'images/codex-zh/codex-client.png',
+    'images/codex-zh/codex-dir.png',
     'images/cherry-studio/add_provider.webp',
     'images/langbot/add_newapi_model.webp',
     'images/astrbot/image-2.webp'
@@ -76,6 +77,9 @@ test('codex openclaw and async image docs follow the latest source material', ()
   assert.match(html, /auth\.json/);
   assert.match(html, /config\.toml/);
   assert.match(html, /CLI 和客户端都是这个流程/);
+  assert.match(html, /images\/codex-zh\/codex-client\.png/);
+  assert.match(html, /images\/codex-zh\/codex-dir\.png/);
+  assert.match(html, /安装依赖/);
   assert.match(html, /OpenClaw 安装向导里填写 URL 时不要加 \/v1/);
   assert.match(html, /https:\/\/ciyuan\.fast，不是 https:\/\/ciyuan\.fast\/v1/);
   assert.match(html, /images\/openclaw-guide\/image/);

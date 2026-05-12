@@ -824,8 +824,8 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
     const productResources = {
       'openclaw': [
         { label: '官网', title: 'openclaw.ai', href: 'https://openclaw.ai' },
-        { label: '文档', title: 'docs.openclaw.ai', href: 'https://docs.openclaw.ai' },
-        { label: 'GitHub', title: 'openclaw/openclaw', href: 'https://github.com/openclaw/openclaw' }
+        { label: 'GitHub', title: 'openclaw/openclaw', href: 'https://github.com/openclaw/openclaw' },
+        { label: '安装依赖', title: 'OpenClaw Install Docs', href: 'https://docs.openclaw.ai/install' }
       ],
       'openclaw': [
         { title: '打开安装向导', detail: 'Windows 用户建议先进入 WSL2；Mac、Linux、WSL2 用户打开终端执行官方一键安装脚本。脚本会自动安装依赖并进入新手引导。', src: 'images/openclaw-guide/image1.png', alt: 'OpenClaw 安装入口' },
@@ -899,10 +899,10 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { title: 'macOS/Linux 填入词元.fast 配置', detail: 'macOS 或 Linux 用户在终端里设置环境变量。设置完成后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
       ],
       'codex-cli': [
-        { title: '安装或打开 Codex', detail: 'CLI 和客户端都是这个流程：先确保已经安装 Codex CLI 或 VS Code Codex 插件。两者都会读取用户目录下的 .codex 配置。', src: 'images/codex-cli/introduce-01.webp', alt: 'Codex 使用演示' },
-        { title: '找到 .codex 配置目录', detail: '在用户主目录创建或打开 .codex 文件夹。Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。', src: 'images/codex-cli/windows_open_terminal.webp', alt: '打开终端定位 .codex' },
-        { title: '在 auth.json 写入 API Key', detail: '新建 auth.json，把词元.fast API Key 写入 OPENAI_API_KEY 字段。客户端和 CLI 都会复用这个密钥，不需要分别配置。', src: 'images/ciyuan-api-key.png', alt: '创建词元.fast API Key' },
-        { title: '在 config.toml 写入 provider 和模型', detail: '新建或编辑 config.toml，model 写 gpt-5.5，provider 指向词元.fast。保存后重新打开 CLI 或客户端让配置生效。', src: 'images/codex-cli/windows_configure.webp', alt: '配置 Codex config.toml' }
+        { title: '打开 Codex 中文教程对应界面', detail: '以中文教程为准：CLI 和客户端都是这个流程。先确认你要配置的是 Codex CLI 或 VS Code Codex 客户端，它们都会读取同一个 .codex 配置目录。', src: 'images/codex-zh/codex-client.png', alt: 'Codex 中文教程客户端界面' },
+        { title: '找到 .codex 配置目录', detail: '进入用户目录下的 .codex 文件夹。Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。后面两个文件都放在这里。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex 中文教程 .codex 目录' },
+        { title: '在 auth.json 写入 API Key', detail: '按中文教程流程，在 auth.json 写入词元.fast API Key。不要再用其他截图或旧教程里的 Key，客户端和 CLI 都会读取这个文件。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex auth.json 配置位置' },
+        { title: '在 config.toml 写入 provider 和模型', detail: '继续在 config.toml 写 provider 和模型。model 使用 gpt-5.5，provider 指向词元.fast。保存后重启 CLI 或客户端。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex config.toml 配置位置' }
       ],
       'factory-droid-cli': [
         { title: '认识 Droid 的命令行界面', detail: '先看示例图，确认后续安装成功后会在终端里和 Droid 交互。', src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
@@ -947,26 +947,49 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
 
     const products = [
       {
-        id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '图文部署', 'Gateway'],
-        summary: '按图文向导在 Mac、Linux、WSL2 或 Windows PowerShell 中部署 OpenClaw，并接入词元.fast。注意 OpenClaw URL 不带 /v1。',
+        id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
+        summary: 'OpenClaw 图文部署详细指南：按 Word 文档顺序从安装、模型配置、技能选择到验证命令一步步完成。',
         body: `
-          <h2>OpenClaw - 图文部署详细指南</h2>
-          <p class="lead">OpenClaw 是开源、自托管的个人 AI 助手平台。这里按你提供的图文版部署文档重写，面向小白从安装、选择模型厂商、填写词元.fast 到验证运行一步步走。特别注意：OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 <code>https://ciyuan.fast</code>，不是 <code>https://ciyuan.fast/v1</code>。</p>
-          <h3>项目地址</h3><p>项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
-          <h3>推荐安装方式</h3>
-          <p>Mac、Linux、WSL2 推荐使用官方一键脚本。Windows 用户如果熟悉 WSL2，建议优先在 WSL2 里安装；也可以使用 PowerShell 安装脚本。</p>
+          <h2>OpenClaw部署详细指南（图文版）</h2>
+          <p class="lead">项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。这部分按照你提供的 Word 文档内容整理，只优化排版。特别注意：OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 <code>https://ciyuan.fast</code>，不是 <code>https://ciyuan.fast/v1</code>。</p>
+          <h3>一、推荐安装方式：官方一键脚本</h3>
+          <p>在 Windows 系统上，建议在 WSL2 下运行 OpenClaw；Mac、Linux、WSL2 用户使用官方一键脚本最省事，脚本会自动检测环境、安装 Node.js（如果缺失）并启动新手引导流程。</p>
           <pre><code># Mac / Linux / WSL2
-curl -fsSL https://openclaw.ai/install.sh | bash
+curl -fsSL https://openclaw.ai/install.sh | bash</code></pre>
+          <p>如果 Mac 出现 <code>Homebrew not found</code>，先安装 Homebrew 并配置环境变量，再继续安装 OpenClaw。</p>
+          <pre><code># 安装 Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Windows PowerShell
-iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre>
-          <h3>词元.fast 配置重点</h3>
-          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>模型厂商</td><td>自定义提供商 / Custom Provider</td></tr><tr><td>URL</td><td><strong>https://ciyuan.fast</strong>，不要加 <code>/v1</code></td></tr><tr><td>API Key</td><td>词元.fast 控制台创建的密钥</td></tr><tr><td>接口格式</td><td>OpenAI 格式 / OpenAI compatible</td></tr><tr><td>模型名</td><td>例如 <code>gpt-5.5</code>，以控制台可用模型为准</td></tr></table>
-          <h3>安装后验证</h3>
-          <pre><code>openclaw doctor
-openclaw status
-openclaw dashboard</code></pre>
-          <h3>日常命令</h3><ul><li>打开可视化面板：<code>openclaw dashboard</code></li><li>重新配置：<code>openclaw onboard</code></li><li>重启网关：<code>openclaw gateway restart</code></li><li>升级：<code>openclaw update</code></li><li>安全检查：<code>openclaw security audit</code></li></ul>
+# 配置环境变量
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/admin/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 查看 brew
+brew --version</code></pre>
+          <p>Windows PowerShell 用户可以打开开始菜单，搜索 PowerShell，选择 Windows PowerShell 后执行：</p>
+          <pre><code>iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre>
+          <p>安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
+          <h3>二、安装配置细节</h3>
+          <ol><li>开始安装后，遇到确认项选择 yes。</li><li>选择快速开始。</li><li>选择模型厂商时选择自定义提供商（ciyuan.fast）。</li><li>填入 URL：<strong>https://ciyuan.fast</strong>，不要加 <code>/v1</code>。</li><li>填入你的 API Key。</li><li>选择 OpenAI 格式。</li><li>填入模型名称，例如 <code>gpt-5.5</code>。</li><li>后面两个字段相当于代号，可以按向导随便填。</li><li>选择连接 App 的步骤可以先跳过。</li><li>进入技能选择界面后，如果不知道选什么，可以先选择文档里推荐的官方技能。</li><li>后续生图、笔记、语音对话等能力，如果开通了对应 API 可以选 yes；不确定可以先选 no。</li><li>最后选择 restart，进入对话框后测试你的私人 AI。</li></ol>
+          <h3>三、部署后的验证与日常命令</h3>
+          <pre><code>openclaw doctor         # 检查配置问题
+openclaw status         # 网关状态
+openclaw dashboard      # 打开浏览器用户界面</code></pre>
+          <p>常用指令：打开可视化面板 <code>openclaw dashboard</code>，重新配置 <code>openclaw onboard</code>，重启 <code>openclaw gateway restart</code>，升级 <code>openclaw update</code>，检查网关状态 <code>openclaw status</code>，诊断配置健康度 <code>openclaw doctor</code>。</p>
+          <h3>四、安全提醒</h3>
+          <p>定期运行安全检查，尤其是在更改配置或暴露网络接口后。</p>
+          <pre><code>openclaw security audit
+openclaw security audit --deep
+openclaw security audit --fix
+openclaw security audit --json</code></pre>
+          <p>特殊命令：赋予 OpenClaw 全部权限是高危操作，执行前必须确认风险。</p>
+          <pre><code>openclaw config set tools.profile full
+openclaw gateway restart</code></pre>
+          <h3>五、附录：技能理解</h3>
+          <p><strong>mcporter</strong> 是 MCP 桥接器，可以把 Python 脚本或特定工具封装成 OpenClaw 能调用的能力。<strong>peekaboo</strong> 是 Mac 视觉自动化工具，可以截图、识别 UI 并模拟点击。<strong>clawhub</strong> 是官方技能包中心。<strong>model-usage</strong> 可以监控模型 API 的 Token 消耗和账单。</p>
+          <p><strong>1password</strong> 用于安全提取密码和 API Key。<strong>himalaya</strong> 是终端邮件客户端。<strong>imsg / wacli</strong> 可以把 Agent 绑定到 iMessage 或 WhatsApp。<strong>obsidian / bear-notes / apple-notes</strong> 适合笔记和知识库工作流。</p>
+          <h3>六、附录：组成 OpenClaw 大脑的脑区</h3>
+          <p><strong>boot-md</strong> 类似启动脚本，每次网关启动时读取并执行 BOOT.md。<strong>bootstrap-extra-files</strong> 用于上下文预加载，可以把项目代码或日志注入初始上下文。<strong>command-logger</strong> 用于记录 Agent 执行过的 Shell 命令，方便排查问题。<strong>session-memory</strong> 用于把短期会话记忆沉淀为长期记忆。</p>
         `
       },
       {
