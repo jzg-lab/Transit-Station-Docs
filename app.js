@@ -1008,6 +1008,7 @@ function landingPageBoundary(direction) {
 
 function syncLandingPage(page) {
   currentLandingPage = page;
+  document.body.classList.add('js-landing-ready');
   document.body.classList.toggle('landing-intro', page === 'intro');
   document.body.classList.toggle('landing-map', page === 'map');
   document.body.classList.toggle('map-visible', page === 'map');

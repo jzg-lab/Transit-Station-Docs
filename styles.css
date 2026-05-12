@@ -12,7 +12,7 @@
       --shadow: 0 24px 80px rgba(30, 49, 39, 0.14);
       --radius-lg: 28px;
       --radius-md: 18px;
-      --radius-sm: 12px;    
+      --radius-sm: 12px;
       --topbar-offset: 118px;
       --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -379,13 +379,20 @@
       gap: 20px;
       min-height: calc(100vh - var(--topbar-offset) - 22px);
       scroll-margin-top: var(--topbar-offset);
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      pointer-events: auto;
+      transform-origin: center top;
+      will-change: opacity, transform, filter;
+      transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
+    }
+
+    body.js-landing-ready .workspace {
       opacity: 0;
       transform: translate3d(0, 72px, 0) scale(0.965);
       filter: blur(14px);
       pointer-events: none;
-      transform-origin: center top;
-      will-change: opacity, transform, filter;
-      transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
     }
 
     body.landing-map .hero,
@@ -403,9 +410,9 @@
       pointer-events: none;
     }
 
-    body.landing-map .workspace,
-    body.map-visible .workspace,
-    body.map-entering:not(.landing-intro) .workspace {
+    body.js-landing-ready.landing-map .workspace,
+    body.js-landing-ready.map-visible .workspace,
+    body.js-landing-ready.map-entering:not(.landing-intro) .workspace {
       opacity: 1;
       transform: translateY(0) scale(1);
       filter: blur(0);
@@ -1370,4 +1377,3 @@
       color: #dbe9e1;
       border-color: rgba(148, 180, 164, 0.22);
     }
-
