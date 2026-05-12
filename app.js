@@ -1003,6 +1003,7 @@ function landingPageBoundary(direction) {
     return window.scrollY <= mapTop + 2;
   }
   if (direction < 0) return window.scrollY <= 2;
+  if (currentLandingPage === 'intro') return window.scrollY + window.innerHeight >= document.querySelector('#docs').offsetTop - 2;
   return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
 }
 

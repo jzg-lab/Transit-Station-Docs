@@ -263,6 +263,7 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /window\.scrollY <= 2/);
   assert.match(html, /const mapTop = document\.querySelector\('#docs'\)\.offsetTop - updateTopbarOffset\(\)/);
   assert.match(html, /return window\.scrollY <= mapTop \+ 2/);
+  assert.match(html, /if \(currentLandingPage === 'intro'\) return window\.scrollY \+ window\.innerHeight >= document\.querySelector\('#docs'\)\.offsetTop - 2/);
   assert.match(html, /window\.innerHeight \+ window\.scrollY >= document\.documentElement\.scrollHeight - 2/);
   assert.match(html, /if \(!landingPageBoundary\(direction\)\) \{[\s\S]*?resetWheelProgress\(\);[\s\S]*?return;[\s\S]*?\}/);
   assert.match(html, /wheelProgress \+= Math\.abs\(event\.deltaY\)/);
