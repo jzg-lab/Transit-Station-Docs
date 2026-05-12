@@ -44,10 +44,10 @@ test('old provider branding and endpoints are not shipped', () => {
 
 test('page exposes category navigation and grouped cards', () => {
   const html = readFileSync('index.html', 'utf8');
-  for (const category of ['编程助手', '桌面客户端', '机器人平台', '阅读翻译', '部署中枢']) {
+  for (const category of ['编程', '桌面', '机器人', '阅读', '部署']) {
     assert.match(html, new RegExp(category));
   }
-  assert.match(html, /class="product-card"/);
+  assert.match(html, /product-card/);
   assert.match(html, /category: 'coding'/);
 });
 
@@ -56,9 +56,22 @@ test('layout separates entry discovery from focused reading', () => {
   assert.match(html, /class="guide-layout"/);
   assert.match(html, /class="docs-intro"/);
   assert.match(html, /class="route-steps"/);
+  assert.match(html, /class="selector-head"/);
+  assert.match(html, /class="search-box nav-search"/);
   assert.match(html, /id="searchInput"/);
   assert.doesNotMatch(html, /id="readerPanel"/);
   assert.doesNotMatch(html, /id="doc"/);
+});
+
+test('left selector uses compact categories with counts', () => {
+  const html = readFileSync('index.html', 'utf8');
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(html, /function categoryCount/);
+  assert.match(html, /<span>\$\{category\.label\}<\/span><small>\$\{categoryCount\(category\.id\)\}<\/small>/);
+  assert.match(html, /<span><strong>\$\{product\.title\}<\/strong><small>\$\{product\.subtitle\}<\/small><\/span><em>→<\/em>/);
+  assert.match(css, /\.category-tabs[\s\S]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.product-list[\s\S]*max-height: 500px/);
+  assert.match(css, /\.product-tab em/);
 });
 
 test('landing page includes gentle interaction polish', () => {

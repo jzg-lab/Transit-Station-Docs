@@ -55,9 +55,13 @@
       <section id="docs" class="workspace" aria-label="AI 应用部署文档">
         <div class="guide-layout">
           <aside class="nav-panel">
-            <p class="panel-title">分类</p>
+            <div class="selector-head">
+              <p class="panel-title">选择应用</p>
+              <strong>先缩小范围</strong>
+            </div>
+            <input class="search-box nav-search" id="searchInput" type="search" placeholder="搜索 Codex / 桌面 / 机器人" aria-label="搜索应用文档">
             <div class="category-tabs" id="categoryTabs"></div>
-            <p class="panel-title">应用</p>
+            <p class="panel-title app-list-title">匹配应用</p>
             <div class="product-list" id="productList"></div>
           </aside>
 
@@ -70,7 +74,6 @@
               </div>
               <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
             </div>
-            <input class="search-box" id="searchInput" type="search" placeholder="搜索应用、场景或标签，例如 Codex、机器人、翻译" aria-label="搜索应用文档">
             <div class="cards" id="cards"></div>
           </section>
         </div>
@@ -82,12 +85,12 @@
 
   <script>
     const categories = [
-      { id: 'all', label: '全部应用', intro: '完整部署清单' },
-      { id: 'coding', label: '编程助手', intro: '终端与代码代理' },
-      { id: 'desktop', label: '桌面客户端', intro: '本地工作台' },
-      { id: 'bot', label: '机器人平台', intro: 'IM 与 Agent' },
-      { id: 'reading', label: '阅读翻译', intro: '双语阅读' },
-      { id: 'hub', label: '部署中枢', intro: '自托管与 API' }
+      { id: 'all', label: '全部', intro: '完整清单' },
+      { id: 'coding', label: '编程', intro: '终端与代码' },
+      { id: 'desktop', label: '桌面', intro: '本地工作台' },
+      { id: 'bot', label: '机器人', intro: 'IM 与 Agent' },
+      { id: 'reading', label: '阅读', intro: '翻译阅读' },
+      { id: 'hub', label: '部署', intro: '托管与 API' }
     ];
 
     const commonSetup = `
@@ -838,10 +841,14 @@ codex
       return categories.find(category => category.id === categoryId)?.label || '全部应用';
     }
 
+    function categoryCount(categoryId) {
+      return categoryId === 'all' ? products.length : products.filter(product => product.category === categoryId).length;
+    }
+
     function renderCategories() {
       categoryTabs.innerHTML = categories.map(category => `
         <button class="category-tab ${category.id === activeCategory ? 'active' : ''}" data-category="${category.id}">
-          ${category.label}<small>${category.intro}</small>
+          <span>${category.label}</span><small>${categoryCount(category.id)}</small>
         </button>
       `).join('');
     }
@@ -850,7 +857,7 @@ codex
       const visible = filteredProducts();
       productList.innerHTML = visible.map(product => `
         <a class="product-tab ${product.id === activeProduct ? 'active' : ''}" href="docs/${product.id}.html" data-product="${product.id}">
-          ${product.title}<small>${product.subtitle}</small>
+          <span><strong>${product.title}</strong><small>${product.subtitle}</small></span><em>→</em>
         </a>
       `).join('') || '<p class="empty-state">没有匹配的应用，换个关键词试试。</p>';
     }
