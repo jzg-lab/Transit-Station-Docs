@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>词元.fast AI 应用部署中转站</title>
+  <meta name="description" content="词元.fast AI 应用部署文档中转站，覆盖编程助手、桌面客户端、机器人平台、阅读翻译与自托管 AI 应用。">
+  <style>
+    :root {
+      --ink: #17211b;
+      --muted: #617065;
+      --paper: #fffaf0;
+      --paper-2: #f6efe0;
+      --moss: #284b3a;
+      --moss-2: #3f6b52;
+      --gold: #d6a441;
+      --clay: #a6533f;
+      --line: rgba(40, 75, 58, 0.18);
+      --shadow: 0 24px 80px rgba(30, 49, 39, 0.14);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(214, 164, 65, 0.28), transparent 28rem),
+        radial-gradient(circle at 100% 8%, rgba(63, 107, 82, 0.20), transparent 32rem),
+        linear-gradient(135deg, #fffaf0 0%, #f3ead6 48%, #e9efe6 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.24;
+      background-image:
+        linear-gradient(rgba(23, 33, 27, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 33, 27, 0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1440px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px;
+      margin-bottom: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 40px rgba(40, 75, 58, 0.08);
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #fff8e8;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--moss), var(--gold), var(--clay), var(--moss));
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.32), 0 10px 22px rgba(40, 75, 58, 0.24);
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.48);
+      color: var(--moss);
+      text-decoration: none;
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .pill.primary {
+      color: #fffaf0;
+      background: var(--moss);
+      border-color: var(--moss);
+      box-shadow: 0 10px 24px rgba(40, 75, 58, 0.24);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 26px;
+    }
+
+    .hero-card, .signal-card, .workspace {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.78);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: clamp(30px, 5vw, 66px);
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 1px solid rgba(40, 75, 58, 0.16);
+      background: radial-gradient(circle, rgba(214, 164, 65, 0.32), transparent 62%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--clay);
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    h1 {
+      max-width: 880px;
+      margin: 0;
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 0.98;
+      letter-spacing: -0.08em;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid var(--moss);
+      background: var(--moss);
+      color: #fffaf0;
+      text-decoration: none;
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(40, 75, 58, 0.22);
+    }
+
+    .button.ghost {
+      color: var(--moss);
+      background: rgba(255, 255, 255, 0.42);
+      box-shadow: none;
+    }
+
+    .signal-card {
+      padding: 26px;
+      display: grid;
+      gap: 14px;
+      background:
+        linear-gradient(160deg, rgba(40, 75, 58, 0.92), rgba(20, 36, 28, 0.94)),
+        var(--moss);
+      color: #fffaf0;
+    }
+
+    .metric {
+      padding: 20px;
+      border: 1px solid rgba(255, 250, 240, 0.18);
+      border-radius: 22px;
+      background: rgba(255, 250, 240, 0.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: #ffe5a4;
+    }
+
+    .metric span {
+      color: rgba(255, 250, 240, 0.74);
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr) 260px;
+      min-height: 760px;
+    }
+
+    .nav-panel, .toc-panel {
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .nav-panel { border-right: 1px solid var(--line); }
+    .toc-panel { border-left: 1px solid var(--line); }
+
+    .panel-title {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .category-tabs {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .category-tab, .product-tab {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: 15px;
+      padding: 12px 13px;
+      background: transparent;
+      color: var(--moss);
+      cursor: pointer;
+      text-align: left;
+      font: 800 14px/1.35 ui-sans-serif, "Noto Sans SC", sans-serif;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .category-tab:hover, .product-tab:hover { transform: translateX(3px); }
+
+    .category-tab.active, .product-tab.active {
+      background: #fffaf0;
+      border-color: var(--line);
+      box-shadow: 0 8px 18px rgba(40, 75, 58, 0.08);
+    }
+
+    .product-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-tab small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .content-panel {
+      min-width: 0;
+      padding: clamp(24px, 4vw, 48px);
+    }
+
+    .collection-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 26px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .collection-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.04em;
+    }
+
+    .collection-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .api-badge {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--ink);
+      color: #fffaf0;
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .product-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.44);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 250, 240, 0.92);
+      box-shadow: 0 16px 34px rgba(40, 75, 58, 0.13);
+    }
+
+    .product-card h3 {
+      margin: 0 0 9px;
+      font-size: 19px;
+    }
+
+    .product-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(214, 164, 65, 0.16);
+      color: var(--moss);
+      font: 800 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    .doc {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 240, 0.70);
+      padding: clamp(24px, 4vw, 44px);
+      box-shadow: 0 16px 44px rgba(40, 75, 58, 0.08);
+    }
+
+    .doc h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.04em;
+    }
+
+    .doc .lead {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .doc h3 {
+      margin: 34px 0 14px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-size: 24px;
+    }
+
+    .doc h4 {
+      margin: 24px 0 10px;
+      font-size: 18px;
+    }
+
+    .doc p, .doc li {
+      color: #3c4a40;
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .doc ul, .doc ol { padding-left: 22px; }
+
+    .callout {
+      margin: 20px 0;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(63, 107, 82, 0.22);
+      background: linear-gradient(135deg, rgba(63, 107, 82, 0.10), rgba(214, 164, 65, 0.12));
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--moss);
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    pre {
+      position: relative;
+      overflow-x: auto;
+      margin: 18px 0;
+      padding: 18px;
+      border-radius: 18px;
+      background: #18251d;
+      color: #fff4d5;
+      box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.08);
+    }
+
+    code {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    :not(pre) > code {
+      padding: 2px 6px;
+      border-radius: 7px;
+      background: rgba(166, 83, 63, 0.12);
+      color: #783526;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: 1px solid rgba(255, 250, 240, 0.22);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255, 250, 240, 0.12);
+      color: #fff4d5;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    th { background: rgba(40, 75, 58, 0.10); }
+
+    .toc-list {
+      display: grid;
+      gap: 10px;
+      position: sticky;
+      top: 110px;
+    }
+
+    .toc-list a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .toc-list a:hover { color: var(--clay); }
+
+    .footer-note {
+      margin: 24px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 1120px) {
+      .hero, .workspace { grid-template-columns: 1fr; }
+      .toc-panel { display: none; }
+      .nav-panel { border-right: none; border-bottom: 1px solid var(--line); }
+      .product-list, .category-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 24px, 1440px); padding-top: 12px; }
+      .topbar { align-items: flex-start; border-radius: 24px; position: static; flex-direction: column; }
+      .top-links { justify-content: flex-start; }
+      .hero-card { padding: 28px; }
+      .cards, .product-list, .category-tabs, .collection-head { grid-template-columns: 1fr; }
+      .api-badge { white-space: normal; }
+      .content-panel { padding: 16px; }
+      .doc { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="词元.fast 文档首页">
+        <span class="brand-mark">词</span>
+        <span>词元.fast AI 应用部署中转站</span>
+      </a>
+      <nav class="top-links" aria-label="顶部导航">
+        <a class="pill" href="#docs">应用文档</a>
+        <a class="pill" href="https://ciyuan.fast" target="_blank" rel="noreferrer">打开词元.fast</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-card">
+          <p class="eyebrow">AI Gateway Playbook</p>
+          <h1 id="hero-title">把好用的 AI 工具，接到同一个词元.fast 中转站。</h1>
+          <p>这里整理了从编程助手、桌面客户端到机器人平台的部署与接入路径。页面以“先选场景，再看工具，再复制配置”为主线重排，减少来回翻找，让用户更快完成 API 地址、密钥和模型配置。</p>
+          <div class="hero-actions">
+            <a class="button" href="#docs">浏览部署教程</a>
+            <a class="button ghost" href="https://ciyuan.fast" target="_blank" rel="noreferrer">访问 https://ciyuan.fast</a>
+          </div>
+        </div>
+        <aside class="signal-card" aria-label="站点概览">
+          <div class="metric"><strong>10</strong><span>覆盖 10 个常见 AI 应用和开发工具</span></div>
+          <div class="metric"><strong>5</strong><span>按编程、桌面、机器人、翻译、部署中枢分组</span></div>
+          <div class="metric"><strong>/v1</strong><span>OpenAI 兼容工具优先使用 <code>https://ciyuan.fast/v1</code></span></div>
+        </aside>
+      </section>
+
+      <section id="docs" class="workspace" aria-label="AI 应用部署文档">
+        <aside class="nav-panel">
+          <p class="panel-title">分类</p>
+          <div class="category-tabs" id="categoryTabs"></div>
+          <p class="panel-title">应用</p>
+          <div class="product-list" id="productList"></div>
+        </aside>
+
+        <section class="content-panel">
+          <div class="collection-head">
+            <div>
+              <h2>应用接入地图</h2>
+              <p>先按使用场景筛选，再进入对应文档。所有教程已统一替换为词元.fast，并保留可复制的关键配置片段。</p>
+            </div>
+            <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
+          </div>
+          <div class="cards" id="cards"></div>
+          <article class="doc" id="doc"></article>
+        </section>
+
+        <aside class="toc-panel">
+          <p class="panel-title">当前目录</p>
+          <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+        </aside>
+      </section>
+    </main>
+
+    <p class="footer-note">本页面面向词元.fast 用户，用于快速完成 AI 应用部署和模型网关配置。实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+
+  <script>
+    const categories = [
+      { id: 'all', label: '全部应用', intro: '完整部署清单' },
+      { id: 'coding', label: '编程助手', intro: '终端与代码代理' },
+      { id: 'desktop', label: '桌面客户端', intro: '本地工作台' },
+      { id: 'bot', label: '机器人平台', intro: 'IM 与 Agent' },
+      { id: 'reading', label: '阅读翻译', intro: '双语阅读' },
+      { id: 'hub', label: '部署中枢', intro: '自托管网关' }
+    ];
+
+    const commonSetup = `
+      <div class="callout"><strong>词元.fast 通用配置</strong>在词元.fast 控制台创建 API Key。OpenAI 兼容应用通常填写 <code>https://ciyuan.fast/v1</code>；少数工具如果单独要求 Base URL、不自动拼接 <code>/v1</code>，则填写 <code>https://ciyuan.fast</code>。</div>
+      <pre><code>API Key: 在 https://ciyuan.fast 控制台创建
+OpenAI Compatible Base URL: https://ciyuan.fast/v1
+模型名称: 选择控制台中已启用的模型 ID</code></pre>
+    `;
+
+    const products = [
+      {
+        id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
+        summary: '把 Telegram、Discord、WhatsApp、iMessage 等入口连接到你自己的 AI 助手。适合重视数据控制权和长期自动化的人。',
+        body: `
+          <h2>OpenClaw - 自托管 AI 智能助手平台</h2>
+          <p class="lead">OpenClaw 是开源的个人 AI 助手平台，可以把消息应用、Gateway 和本地/服务器上的 AI Agent 连接起来。接入词元.fast 后，你可以把默认模型切到统一的兼容 OpenAI 网关。</p>
+          <h3>核心特性</h3>
+          <ul><li>支持 Telegram、Discord、WhatsApp、iMessage 等多渠道接入。</li><li>Gateway 统一管理入口，适合长期运行的个人助手。</li><li>支持持久记忆、定时任务、多代理路由、工具调用与代码执行。</li><li>自托管部署，数据和配置掌握在自己手里。</li></ul>
+          <h3>接入前准备</h3>
+          ${commonSetup}
+          <h3>安装与启动</h3>
+          <pre><code>curl -fsSL https://openclaw.ai/install.sh | bash
+openclaw onboard --install-daemon
+openclaw gateway status
+openclaw dashboard</code></pre>
+          <h3>配置词元.fast Provider</h3>
+          <p>在 OpenClaw 配置中新增一个 OpenAI 兼容 provider，把 <code>baseUrl</code> 指向词元.fast，并把默认模型引用到该 provider 下的模型 ID。</p>
+          <pre><code>models:
+  providers:
+    ciyuan:
+      api: openai-completions
+      baseUrl: https://ciyuan.fast/v1
+      apiKey: ${'${NEWAPI_API_KEY}'}
+      models:
+        - id: gpt-4.1
+  default: ciyuan/gpt-4.1</code></pre>
+          <h3>验收标准</h3>
+          <ol><li>Control UI 能正常打开。</li><li>Gateway 状态正常。</li><li>用默认 Agent 发起一次对话，确认调用的是词元.fast 中的模型。</li></ol>
+        `
+      },
+      {
+        id: 'claude-code', category: 'coding', title: 'Claude Code', subtitle: 'Anthropic 终端编程助手', tags: ['终端', '代码理解', 'IDE'],
+        summary: '在终端里理解代码库、编辑多文件、跑测试并协助提交。适合把 Claude Code 统一接到词元.fast。',
+        body: `
+          <h2>Claude Code - 终端编程助手</h2>
+          <p class="lead">Claude Code 强在代码库理解、多文件编辑和命令行工作流。使用词元.fast 时，重点是让 CLI 读取正确的 Base URL、API Key 与模型配置。</p>
+          <h3>适用场景</h3><ul><li>新项目快速读代码、梳理模块和依赖。</li><li>复杂修改时让代理跨文件编辑并运行测试。</li><li>与 VS Code、JetBrains 或 Git 工作流配合。</li></ul>
+          <h3>通用接入</h3>${commonSetup}
+          <h3>Shell 环境变量示例</h3>
+          <pre><code>export ANTHROPIC_BASE_URL="https://ciyuan.fast"
+export ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"
+export ANTHROPIC_MODEL="claude-sonnet-4-5"</code></pre>
+          <h3>Windows PowerShell 示例</h3>
+          <pre><code>$env:ANTHROPIC_BASE_URL="https://ciyuan.fast"
+$env:ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"
+$env:ANTHROPIC_MODEL="claude-sonnet-4-5"</code></pre>
+          <h3>使用建议</h3><ol><li>先用只读问题验证模型连通性。</li><li>再授权文件编辑和命令执行。</li><li>每次大改后让工具跑测试，再人工复核 diff。</li></ol>
+        `
+      },
+      {
+        id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['CLI', '沙箱', '补丁'],
+        summary: '适合在本地仓库中让 AI 代理读代码、改文件、执行命令。词元.fast 可作为兼容 OpenAI 的模型入口。',
+        body: `
+          <h2>OpenAI Codex CLI - 终端 AI 编程助手</h2>
+          <p class="lead">Codex CLI 面向真实代码库工作，强调命令执行、沙箱策略和可审查补丁。接入词元.fast 时，把 OpenAI 兼容地址与 Key 写入配置即可。</p>
+          <h3>能力速览</h3><ul><li>阅读项目结构并定位问题。</li><li>生成原子补丁，便于代码审查。</li><li>在受控权限下执行测试、构建和脚本。</li></ul>
+          <h3>接入配置</h3>${commonSetup}
+          <pre><code>export OPENAI_API_KEY="你的词元.fast API Key"
+export OPENAI_BASE_URL="https://ciyuan.fast/v1"
+codex</code></pre>
+          <h3>配置文件思路</h3><p>如果使用配置文件，建议把 provider 单独命名为 <code>ciyuan</code>，方便后续在多个模型网关之间切换。</p>
+          <pre><code>[model_providers.ciyuan]
+name = "词元.fast"
+base_url = "https://ciyuan.fast/v1"
+env_key = "OPENAI_API_KEY"</code></pre>
+          <h3>风险控制</h3><ol><li>不要把生产密钥写进仓库。</li><li>让代理修改前先说明计划。</li><li>大范围重构前先建立测试基线。</li></ol>
+        `
+      },
+      {
+        id: 'factory-droid-cli', category: 'coding', title: 'Factory Droid CLI', subtitle: 'AI 软件工程助手', tags: ['规划', '测试', '自动化'],
+        summary: '从需求分析、实现到测试的工程型 CLI，可通过词元.fast 调用兼容模型。',
+        body: `
+          <h2>Factory Droid CLI - AI 软件工程助手</h2>
+          <p class="lead">Factory Droid CLI 适合把开发任务拆成计划、实现和验证步骤。接入词元.fast 后，可以把模型供应统一到同一个 API 网关。</p>
+          <h3>工作流定位</h3><ul><li>根据需求生成实现计划。</li><li>协助编辑代码、补测试、解释失败日志。</li><li>适合团队用同一套中转站管理额度和模型。</li></ul>
+          <h3>配置词元.fast</h3>${commonSetup}
+          <pre><code>base_url = "https://ciyuan.fast"
+api_key = "你的词元.fast API Key"
+model = "选择控制台中的模型 ID"</code></pre>
+          <h3>落地建议</h3><ol><li>先用小任务验证模型和上下文表现。</li><li>把项目约束写入 README 或 AGENTS.md。</li><li>每次让 CLI 改代码后检查 git diff。</li></ol>
+        `
+      },
+      {
+        id: 'cc-switch', category: 'coding', title: 'CC Switch', subtitle: 'AI CLI 统一管理工具', tags: ['配置管理', 'Deep Link', 'MCP'],
+        summary: '统一管理 Claude Code、Codex、Gemini CLI 的 Provider、MCP 与提示词配置。',
+        body: `
+          <h2>CC Switch - AI CLI 统一管理工具</h2>
+          <p class="lead">CC Switch 的价值是减少多 CLI 配置混乱。把词元.fast 设成一个 Provider 后，可以在 Claude Code、Codex、Gemini CLI 等工具之间复用。</p>
+          <h3>适合谁</h3><ul><li>同时使用多个终端 AI 编程工具的人。</li><li>需要管理多个 Provider、模型、MCP Server 的团队。</li><li>希望快速切换系统提示词和工作区配置的人。</li></ul>
+          <h3>Provider 配置</h3>${commonSetup}
+          <pre><code>{
+  "name": "词元.fast",
+  "baseUrl": "https://ciyuan.fast/v1",
+  "apiKey": "你的词元.fast API Key",
+  "models": ["gpt-4.1", "claude-sonnet-4-5"]
+}</code></pre>
+          <h3>使用建议</h3><ol><li>把 Provider 名称统一写成 <code>ciyuan-fast</code> 或 <code>词元.fast</code>。</li><li>MCP Server 单独管理，避免和模型网关配置混在一起。</li><li>切换后用一次简单对话确认当前 CLI 读到了新配置。</li></ol>
+        `
+      },
+      {
+        id: 'cherry-studio', category: 'desktop', title: 'Cherry Studio', subtitle: '桌面 AI 客户端', tags: ['桌面端', '多助手', 'NewAPI'],
+        summary: '面向日常对话、知识处理和多模型切换的桌面客户端。可手动添加词元.fast 作为 OpenAI 兼容供应商。',
+        body: `
+          <h2>Cherry Studio - 桌面 AI 客户端</h2>
+          <p class="lead">Cherry Studio 内置多种助手和模型管理能力，适合把词元.fast 配成统一的桌面 AI 入口。</p>
+          <h3>接入步骤</h3>${commonSetup}
+          <ol><li>进入设置里的模型服务或供应商管理。</li><li>新增 OpenAI 兼容或 NewAPI 类型供应商。</li><li>填写 API 地址 <code>https://ciyuan.fast</code> 或 <code>https://ciyuan.fast/v1</code>，以客户端提示为准。</li><li>粘贴词元.fast API Key。</li><li>同步或手动填写模型名称并测试对话。</li></ol>
+          <h3>推荐配置表</h3><table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>供应商名称</td><td>词元.fast</td></tr><tr><td>API 密钥</td><td>词元.fast 控制台创建的 Key</td></tr><tr><td>API 地址</td><td>https://ciyuan.fast/v1</td></tr><tr><td>模型</td><td>控制台中已启用的模型 ID</td></tr></table>
+        `
+      },
+      {
+        id: 'aionui', category: 'desktop', title: 'AionUi', subtitle: '开源桌面办公 Agent', tags: ['办公 Agent', '多代理', '桌面'],
+        summary: '支持 Gemini CLI、Claude Code、Codex 等代理的桌面办公工作台，可把词元.fast 作为统一模型供应。',
+        body: `
+          <h2>AionUi - 免费开源的桌面办公 Agent</h2>
+          <p class="lead">AionUi 把多个 AI 代理放进桌面工作台，适合处理办公、开发和自动化任务。接入词元.fast 后，可以统一管理多模型工作流。</p>
+          <h3>配置入口</h3>${commonSetup}
+          <ol><li>打开 AionUi 设置或模型提供商页面。</li><li>新增 OpenAI 兼容服务。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 使用词元.fast 控制台创建的密钥。</li><li>选择模型后新建会话测试。</li></ol>
+          <h3>使用建议</h3><ul><li>办公场景优先选择稳定、上下文长度合适的模型。</li><li>开发场景单独配置代码模型，避免和日常对话混用。</li><li>重要文档处理前先确认隐私与数据策略。</li></ul>
+        `
+      },
+      {
+        id: 'fluent-read', category: 'reading', title: '流畅阅读', subtitle: 'FluentRead 开源翻译插件', tags: ['浏览器插件', '双语阅读', '翻译'],
+        summary: '支持多种翻译引擎和 AI 大模型翻译。用词元.fast 可获得更统一的模型与密钥管理。',
+        body: `
+          <h2>流畅阅读 FluentRead - 开源翻译插件</h2>
+          <p class="lead">FluentRead 面向网页双语阅读和沉浸式翻译。接入词元.fast 后，可使用统一 API Key 调用大模型翻译。</p>
+          <h3>手动配置</h3>${commonSetup}
+          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>翻译服务</td><td>NewAPI 或 OpenAI 兼容</td></tr><tr><td>访问令牌</td><td>词元.fast API Key</td></tr><tr><td>接口地址</td><td>https://ciyuan.fast</td></tr><tr><td>模型</td><td>选择或手动输入模型 ID</td></tr></table>
+          <h3>验收方式</h3><ol><li>打开一篇外文网页。</li><li>触发划词或全文翻译。</li><li>如果返回 401，检查 Key；如果返回模型不存在，检查模型 ID。</li></ol>
+        `
+      },
+      {
+        id: 'langbot', category: 'bot', title: 'LangBot', subtitle: '即时通信机器人开发平台', tags: ['飞书', '钉钉', '知识库'],
+        summary: '支持飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等渠道，并支持知识库、Agent、MCP。',
+        body: `
+          <h2>LangBot - 即时通信机器人开发平台</h2>
+          <p class="lead">LangBot 是开源 IM 机器人开发平台，可把大模型能力接入飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等渠道。</p>
+          <h3>接入词元.fast</h3>${commonSetup}
+          <ol><li>在词元.fast 控制台创建 API Key。</li><li>进入 LangBot 模型设置，新增 NewAPI 或 OpenAI 兼容供应商。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>选择聊天模型，并在流水线中启用。</li><li>通过对话调试或已绑定机器人发送测试消息。</li></ol>
+          <h3>知识库向量模型</h3><p>如果词元.fast 中启用了嵌入模型，可在 LangBot 中新增嵌入模型，并在新建知识库时选择该向量模型。</p>
+        `
+      },
+      {
+        id: 'astrbot', category: 'bot', title: 'AstrBot', subtitle: 'Agent 聊天机器人', tags: ['QQ', '企业微信', 'Agent'],
+        summary: '一站式 Agent 聊天机器人平台，适合把 QQ、飞书、钉钉、企业微信等会话接入大模型。',
+        body: `
+          <h2>AstrBot - Agent 聊天机器人</h2>
+          <p class="lead">AstrBot 可把大模型能力接入 QQ、飞书、钉钉、企业微信等平台，用于个人 AI 伙伴、智能客服、知识库和自动化助手。</p>
+          <h3>配置步骤</h3>${commonSetup}
+          <ol><li>登录词元.fast，进入控制台创建 API Key。</li><li>打开 AstrBot 管理面板，进入模型提供商。</li><li>新增 OpenAI 提供商。</li><li>API Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 填入词元.fast 密钥并保存。</li><li>在配置文件中把默认聊天模型切换到刚创建的提供商。</li></ol>
+          <h3>排错清单</h3><ul><li>无法保存：检查 URL 是否包含协议头。</li><li>模型不可用：确认模型 ID 与词元.fast 控制台一致。</li><li>机器人无回复：检查平台绑定、流水线和默认模型是否同时启用。</li></ul>
+        `
+      }
+    ];
+
+    let activeCategory = 'all';
+    let activeProduct = products[0].id;
+
+    const categoryTabs = document.querySelector('#categoryTabs');
+    const productList = document.querySelector('#productList');
+    const cards = document.querySelector('#cards');
+    const doc = document.querySelector('#doc');
+    const toc = document.querySelector('#toc');
+
+    function filteredProducts() {
+      return activeCategory === 'all' ? products : products.filter(product => product.category === activeCategory);
+    }
+
+    function renderCategories() {
+      categoryTabs.innerHTML = categories.map(category => `
+        <button class="category-tab ${category.id === activeCategory ? 'active' : ''}" data-category="${category.id}">
+          ${category.label}<small>${category.intro}</small>
+        </button>
+      `).join('');
+    }
+
+    function renderProductList() {
+      productList.innerHTML = filteredProducts().map(product => `
+        <button class="product-tab ${product.id === activeProduct ? 'active' : ''}" data-product="${product.id}">
+          ${product.title}<small>${product.subtitle}</small>
+        </button>
+      `).join('');
+    }
+
+    function renderCards() {
+      cards.innerHTML = filteredProducts().map(product => `
+        <article class="product-card" data-category="${product.category}" data-product="${product.id}" tabindex="0">
+          <h3>${product.title}</h3>
+          <p>${product.summary}</p>
+          <div class="tag-row">${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+        </article>
+      `).join('');
+    }
+
+    function renderDoc() {
+      const product = products.find(item => item.id === activeProduct) || filteredProducts()[0] || products[0];
+      activeProduct = product.id;
+      doc.innerHTML = product.body;
+      addCopyButtons();
+      renderToc();
+    }
+
+    function renderToc() {
+      const headings = [...doc.querySelectorAll('h3')];
+      toc.innerHTML = headings.map((heading, index) => {
+        const id = `${activeProduct}-heading-${index}`;
+        heading.id = id;
+        return `<a href="#${id}">${heading.textContent}</a>`;
+      }).join('');
+    }
+
+    function addCopyButtons() {
+      doc.querySelectorAll('pre').forEach(pre => {
+        if (pre.querySelector('.copy-btn')) return;
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.type = 'button';
+        button.textContent = '复制';
+        button.addEventListener('click', async () => {
+          const text = pre.querySelector('code')?.innerText || '';
+          try {
+            await navigator.clipboard.writeText(text);
+            button.textContent = '已复制';
+          } catch (error) {
+            button.textContent = '手动复制';
+          }
+          setTimeout(() => { button.textContent = '复制'; }, 1600);
+        });
+        pre.appendChild(button);
+      });
+    }
+
+    function setCategory(categoryId) {
+      activeCategory = categoryId;
+      const visible = filteredProducts();
+      if (!visible.some(product => product.id === activeProduct)) activeProduct = visible[0].id;
+      renderAll();
+    }
+
+    function setProduct(productId) {
+      activeProduct = productId;
+      renderProductList();
+      renderCards();
+      renderDoc();
+      doc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderAll() {
+      renderCategories();
+      renderProductList();
+      renderCards();
+      renderDoc();
+    }
+
+    document.addEventListener('click', event => {
+      const categoryButton = event.target.closest('[data-category].category-tab');
+      const productButton = event.target.closest('[data-product]');
+      if (categoryButton) setCategory(categoryButton.dataset.category);
+      if (productButton && !categoryButton) setProduct(productButton.dataset.product);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Enter') return;
+      const card = event.target.closest('.product-card');
+      if (card) setProduct(card.dataset.product);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
