@@ -274,10 +274,14 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /wheelProgress \+= wheelStep/);
   assert.match(html, /if \(wheelProgress < landingWheelThreshold\) return/);
   assert.match(html, /function scrollToLandingPage/);
+  assert.match(html, /function mapLandingTop/);
   assert.match(html, /topbar\.getBoundingClientRect\(\)\.height/);
   assert.match(html, /window\.getComputedStyle\(topbar\)\.top/);
-  assert.match(html, /target\.offsetTop - topbarOffset/);
+  assert.match(html, /docs\.offsetTop - updateTopbarOffset\(\)/);
   assert.match(html, /window\.location\.hash === '#docs'/);
+  assert.match(html, /const landingObserverThreshold = 0\.22/);
+  assert.match(html, /entry\.intersectionRatio >= landingObserverThreshold/);
+  assert.match(html, /isNearMapLandingBoundary\(\)/);
   assert.match(html, /function switchLandingPage/);
   assert.match(html, /document\.body\.classList\.add\('js-landing-ready'\)/);
   assert.match(html, /document\.body\.classList\.add\('map-preparing'\)/);
@@ -288,6 +292,7 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /function canScrollWithin/);
   assert.match(html, /window\.addEventListener\('wheel', handleLandingWheel, \{ passive: false \}\)/);
   assert.match(css, /body\.landing-map \.hero/);
+  assert.match(css, /body\.js-landing-ready\.landing-map:not\(\.map-entering\) \.hero[\s\S]*?display: none/);
   assert.match(css, /body\.js-landing-ready\.landing-map \.workspace/);
   assert.doesNotMatch(css, /body\.js-landing-ready \.workspace\s*\{[\s\S]*?pointer-events: none/);
   assert.match(css, /--topbar-offset/);
@@ -314,6 +319,90 @@ test('landing map switch slides without scaling the layout', () => {
   assert.doesNotMatch(css, /body\.(?:map-preparing|intro-entering|landing-map|map-entering)[\s\S]{0,180}scale\(/);
   assert.match(css, /\.product-card[\s\S]*?animation: riseIn 0\.56s ease both/);
   assert.doesNotMatch(css, /body\.(?:map-entering|intro-entering) \.product-card[\s\S]*?animation: none/);
+});
+
+test('map observer does not hide the intro before the map is aligned', () => {
+  const app = readFileSync('app.js', 'utf8');
+  const bodyClasses = new Set();
+  const rootStyle = new Map();
+  const categoryTabs = { innerHTML: '' };
+  const productList = { innerHTML: '' };
+  const cards = { innerHTML: '' };
+  const searchInput = { value: '', addEventListener() {} };
+  const heroSearchInput = { value: '', addEventListener() {} };
+  const docsElement = { offsetTop: 780, parentElement: null };
+  const topElement = { offsetTop: 0, parentElement: null };
+  const topbar = {
+    getBoundingClientRect: () => ({ height: 68 }),
+    parentElement: null
+  };
+  let observerCallback;
+  const body = {
+    classList: {
+      add: (...classes) => classes.forEach(className => bodyClasses.add(className)),
+      remove: (...classes) => classes.forEach(className => bodyClasses.delete(className)),
+      toggle: (className, force) => force ? bodyClasses.add(className) : bodyClasses.delete(className)
+    }
+  };
+  function TestIntersectionObserver(callback) {
+    observerCallback = callback;
+    return { observe() {} };
+  }
+  const context = {
+    document: {
+      body,
+      documentElement: {
+        scrollHeight: 1600,
+        style: {
+          setProperty: (name, value) => rootStyle.set(name, value)
+        }
+      },
+      querySelector(selector) {
+        return {
+          '#categoryTabs': categoryTabs,
+          '#productList': productList,
+          '#cards': cards,
+          '#searchInput': searchInput,
+          '#heroSearchInput': heroSearchInput,
+          '#docs': docsElement,
+          '#top': topElement,
+          '.topbar': topbar
+        }[selector] || null;
+      },
+      querySelectorAll() {
+        return [];
+      },
+      addEventListener() {}
+    },
+    window: {
+      innerHeight: 900,
+      scrollY: 0,
+      location: { hash: '' },
+      addEventListener() {},
+      clearTimeout() {},
+      setTimeout() {},
+      requestAnimationFrame(handler) {
+        handler();
+      },
+      scrollTo() {},
+      getComputedStyle: () => ({
+        top: '16px',
+        overflowY: 'visible'
+      }),
+      IntersectionObserver: TestIntersectionObserver
+    },
+    Element: function Element() {},
+    IntersectionObserver: TestIntersectionObserver,
+    setTimeout() {}
+  };
+
+  vm.runInNewContext(app, context);
+  observerCallback([{ isIntersecting: true, intersectionRatio: 0.3 }]);
+  assert.equal(bodyClasses.has('landing-map'), false);
+
+  context.window.scrollY = 662;
+  observerCallback([{ isIntersecting: true, intersectionRatio: 0.3 }]);
+  assert.equal(bodyClasses.has('landing-map'), true);
 });
 
 test('map jump clicks scroll smoothly without rebuilding stable cards', () => {

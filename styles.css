@@ -400,6 +400,10 @@
       pointer-events: none;
     }
 
+    body.js-landing-ready.landing-map:not(.map-entering) .hero {
+      display: none;
+    }
+
     body.js-landing-ready.landing-map .workspace,
     body.js-landing-ready.map-visible .workspace,
     body.js-landing-ready.map-entering:not(.landing-intro) .workspace {

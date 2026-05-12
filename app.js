@@ -965,6 +965,7 @@ let landingSwitchLocked = false;
 const landingWheelThreshold = 220;
 const landingWheelMaxStep = 90;
 const landingBoundaryTolerance = 12;
+const landingObserverThreshold = 0.22;
 const landingTransitionMs = 460;
 let wheelProgress = 0;
 let wheelDirection = 0;
@@ -979,11 +980,16 @@ function updateTopbarOffset() {
   return topbarOffset;
 }
 
+function mapLandingTop() {
+  const docs = document.querySelector('#docs');
+  if (!docs) return 0;
+  return Math.max(0, docs.offsetTop - updateTopbarOffset());
+}
+
 function scrollToLandingPage(page, behavior = 'smooth') {
   const target = document.querySelector(page === 'map' ? '#docs' : '#top');
   if (!target) return;
-  const topbarOffset = page === 'map' ? updateTopbarOffset() : 0;
-  const targetTop = target.offsetTop - topbarOffset;
+  const targetTop = page === 'map' ? mapLandingTop() : target.offsetTop;
   window.scrollTo({ top: Math.max(0, targetTop), behavior });
 }
 
@@ -1015,12 +1021,16 @@ function canScrollWithin(element, direction) {
 
 function landingPageBoundary(direction) {
   if (direction < 0 && currentLandingPage === 'map') {
-    const mapTop = document.querySelector('#docs').offsetTop - updateTopbarOffset();
+    const mapTop = mapLandingTop();
     return window.scrollY <= mapTop + landingBoundaryTolerance;
   }
   if (direction < 0) return window.scrollY <= 2;
   if (currentLandingPage === 'intro') return window.scrollY + window.innerHeight >= document.querySelector('#docs').offsetTop - landingBoundaryTolerance;
   return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - landingBoundaryTolerance;
+}
+
+function isNearMapLandingBoundary() {
+  return window.scrollY >= mapLandingTop() - landingBoundaryTolerance;
 }
 
 function syncLandingPage(page) {
@@ -1051,6 +1061,7 @@ function switchLandingPage(page, options = {}) {
   setTimeout(() => {
     document.body.classList.remove('map-entering', 'intro-entering');
     landingSwitchLocked = false;
+    if (page === 'map') scrollToLandingPage('map', 'auto');
   }, landingTransitionMs);
 }
 
@@ -1116,9 +1127,9 @@ window.addEventListener('resize', updateTopbarOffset);
 if ('IntersectionObserver' in window) {
   const mapObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) syncLandingPage('map');
+      if (entry.isIntersecting && entry.intersectionRatio >= landingObserverThreshold && isNearMapLandingBoundary()) syncLandingPage('map');
     });
-  }, { threshold: 0.22 });
+  }, { threshold: landingObserverThreshold });
   mapObserver.observe(document.querySelector('#docs'));
 } else {
   syncLandingPage('intro');
