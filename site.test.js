@@ -186,6 +186,16 @@ test('tutorials are beginner friendly and support image zoom', () => {
   assert.doesNotMatch(html, /看不清时点击图片放大查看/);
 });
 
+test('client scripts avoid unsafe toc html injection and non-element wheel targets', () => {
+  const docsScript = readFileSync('docs.js', 'utf8');
+  const indexHtml = readFileSync('index.html', 'utf8');
+  assert.match(docsScript, /toc\.replaceChildren/);
+  assert.match(docsScript, /document\.createElement\('a'\)/);
+  assert.match(docsScript, /link\.textContent = heading\.textContent/);
+  assert.doesNotMatch(docsScript, /toc\.innerHTML = headings\.map/);
+  assert.match(indexHtml, /element instanceof Element \? element : element\?\.parentElement/);
+});
+
 test('codex openclaw and async image docs follow the latest source material', () => {
   const html = readFileSync('docs/codex-cli.html', 'utf8') + readFileSync('docs/openclaw.html', 'utf8') + readFileSync('docs/async-image-api.html', 'utf8');
   assert.match(html, /gpt-5\.5/);

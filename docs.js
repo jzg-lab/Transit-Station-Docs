@@ -46,11 +46,15 @@ function renderToc() {
   const toc = document.querySelector('#toc');
   if (!doc || !toc) return;
   const headings = [...doc.querySelectorAll('h2, h3')];
-  toc.innerHTML = headings.map((heading, index) => {
+  toc.replaceChildren(...headings.map((heading, index) => {
     const id = heading.id || `heading-${index}`;
     heading.id = id;
-    return `<a href="#${id}" class="toc-${heading.tagName.toLowerCase()}">${heading.textContent}</a>`;
-  }).join('');
+    const link = document.createElement('a');
+    link.href = `#${id}`;
+    link.className = `toc-${heading.tagName.toLowerCase()}`;
+    link.textContent = heading.textContent;
+    return link;
+  }));
 }
 
 document.addEventListener('click', event => {

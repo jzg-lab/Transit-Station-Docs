@@ -1086,7 +1086,7 @@ codex
     }
 
     function canScrollWithin(element, direction) {
-      let node = element;
+      let node = element instanceof Element ? element : element?.parentElement;
       while (node && node !== document.body) {
         const style = window.getComputedStyle(node);
         const scrollable = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight;
