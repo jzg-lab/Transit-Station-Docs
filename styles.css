@@ -388,24 +388,10 @@
       transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
     }
 
-    body.js-landing-ready .workspace {
-      opacity: 0;
-      transform: translate3d(0, 72px, 0) scale(0.965);
-      filter: blur(14px);
-      pointer-events: none;
-    }
-
     body.landing-map .hero,
     body.map-entering:not(.landing-intro) .hero {
       opacity: 0;
       transform: translate3d(0, -72px, 0) scale(0.965);
-      filter: blur(14px);
-      pointer-events: none;
-    }
-
-    body.landing-intro .workspace {
-      opacity: 0;
-      transform: translate3d(0, 72px, 0) scale(0.965);
       filter: blur(14px);
       pointer-events: none;
     }
