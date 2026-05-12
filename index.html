@@ -827,18 +827,6 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { label: 'GitHub', title: 'openclaw/openclaw', href: 'https://github.com/openclaw/openclaw' },
         { label: '安装依赖', title: 'OpenClaw Install Docs', href: 'https://docs.openclaw.ai/install' }
       ],
-      'openclaw': [
-        { title: '打开安装向导', detail: 'Windows 用户建议先进入 WSL2；Mac、Linux、WSL2 用户打开终端执行官方一键安装脚本。脚本会自动安装依赖并进入新手引导。', src: 'images/openclaw-guide/image1.png', alt: 'OpenClaw 安装入口' },
-        { title: '选择快速开始', detail: '安装脚本进入引导后，遇到是否继续、是否快速开始这类问题，小白直接选择 yes 或 Quick Start。', src: 'images/openclaw-guide/image2.png', alt: 'OpenClaw 快速开始' },
-        { title: '选择自定义模型厂商', detail: '模型厂商选择 Custom Provider 或自定义提供商。这里不是选 OpenAI 官方账号，而是把词元.fast 当成兼容模型网关接入。', src: 'images/openclaw-guide/image3.png', alt: '选择自定义模型厂商' },
-        { title: '填写词元.fast URL，注意不要加 /v1', detail: 'OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 https://ciyuan.fast，不是 https://ciyuan.fast/v1。这一点和很多 OpenAI 兼容客户端不同。', src: 'images/openclaw-guide/image4.png', alt: '填写词元.fast URL' },
-        { title: '粘贴 API Key', detail: '把第 1 步从词元.fast 创建并复制的 API Key 粘贴进去。粘贴时终端可能不显示字符，这是正常的。', src: 'images/openclaw-guide/image5.png', alt: '填写 OpenClaw API Key' },
-        { title: '选择 OpenAI 格式', detail: '接口格式选择 OpenAI compatible 或 OpenAI 格式，让 OpenClaw 按兼容协议调用词元.fast。', src: 'images/openclaw-guide/image6.png', alt: '选择 OpenAI 格式' },
-        { title: '填写模型名称', detail: '模型名称填写你要使用的模型，例如 gpt-5.5。后面两个代号字段可以按向导提示填写，主要用于本地识别。', src: 'images/openclaw-guide/image7.png', alt: '填写模型名称' },
-        { title: '跳过或选择连接 App', detail: '如果只是先验证 OpenClaw 能跑起来，连接 Telegram、Discord、飞书等 App 的步骤可以先跳过，后面再配置。', src: 'images/openclaw-guide/image8.png', alt: '选择连接 App' },
-        { title: '选择官方技能', detail: '进入技能选择页后，小白可以先选择推荐的核心技能。等能正常对话后，再回头研究每个技能的作用。', src: 'images/openclaw-guide/image9.png', alt: '选择 OpenClaw 技能' },
-        { title: '完成后重启并进入对话', detail: '向导结束后按提示 restart，随后打开 dashboard 或对话入口，先发送一句简单消息确认模型能回复。', src: 'images/openclaw-guide/image10.png', alt: 'OpenClaw 完成配置' }
-      ],
       'claude-code': [
         { label: '官网', title: 'Anthropic Claude Code', href: 'https://www.anthropic.com/claude-code' },
         { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' },
@@ -852,7 +840,7 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
       'factory-droid-cli': [
         { label: '官网', title: 'Factory AI', href: 'https://factory.ai' },
         { label: '文档', title: 'Factory Docs', href: 'https://docs.factory.ai' },
-        { label: '安装', title: 'npm install -g droid', href: 'https://www.npmjs.com/package/droid' }
+        { label: '安装', title: 'Factory CLI', href: 'https://docs.factory.ai' }
       ],
       'cc-switch': [
         { label: 'GitHub', title: 'farion1231/cc-switch', href: 'https://github.com/farion1231/cc-switch' },
@@ -861,246 +849,268 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
       ],
       'cherry-studio': [
         { label: '官网', title: 'cherry-ai.com', href: 'https://cherry-ai.com' },
-        { label: '下载', title: 'Cherry Studio Download', href: 'https://cherry-ai.com/download' },
-        { label: '文档', title: 'docs.cherry-ai.com', href: 'https://docs.cherry-ai.com' }
+        { label: 'GitHub', title: 'CherryHQ/cherry-studio', href: 'https://github.com/CherryHQ/cherry-studio' },
+        { label: '下载', title: 'Cherry Studio Releases', href: 'https://github.com/CherryHQ/cherry-studio/releases' }
       ],
       'aionui': [
-        { label: '官网', title: 'aionui.com', href: 'https://www.aionui.com' },
-        { label: 'GitHub', title: 'iOfficeAI/AionUi', href: 'https://github.com/iOfficeAI/AionUi' },
-        { label: '下载', title: 'AionUi Releases', href: 'https://github.com/iOfficeAI/AionUi/releases' }
+        { label: 'GitHub', title: 'office-sec/AionUi', href: 'https://github.com/office-sec/AionUi' },
+        { label: '官网', title: 'aionui.com', href: 'https://aionui.com' },
+        { label: '下载', title: 'AionUi Releases', href: 'https://github.com/office-sec/AionUi/releases' }
       ],
       'fluent-read': [
         { label: 'GitHub', title: 'Bistutu/FluentRead', href: 'https://github.com/Bistutu/FluentRead' },
-        { label: '官网', title: 'FluentRead 项目主页', href: 'https://fluent.thinkstu.com' },
-        { label: '下载', title: '浏览器扩展安装', href: 'https://github.com/Bistutu/FluentRead/releases' }
-      ],
-      'async-image-api': [
-        { label: '服务地址', title: 'img.ciyuan.fast', href: 'https://img.ciyuan.fast' },
-        { label: '文生图', title: 'POST /v1/images/generations', href: 'https://img.ciyuan.fast/v1/images/generations' },
-        { label: '任务查询', title: 'GET /v1/image-jobs/:jobId', href: 'https://img.ciyuan.fast/v1/image-jobs/' }
+        { label: 'Chrome', title: 'Chrome Web Store', href: 'https://chromewebstore.google.com/detail/djnlaiohfaaifbibleebjggkghlmcpcj' },
+        { label: 'Firefox', title: 'Firefox Add-ons', href: 'https://addons.mozilla.org/zh-CN/firefox/addon/%E6%B5%81%E7%95%85%E9%98%85%E8%AF%BB/' }
       ],
       'langbot': [
         { label: '官网', title: 'langbot.app', href: 'https://langbot.app' },
-        { label: '下载', title: 'LangBot Releases', href: 'https://github.com/langbot-app/LangBot/releases' },
-        { label: 'GitHub', title: 'langbot-app/LangBot', href: 'https://github.com/langbot-app/LangBot' }
+        { label: 'GitHub', title: 'langbot-app/LangBot', href: 'https://github.com/langbot-app/LangBot' },
+        { label: '文档', title: 'docs.langbot.app', href: 'https://docs.langbot.app' }
       ],
       'astrbot': [
         { label: '官网', title: 'astrbot.app', href: 'https://astrbot.app' },
-        { label: '文档', title: 'docs.astrbot.app', href: 'https://docs.astrbot.app' },
-        { label: 'GitHub', title: 'astrbotdevs/astrbot', href: 'https://github.com/astrbotdevs/astrbot' }
+        { label: 'GitHub', title: 'astrbotdevs/astrbot', href: 'https://github.com/astrbotdevs/astrbot' },
+        { label: '文档', title: 'docs.astrbot.app', href: 'https://docs.astrbot.app' }
+      ],
+      'async-image-api': [
+        { label: '接口域名', title: 'img.ciyuan.fast', href: 'https://img.ciyuan.fast' },
+        { label: '控制台', title: '词元.fast', href: 'https://ciyuan.fast' },
+        { label: '说明', title: '可直接丢给 AI 助手', href: 'https://ciyuan.fast' }
       ]
     };
 
     const productScreenshots = {
+      'openclaw': [
+        { title: 'OpenClaw 图文步骤 1', detail: '打开安装向导，Windows 用户建议先进入 WSL2；Mac、Linux、WSL2 执行官方一键脚本。', src: 'images/openclaw-guide/image1.png', alt: 'OpenClaw 部署截图 1' },
+        { title: 'OpenClaw 图文步骤 2', detail: '选择 yes 继续安装。', src: 'images/openclaw-guide/image2.png', alt: 'OpenClaw 部署截图 2' },
+        { title: 'OpenClaw 图文步骤 3', detail: '选择快速开始。', src: 'images/openclaw-guide/image3.png', alt: 'OpenClaw 部署截图 3' },
+        { title: 'OpenClaw 图文步骤 4', detail: '选择自定义提供商，把词元.fast 当作兼容模型网关接入。', src: 'images/openclaw-guide/image4.png', alt: 'OpenClaw 部署截图 4' },
+        { title: 'OpenClaw 图文步骤 5', detail: '填写 URL：OpenClaw 这里填 https://ciyuan.fast，不要加 /v1。', src: 'images/openclaw-guide/image5.png', alt: 'OpenClaw 部署截图 5' },
+        { title: 'OpenClaw 图文步骤 6', detail: '粘贴词元.fast API Key。', src: 'images/openclaw-guide/image6.png', alt: 'OpenClaw 部署截图 6' },
+        { title: 'OpenClaw 图文步骤 7', detail: '选择 OpenAI 格式。', src: 'images/openclaw-guide/image7.png', alt: 'OpenClaw 部署截图 7' },
+        { title: 'OpenClaw 图文步骤 8', detail: '填写模型名称，例如 gpt-5.3-codex 或控制台可用模型。', src: 'images/openclaw-guide/image8.png', alt: 'OpenClaw 部署截图 8' },
+        { title: 'OpenClaw 图文步骤 9', detail: '连接 App 的步骤可以先跳过。', src: 'images/openclaw-guide/image9.png', alt: 'OpenClaw 部署截图 9' },
+        { title: 'OpenClaw 图文步骤 10', detail: '选择官方技能，不确定时先选推荐技能。', src: 'images/openclaw-guide/image10.png', alt: 'OpenClaw 部署截图 10' },
+        { title: 'OpenClaw 图文步骤 11', detail: '包管理器推荐 npm。', src: 'images/openclaw-guide/image11.png', alt: 'OpenClaw 部署截图 11' },
+        { title: 'OpenClaw 图文步骤 12', detail: '额外 API 能力不确定时先选 no。', src: 'images/openclaw-guide/image12.png', alt: 'OpenClaw 部署截图 12' },
+        { title: 'OpenClaw 图文步骤 13', detail: '如果已开通生图、笔记、语音等能力，可按需开启。', src: 'images/openclaw-guide/image13.png', alt: 'OpenClaw 部署截图 13' },
+        { title: 'OpenClaw 图文步骤 14', detail: '确认配置并 restart。', src: 'images/openclaw-guide/image14.png', alt: 'OpenClaw 部署截图 14' },
+        { title: 'OpenClaw 图文步骤 15', detail: '进入对话框后先测试一句简单消息。', src: 'images/openclaw-guide/image15.png', alt: 'OpenClaw 部署截图 15' },
+        { title: 'OpenClaw 图文步骤 16', detail: '检查 dashboard 是否能正常打开。', src: 'images/openclaw-guide/image16.png', alt: 'OpenClaw 部署截图 16' },
+        { title: 'OpenClaw 图文步骤 17', detail: '检查状态与网关连接。', src: 'images/openclaw-guide/image17.png', alt: 'OpenClaw 部署截图 17' },
+        { title: 'OpenClaw 图文步骤 18', detail: '查看技能和应用连接状态。', src: 'images/openclaw-guide/image18.png', alt: 'OpenClaw 部署截图 18' },
+        { title: 'OpenClaw 图文步骤 19', detail: '确认模型回复可用。', src: 'images/openclaw-guide/image19.png', alt: 'OpenClaw 部署截图 19' },
+        { title: 'OpenClaw 图文步骤 20', detail: '完成部署后按日常命令维护。', src: 'images/openclaw-guide/image20.png', alt: 'OpenClaw 部署截图 20' }
+      ],
       'claude-code': [
-        { title: '确认 Claude Code 能做什么', detail: '先看演示图，理解 Claude Code 是在终端里帮你读代码、改代码、跑命令的工具，不是普通聊天窗口。', src: 'images/claude-code/introduce-01.webp', alt: 'Claude Code 代码库理解演示' },
-        { title: '理解多文件编辑效果', detail: '这一步让你知道后面配置成功后，可以让 Claude Code 同时处理多个文件，适合真实项目。', src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
-        { title: 'Windows 填入词元.fast 配置', detail: '在 Windows 终端或系统环境变量里填入 Base URL、API Key 和模型名。API Key 就是第 1 步复制的密钥。', src: 'images/claude-code/windows_configure.webp', alt: 'Windows 环境变量配置' },
-        { title: 'macOS/Linux 填入词元.fast 配置', detail: 'macOS 或 Linux 用户在终端里设置环境变量。设置完成后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
+        { title: '确认 Claude Code 能做什么', detail: '先看演示图，理解 Claude Code 是在终端里帮你读代码、改代码、跑命令的工具。', src: 'images/claude-code/introduce-01.webp', alt: 'Claude Code 代码库理解演示' },
+        { title: '理解多文件编辑效果', detail: '配置成功后可让 Claude Code 同时处理多个文件，适合真实项目。', src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
+        { title: 'macOS/Linux 填入词元.fast 配置', detail: '设置环境变量后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
       ],
       'codex-cli': [
-        { title: '打开 Codex 中文教程对应界面', detail: '以中文教程为准：CLI 和客户端都是这个流程。先确认你要配置的是 Codex CLI 或 VS Code Codex 客户端，它们都会读取同一个 .codex 配置目录。', src: 'images/codex-zh/codex-client.png', alt: 'Codex 中文教程客户端界面' },
-        { title: '找到 .codex 配置目录', detail: '进入用户目录下的 .codex 文件夹。Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。后面两个文件都放在这里。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex 中文教程 .codex 目录' },
-        { title: '在 auth.json 写入 API Key', detail: '按中文教程流程，在 auth.json 写入词元.fast API Key。不要再用其他截图或旧教程里的 Key，客户端和 CLI 都会读取这个文件。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex auth.json 配置位置' },
-        { title: '在 config.toml 写入 provider 和模型', detail: '继续在 config.toml 写 provider 和模型。model 使用 gpt-5.5，provider 指向词元.fast。保存后重启 CLI 或客户端。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex config.toml 配置位置' }
-      ],
-      'factory-droid-cli': [
-        { title: '认识 Droid 的命令行界面', detail: '先看示例图，确认后续安装成功后会在终端里和 Droid 交互。', src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
-        { title: '打开终端准备安装', detail: 'Windows 用户先打开终端窗口。不要在浏览器地址栏里输入命令，命令都要在终端里执行。', src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
-        { title: '安装 Droid CLI', detail: '按照截图里的安装命令安装 Droid。安装完成后可以输入版本命令确认是否安装成功。', src: 'images/factory-droid-cli/windows_install_droid.webp', alt: 'Windows 安装 Droid' },
-        { title: '填入词元.fast 地址和密钥', detail: '配置时把 base_url 填成 https://ciyuan.fast，把 API Key 填成第 1 步复制的密钥。', src: 'images/factory-droid-cli/factory_cli_setup_windows.webp', alt: 'Factory CLI Windows 配置' }
-      ],
-      'cc-switch': [
-        { title: '确认 CC Switch 导入弹窗', detail: '打开导入弹窗后，检查 Provider 名称、Base URL 和模型是否正确，再确认保存。', src: 'images/cc-switch/fill_dialog.webp', alt: 'CC Switch 一键填入 Provider 弹窗' }
+        { title: '打开 Codex 中文教程对应界面', detail: '以中文教程为准：CLI 和客户端都是这个流程。', src: 'images/codex-zh/codex-client.png', alt: 'Codex 中文教程客户端界面' },
+        { title: '找到 .codex 配置目录', detail: 'Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex 中文教程 .codex 目录' },
+        { title: '在 auth.json 写入 API Key', detail: '按中文教程流程，在 auth.json 写入词元.fast API Key。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex auth.json 配置位置' },
+        { title: '在 config.toml 写入 provider 和模型', detail: 'model 使用 gpt-5.5，provider 指向词元.fast。保存后重启 CLI 或客户端。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex config.toml 配置位置' }
       ],
       'cherry-studio': [
-        { title: '准备 API Key', detail: '所有 Cherry Studio 里的 API 密钥都使用第 1 步从词元.fast 复制的密钥，不要使用截图里的旧站点密钥。', src: 'images/ciyuan-api-key.png', alt: '复制词元.fast API Key' },
-        { title: '新增模型供应商', detail: '进入 Cherry Studio 的供应商设置，新增 OpenAI 兼容或 NewAPI 类型供应商，名称建议写词元.fast。', src: 'images/cherry-studio/add_provider.webp', alt: '添加 Cherry Studio 供应商' },
-        { title: '添加可用模型', detail: '把词元.fast 控制台里可用的模型 ID 填到模型列表。模型名要完全一致，大小写和符号都不要改。', src: 'images/cherry-studio/add_models.webp', alt: '添加模型' },
-        { title: '回到聊天页切换模型', detail: '保存供应商后回到聊天页面，在模型下拉框里选择刚刚添加的词元.fast 模型，然后发送一句话测试。', src: 'images/cherry-studio/switch_model.webp', alt: '切换模型' }
-      ],
-      'aionui': [
-        { title: '确认正在配置 AionUi', detail: '打开 AionUi 后先确认应用界面，后续要进入设置页面添加模型供应商。', src: 'images/aionuilogo.webp', alt: 'AionUi 标识' },
-        { title: '准备 API Key', detail: 'API Key 统一使用第 1 步从词元.fast 复制的密钥。复制后不要截图公开，也不要发给别人。', src: 'images/ciyuan-api-key.png', alt: '复制词元.fast API Key' },
-        { title: '打开模型设置', detail: '在 AionUi 中进入模型或 Provider 设置页面，准备新增一个 OpenAI 兼容服务。', src: 'images/add-model-1.webp', alt: '打开模型设置' },
-        { title: '添加 NewAPI 提供商', detail: '供应商类型选择 NewAPI 或 OpenAI 兼容，API 地址填 https://ciyuan.fast/v1，密钥填第 1 步复制的 Key。', src: 'images/newapi_provider.webp', alt: '添加 NewAPI 提供商' }
+        { title: '复制 API Key', detail: '在词元.fast 创建并复制 API Key。', src: 'images/cherry-studio/copy_api_key.webp', alt: '复制 API Key' },
+        { title: '添加供应商', detail: '在 Cherry Studio 新增 OpenAI 兼容或 NewAPI 供应商。', src: 'images/cherry-studio/add_provider.webp', alt: '添加供应商' },
+        { title: '添加模型', detail: '填写模型 ID 后保存。', src: 'images/cherry-studio/add_models.webp', alt: '添加模型' },
+        { title: '切换模型', detail: '回到聊天界面切换到新模型。', src: 'images/cherry-studio/switch_model.webp', alt: '切换模型' }
       ],
       'fluent-read': [
-        { title: '打开流畅阅读配置入口', detail: '安装插件后进入配置页面。如果出现添加提示，先确认它要填的是 NewAPI 或 OpenAI 兼容配置。', src: 'images/fluent-read/hint.webp', alt: '流畅阅读添加提示' },
-        { title: '确认导入信息', detail: '检查接口地址、模型和访问令牌。访问令牌就是第 1 步复制的词元.fast API Key。', src: 'images/fluent-read/confirm.webp', alt: '确认导入配置' },
-        { title: '确认配置启用', detail: '配置保存后，确认 NewAPI 配置已经启用，再打开网页测试翻译。', src: 'images/fluent-read/fluentread.webp', alt: '配置结果' },
-        { title: '手动填写配置', detail: '如果不能自动导入，就手动填写接口地址 https://ciyuan.fast、访问令牌和模型名称。', src: 'images/fluent-read/configuration.webp', alt: '手动配置 FluentRead' }
+        { title: '控制台导入提示', detail: '安装插件后打开控制台令牌页，可用一键导入提示。', src: 'images/fluent-read/hint.webp', alt: '添加提示' },
+        { title: '确认导入', detail: '检查模型、Key、接口地址后确认。', src: 'images/fluent-read/confirm.webp', alt: '确认导入' },
+        { title: '配置结果', detail: '确认 NewAPI 配置已启用。', src: 'images/fluent-read/fluentread.webp', alt: '配置结果' },
+        { title: '手动配置', detail: '也可以在插件设置里手动填写。', src: 'images/fluent-read/configuration.webp', alt: '手动配置' }
       ],
       'langbot': [
-        { title: '准备 API Key', detail: 'LangBot 需要 API Key 才能调用模型。这里统一使用第 1 步从词元.fast 创建并复制的密钥。', src: 'images/ciyuan-api-key.png', alt: '获取 API Key' },
-        { title: '添加 NewAPI 模型', detail: '进入 LangBot 模型设置，选择 NewAPI 或 OpenAI 兼容供应商，填写 https://ciyuan.fast/v1 和 API Key。', src: 'images/langbot/add_newapi_model.webp', alt: '添加 NewAPI 模型' },
-        { title: '在流水线里选择模型', detail: '模型添加成功后，还要在流水线中选择它。只添加模型但不绑定流水线，机器人不会使用它。', src: 'images/langbot/select_model.webp', alt: '选择模型' },
-        { title: '发送测试消息', detail: '进入对话调试，发送一句简单消息。如果能回复，说明词元.fast、模型和流水线都配置成功。', src: 'images/langbot/debug_chat.webp', alt: '对话调试' }
+        { title: '获取 API Key', detail: '从词元.fast 控制台复制 API Key。', src: 'images/langbot/get_api_key.webp', alt: '获取 API key' },
+        { title: '添加 NewAPI 模型', detail: '在 LangBot 中新增 NewAPI 供应商。', src: 'images/langbot/add_newapi_model.webp', alt: '添加 NewAPI 模型' },
+        { title: '选择模型', detail: '在流水线中选择模型。', src: 'images/langbot/select_model.webp', alt: '选择模型' },
+        { title: '对话调试', detail: '通过对话调试或绑定机器人测试。', src: 'images/langbot/debug_chat.webp', alt: '对话调试' }
       ],
       'astrbot': [
-        { title: '准备 API Key', detail: 'AstrBot 也统一使用第 1 步创建的词元.fast API Key。不要把密钥发到群里或提交到仓库。', src: 'images/ciyuan-api-key.png', alt: '创建 API Key' },
-        { title: '复制 API Key', detail: '复制密钥后先放在本地临时记事本或密码管理器里，等 AstrBot 提示填写 API Key 时再粘贴。', src: 'images/ciyuan-api-key.png', alt: '复制 API Key' },
-        { title: '配置 OpenAI 提供商', detail: '在 AstrBot 模型提供商里选择 OpenAI，Base URL 填 https://ciyuan.fast/v1，API Key 填词元.fast 密钥。', src: 'images/astrbot/image-2.webp', alt: '配置 AstrBot OpenAI 提供商' },
-        { title: '应用到默认聊天模型', detail: '保存提供商后，还要到配置文件或默认模型设置里选中它，否则机器人仍然可能使用旧模型。', src: 'images/astrbot/image-3.webp', alt: '应用模型提供商' }
+        { title: '创建 API Key', detail: '在词元.fast 控制台创建密钥。', src: 'images/astrbot/image.webp', alt: '创建 API Key' },
+        { title: '复制 API Key', detail: '复制生成的密钥。', src: 'images/astrbot/image-1.webp', alt: '复制 API Key' },
+        { title: '配置提供商', detail: '在 AstrBot 中新增 OpenAI 提供商并填写 Base URL。', src: 'images/astrbot/image-2.webp', alt: 'AstrBot 提供商配置' },
+        { title: '应用模型', detail: '在配置文件中切换默认聊天模型。', src: 'images/astrbot/image-3.webp', alt: '应用模型' }
       ]
     };
 
     const products = [
       {
         id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
-        summary: 'OpenClaw 图文部署详细指南：按 Word 文档顺序从安装、模型配置、技能选择到验证命令一步步完成。',
+        summary: 'OpenClaw 图文部署详细指南：按上传 Word 文档从安装、模型配置、技能选择、安全审计到附录完整整理。',
         body: `
           <h2>OpenClaw部署详细指南（图文版）</h2>
-          <p class="lead">项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。这部分按照你提供的 Word 文档内容整理，只优化排版。特别注意：OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 <code>https://ciyuan.fast</code>，不是 <code>https://ciyuan.fast/v1</code>。</p>
+          <p class="lead">项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。这部分按你上传的 Word 文档完整整理，保持当前卡片式排版和图文步骤。注意：你上传的文档写的是 <code>https://ciyuan.fast/v1</code>，但 OpenClaw 安装向导这里应填 <code>https://ciyuan.fast</code>，不要加 <code>/v1</code>。</p>
           <h3>一、推荐安装方式：官方一键脚本</h3>
-          <p>在 Windows 系统上，建议在 WSL2 下运行 OpenClaw；Mac、Linux、WSL2 用户使用官方一键脚本最省事，脚本会自动检测环境、安装 Node.js（如果缺失）并启动新手引导流程。</p>
-          <pre><code># Mac / Linux / WSL2
-curl -fsSL https://openclaw.ai/install.sh | bash</code></pre>
-          <p>如果 Mac 出现 <code>Homebrew not found</code>，先安装 Homebrew 并配置环境变量，再继续安装 OpenClaw。</p>
-          <pre><code># 安装 Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# 配置环境变量
+          <p>Windows 系统建议在 WSL2 下运行 OpenClaw。Mac、Linux、WSL2 用户使用官方一键脚本最省事，脚本会自动检测环境、安装 Node.js（如果缺失）并启动初始配置引导。</p><pre><code># Mac / Linux / WSL2
+curl -fsSL https://openclaw.ai/install.sh | bash</code></pre><p>如果 Mac 出现 <code>Homebrew not found</code>，先安装 Homebrew 并配置环境变量。</p><pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/admin/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# 查看 brew
-brew --version</code></pre>
-          <p>Windows PowerShell 用户可以打开开始菜单，搜索 PowerShell，选择 Windows PowerShell 后执行：</p>
-          <pre><code>iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre>
-          <p>安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
+brew --version</code></pre><p>Windows PowerShell 用户执行：</p><pre><code>iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre><p>安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
           <h3>二、安装配置细节</h3>
-          <ol><li>开始安装后，遇到确认项选择 yes。</li><li>选择快速开始。</li><li>选择模型厂商时选择自定义提供商（ciyuan.fast）。</li><li>填入 URL：<strong>https://ciyuan.fast</strong>，不要加 <code>/v1</code>。</li><li>填入你的 API Key。</li><li>选择 OpenAI 格式。</li><li>填入模型名称，例如 <code>gpt-5.5</code>。</li><li>后面两个字段相当于代号，可以按向导随便填。</li><li>选择连接 App 的步骤可以先跳过。</li><li>进入技能选择界面后，如果不知道选什么，可以先选择文档里推荐的官方技能。</li><li>后续生图、笔记、语音对话等能力，如果开通了对应 API 可以选 yes；不确定可以先选 no。</li><li>最后选择 restart，进入对话框后测试你的私人 AI。</li></ol>
+          <ol><li>开始安装后选择 <strong>yes</strong>。</li><li>选择快速开始。</li><li>选择模型厂商：自定义提供商（ciyuan.fast）。</li><li>填入 URL：<strong>https://ciyuan.fast</strong>。OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 https://ciyuan.fast，不是 https://ciyuan.fast/v1。</li><li>填入你的 API Key。</li><li>选择 OpenAI 格式。</li><li>填入模型名称，例如 <code>gpt-5.3-codex</code>；如按 Codex 教程则可用 <code>gpt-5.5</code>。</li><li>后面两个字段相当于代号，可以按向导提示填写。</li><li>连接 App 的步骤可以先跳过。</li><li>进入技能选择界面，不知道选什么时先按图选择推荐项。</li><li>包管理器推荐 npm。</li><li>生图、笔记、语音对话等额外 API，不确定时先全部选 no；开通后再选 yes。</li><li>最后选择 restart，进入对话框后先发一句简单消息测试。</li></ol>
           <h3>三、部署后的验证与日常命令</h3>
           <pre><code>openclaw doctor         # 检查配置问题
 openclaw status         # 网关状态
-openclaw dashboard      # 打开浏览器用户界面</code></pre>
-          <p>常用指令：打开可视化面板 <code>openclaw dashboard</code>，重新配置 <code>openclaw onboard</code>，重启 <code>openclaw gateway restart</code>，升级 <code>openclaw update</code>，检查网关状态 <code>openclaw status</code>，诊断配置健康度 <code>openclaw doctor</code>。</p>
-          <h3>四、安全提醒</h3>
-          <p>定期运行安全检查，尤其是在更改配置或暴露网络接口后。</p>
-          <pre><code>openclaw security audit
+openclaw dashboard      # 打开浏览器用户界面</code></pre><p>常用指令：<code>openclaw dashboard</code> 打开可视化面板，<code>openclaw onboard</code> 重新配置，<code>openclaw gateway restart</code> 重启，<code>openclaw update</code> 升级，<code>openclaw status</code> 检查状态，<code>openclaw doctor</code> 诊断配置健康度。</p>
+          <h3>四、安全：先最小权限，再逐步扩大</h3>
+          <p>定期运行安全审计，尤其是在更改配置或暴露网络接口后。它会标记网关身份验证暴露、浏览器控制暴露、提升的允许列表、文件系统权限等常见漏洞。</p><pre><code>openclaw security audit
 openclaw security audit --deep
 openclaw security audit --fix
-openclaw security audit --json</code></pre>
-          <p>特殊命令：赋予 OpenClaw 全部权限是高危操作，执行前必须确认风险。</p>
-          <pre><code>openclaw config set tools.profile full
+openclaw security audit --json</code></pre><p>OpenClaw 既是一款产品，也是一项实验。不存在“绝对安全”的设置。你要先想清楚：谁可以和机器人对话？机器人被允许在哪里行动？机器人可以触摸哪些东西？</p><p>高危命令：赋予 OpenClaw 全部权限，慎重执行。</p><pre><code>openclaw config set tools.profile full
 openclaw gateway restart</code></pre>
-          <h3>五、附录：技能理解</h3>
-          <p><strong>mcporter</strong> 是 MCP 桥接器，可以把 Python 脚本或特定工具封装成 OpenClaw 能调用的能力。<strong>peekaboo</strong> 是 Mac 视觉自动化工具，可以截图、识别 UI 并模拟点击。<strong>clawhub</strong> 是官方技能包中心。<strong>model-usage</strong> 可以监控模型 API 的 Token 消耗和账单。</p>
-          <p><strong>1password</strong> 用于安全提取密码和 API Key。<strong>himalaya</strong> 是终端邮件客户端。<strong>imsg / wacli</strong> 可以把 Agent 绑定到 iMessage 或 WhatsApp。<strong>obsidian / bear-notes / apple-notes</strong> 适合笔记和知识库工作流。</p>
-          <h3>六、附录：组成 OpenClaw 大脑的脑区</h3>
-          <p><strong>boot-md</strong> 类似启动脚本，每次网关启动时读取并执行 BOOT.md。<strong>bootstrap-extra-files</strong> 用于上下文预加载，可以把项目代码或日志注入初始上下文。<strong>command-logger</strong> 用于记录 Agent 执行过的 Shell 命令，方便排查问题。<strong>session-memory</strong> 用于把短期会话记忆沉淀为长期记忆。</p>
+          <h3>五、其他扩展</h3>
+          <ul><li><strong>Claw 与飞书集成</strong>：可在连接 App 阶段或 dashboard 中补充飞书凭证。</li><li><strong>自定义 skill</strong>：把你的脚本、工具、业务流程包装成 OpenClaw 可调用能力。</li></ul>
+          <h3>附录 1：技能详情</h3>
+          <p><strong>核心扩展与视觉自动化</strong>：<code>mcporter</code> 是 MCP 桥接器；<code>peekaboo</code> 是 Mac 视觉自动化工具；<code>clawhub</code> 是官方技能包中心；<code>model-usage</code> 用于监控 Token 和账单。</p><p><strong>凭证与系统操作</strong>：<code>1password</code> 安全提取密码和 API Key；<code>camsnap</code> 调用 Mac 摄像头。</p><p><strong>通讯与信息处理</strong>：<code>himalaya</code> 是终端邮件客户端；<code>imsg</code> / <code>wacli</code> 可绑定 iMessage 或 WhatsApp。</p><p><strong>效率笔记与日程监控</strong>：<code>obsidian</code>、<code>bear-notes</code>、<code>apple-notes</code> 读写笔记；<code>things-mac</code>、<code>apple-reminders</code> 管理任务；<code>blogwatcher</code> 监控博客和 RSS。</p><p><strong>多媒体与特定领域</strong>：<code>video-frames</code> 视频抽帧；<code>nano-pdf</code> 解析 PDF；<code>goplaces</code> 接 Google Places；<code>openai-whisper</code> 语音转文字；<code>gemini</code> 处理多模态或复杂推理。</p>
+          <h3>附录 2：可能需要接入的其他 API Key</h3>
+          <table><tr><th>能力</th><th>环境变量</th><th>场景</th></tr><tr><td>goplaces</td><td><code>GOOGLE_PLACES_API_KEY</code></td><td>地理位置、店铺信息、评分和路线规划。</td></tr><tr><td>nano-banana-pro</td><td><code>GEMINI_API_KEY</code></td><td>图像生成与编辑。</td></tr><tr><td>notion</td><td><code>NOTION_API_KEY</code></td><td>读写 Notion 工作区。</td></tr><tr><td>openai-image-gen</td><td><code>OPENAI_API_KEY</code></td><td>图像生成。</td></tr><tr><td>openai-whisper-api</td><td><code>OPENAI_API_KEY</code></td><td>语音识别。</td></tr><tr><td>sag</td><td><code>ELEVENLABS_API_KEY</code></td><td>拟真人声合成。</td></tr></table>
+          <h3>附录 3：组成完整 Claw 大脑的脑区</h3>
+          <p><strong>boot-md</strong> 类似启动脚本，每次网关启动读取并执行 <code>BOOT.md</code>。</p><p><strong>bootstrap-extra-files</strong> 用于上下文预加载，把项目代码或日志注入初始上下文。</p><p><strong>command-logger</strong> 集中记录 Agent 执行过的 Shell 命令，方便追溯。</p><p><strong>session-memory</strong> 把短期会话记忆沉淀为长期记忆。</p>
         `
       },
       {
         id: 'claude-code', category: 'coding', title: 'Claude Code', subtitle: 'Anthropic 终端编程助手', tags: ['终端', '代码理解', 'IDE'],
-        summary: '在终端里理解代码库、编辑多文件、跑测试并协助提交。适合把 Claude Code 统一接到词元.fast。',
+        summary: '完整整理 Claude Code 教程：覆盖特性、Windows、macOS、Linux 安装与词元.fast 配置。',
         body: `
-          <h2>Claude Code - 终端编程助手</h2>
-          <p class="lead">Claude Code 强在代码库理解、多文件编辑和命令行工作流。使用词元.fast 时，重点是让 CLI 读取正确的 Base URL、API Key 与模型配置。</p>
-          <h3>适用场景</h3><ul><li>新项目快速读代码、梳理模块和依赖。</li><li>复杂修改时让代理跨文件编辑并运行测试。</li><li>与 VS Code、JetBrains 或 Git 工作流配合。</li></ul>
-          <h3>通用接入</h3>${commonSetup}
-          <h3>Shell 环境变量示例</h3>
-          <pre><code>export ANTHROPIC_BASE_URL="https://ciyuan.fast"
-export ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"
-export ANTHROPIC_MODEL="claude-sonnet-4-5"</code></pre>
-          <h3>Windows PowerShell 示例</h3>
-          <pre><code>$env:ANTHROPIC_BASE_URL="https://ciyuan.fast"
-$env:ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"
-$env:ANTHROPIC_MODEL="claude-sonnet-4-5"</code></pre>
-          <h3>使用建议</h3><ol><li>先用只读问题验证模型连通性。</li><li>再授权文件编辑和命令执行。</li><li>每次大改后让工具跑测试，再人工复核 diff。</li></ol>
+          <h2>Claude Code</h2>
+          <p class="lead">直接在终端中释放 Claude 的强大能力：搜索百万行代码库、理解项目结构、编辑多文件并运行测试。</p>
+          <h3>核心特性</h3>
+          <table><tr><th>功能分类</th><th>特性</th></tr><tr><td>代码理解</td><td>深度分析代码库、依赖和项目结构，快速生成概览。</td></tr><tr><td>代码编辑</td><td>支持多文件协同编辑，按项目模式生成可用代码。</td></tr><tr><td>集成能力</td><td>终端运行，并可集成 VS Code 与 JetBrains IDE。</td></tr><tr><td>安全与灵活</td><td>改动需要授权，支持自定义配置和既有工具链。</td></tr></table>
+          <h3>AI 模型配置方法</h3>
+          <p>Claude Code 对接词元.fast 的关键是设置兼容接口地址和 API Key。当前项目统一使用 <code>https://ciyuan.fast/v1</code>。</p><pre><code>ANTHROPIC_BASE_URL=https://ciyuan.fast
+ANTHROPIC_AUTH_TOKEN=你的词元.fast API Key</code></pre>
+          <h3>Windows 端图文指引</h3>
+          <ol><li>安装 Node.js。</li><li>安装 Git Bash。</li><li>安装 Claude Code。</li><li>设置环境变量。</li><li>在项目目录启动 Claude Code。</li></ol>
+          <h3>macOS 端图文指引</h3>
+          <ol><li>安装 Claude Code CLI。</li><li>设置环境变量。</li><li>重新打开终端后启动。</li><li>遇到权限或 PATH 问题时先检查 Node/npm 环境。</li></ol>
+          <h3>Linux 端图文指引</h3>
+          <ol><li>安装 Node.js / npm。</li><li>安装 Claude Code。</li><li>设置环境变量。</li><li>在项目目录启动并测试。</li></ol>
         `
       },
       {
-        id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI / 客户端', subtitle: 'CLI 和客户端同一套配置流程', tags: ['CLI', '客户端', 'gpt-5.5'],
-        summary: '以知乎详细教程思路重写：auth.json 放密钥，config.toml 放 provider 和模型。CLI 和客户端都是这个流程，模型统一用 gpt-5.5。',
+        id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['Codex', 'auth.json', 'config.toml'],
+        summary: '按指定知乎教程整理：Codex CLI 和客户端共用 .codex、auth.json、config.toml，模型使用 gpt-5.5。',
         body: `
-          <h2>OpenAI Codex CLI / 客户端接入词元.fast</h2>
-          <p class="lead">这版以你提供的知乎 Codex 详细教程为主重写。核心原则很简单：CLI 和客户端都是这个流程，都读取用户目录下的 <code>.codex</code> 配置；<code>auth.json</code> 保存 API Key，<code>config.toml</code> 保存 provider、base_url 和模型。模型使用 <code>gpt-5.5</code>。</p>
-          <h3>第一步：创建 .codex 目录</h3>
-          <p>Windows 一般是 <code>C:\Users\你的用户名\.codex</code>，macOS/Linux 一般是 <code>~/.codex</code>。如果没有这个文件夹，就手动创建一个。</p>
-          <h3>第二步：写 auth.json</h3>
-          <p>在 <code>.codex</code> 目录中新建 <code>auth.json</code>，把词元.fast API Key 写进去。</p>
+          <h2>OpenAI Codex CLI / Codex 客户端</h2>
+          <p class="lead">这部分按你指定的知乎教程重写：Codex CLI 和 VS Code Codex 客户端都是这个流程，核心是用户目录下的 <code>.codex</code> 文件夹，共用 <code>auth.json</code> 和 <code>config.toml</code>。默认模型按来源写 <code>gpt-5.5</code>。</p>
+          <h3>项目介绍</h3>
+          <p>Codex CLI 是 OpenAI 的终端编码代理，可在本地项目中读代码、改文件、生成补丁并运行命令；Codex 客户端通过 VS Code 扩展提供图形化入口。两者接入词元.fast 时，统一检查 <code>.codex</code> 目录。</p>
+          <h3>安装 Codex CLI</h3>
+          <pre><code>npm install -g @openai/codex
+codex --version</code></pre><p>Windows 建议在 WSL2 中安装和运行；macOS / Linux 直接在终端执行。若没有 Node.js，请先安装 Node.js LTS。</p>
+          <h3>VS Code Codex 客户端</h3>
+          <ol><li>打开 VS Code 扩展市场，搜索 Codex / OpenAI Codex。</li><li>安装后打开 Codex 面板。</li><li>客户端读取的仍是用户目录下 <code>.codex</code> 配置；CLI 和客户端都是这个流程。</li></ol>
+          <h3>找到 .codex 配置目录</h3>
+          <p>Windows 通常是 <code>C:\Users\你的用户名\.codex</code>；macOS / Linux 通常是 <code>~/.codex</code>。如果目录不存在，先运行一次 <code>codex</code> 或手动创建。</p>
+          <h3>auth.json：写入 API Key</h3>
           <pre><code>{
   "OPENAI_API_KEY": "你的词元.fast API Key"
-}</code></pre>
-          <h3>第三步：写 config.toml</h3>
-          <p>在同一个 <code>.codex</code> 目录中新建或编辑 <code>config.toml</code>。模型固定写 <code>gpt-5.5</code>，provider 指向词元.fast。</p>
+}</code></pre><p>把词元.fast 控制台创建的密钥写入 <code>auth.json</code>。密钥只放这一处，避免多个文件互相覆盖导致排错困难。</p>
+          <h3>config.toml：写入模型和 Provider</h3>
           <pre><code>model = "gpt-5.5"
-model_provider = "ciyuan"
+model_provider = "ciyuan-fast"
 
-[model_providers.ciyuan]
+[model_providers.ciyuan-fast]
 name = "词元.fast"
 base_url = "https://ciyuan.fast/v1"
-env_key = "OPENAI_API_KEY"
-wire_api = "responses"</code></pre>
-          <h3>第四步：CLI 和客户端都重启</h3>
-          <p>保存两个文件后，关闭并重新打开 Codex CLI 或 VS Code Codex 客户端。因为 CLI 和客户端都是这个流程，所以不用分别填两套 Key。</p>
-          <h3>排错</h3><ul><li>报 401：检查 <code>auth.json</code> 里的 API Key 是否复制完整。</li><li>报模型不存在：检查 <code>gpt-5.5</code> 是否在词元.fast 控制台可用。</li><li>客户端没生效：关闭 VS Code/Codex 客户端后重新打开。</li></ul>
+wire_api = "responses"
+env_key = "OPENAI_API_KEY"</code></pre><p>如果你使用的 Codex 版本要求 Chat Completions，可把 <code>wire_api</code> 按版本提示调整；但先按教程使用 Responses 流程验证。</p>
+          <h3>开始使用</h3>
+          <pre><code>cd /path/to/your/project
+codex
+
+# 进入后可切换模型
+/model</code></pre><p>启动后先问一句简单问题，再让它读取当前目录文件。确认模型、权限、沙箱策略都正常后，再交给它做真实修改。</p>
+          <h3>常见问题</h3>
+          <ul><li><strong>401</strong>：检查 <code>auth.json</code> 里的 API Key 是否复制完整。</li><li><strong>模型不存在</strong>：确认 <code>gpt-5.5</code> 在词元.fast 控制台可用；不可用时换成你实际开通的模型 ID。</li><li><strong>客户端和 CLI 表现不一致</strong>：优先检查它们是否读取同一个用户目录下的 <code>.codex</code>。</li><li><strong>旧教程脚本残留</strong>：不要再使用旧品牌脚本地址和 endpoint；统一用 <code>https://ciyuan.fast/v1</code>。</li></ul>
         `
       },
       {
-        id: 'factory-droid-cli', category: 'coding', title: 'Factory Droid CLI', subtitle: 'AI 软件工程助手', tags: ['规划', '测试', '自动化'],
-        summary: '从需求分析、实现到测试的工程型 CLI，可通过词元.fast 调用兼容模型。',
+        id: 'factory-droid-cli', category: 'coding', title: 'Factory Droid CLI', subtitle: 'Factory 终端 AI 编程助手', tags: ['Droid', '工程代理', 'CLI'],
+        summary: '完整整理 Factory Droid CLI 教程，保留安装、配置文件、Windows 与 macOS/Linux 指引。',
         body: `
-          <h2>Factory Droid CLI - AI 软件工程助手</h2>
-          <p class="lead">Factory Droid CLI 适合把开发任务拆成计划、实现和验证步骤。接入词元.fast 后，可以把模型供应统一到同一个 API 网关。</p>
-          <h3>工作流定位</h3><ul><li>根据需求生成实现计划。</li><li>协助编辑代码、补测试、解释失败日志。</li><li>适合团队用同一套中转站管理额度和模型。</li></ul>
-          <h3>配置词元.fast</h3>${commonSetup}
-          <pre><code>base_url = "https://ciyuan.fast"
-api_key = "你的词元.fast API Key"
-model = "选择控制台中的模型 ID"</code></pre>
-          <h3>落地建议</h3><ol><li>先用小任务验证模型和上下文表现。</li><li>把项目约束写入 README 或 AGENTS.md。</li><li>每次让 CLI 改代码后检查 git diff。</li></ol>
+          <h2>Factory Droid CLI</h2>
+          <p class="lead">Droid CLI 是 Factory AI 的命令行软件工程代理，支持从规划、实现到测试的自动化开发流程。</p>
+          <h3>效果演示</h3>
+          <figure class="shot inline-shot"><img src="images/factory-droid-cli/droid_example.webp" alt="Droid CLI 示例" loading="lazy" data-full="images/factory-droid-cli/droid_example.webp"><figcaption>Droid CLI 示例</figcaption></figure>
+          <h3>特性</h3>
+          <table><tr><th>类别</th><th>能力</th></tr><tr><td>快速上手</td><td>在项目目录启动 <code>droid</code> 交互会话。</td></tr><tr><td>端到端开发</td><td>从规划到实现再到测试，保留人类审批。</td></tr><tr><td>代码库理解</td><td>结合代码、文档和 Issue 上下文给出更准确改动。</td></tr><tr><td>工程系统集成</td><td>可与 Jira、Notion、Slack 等团队工具协作。</td></tr></table>
+          <h3>Windows 端图文指引</h3>
+          <pre><code>irm https://app.factory.ai/cli/windows | iex</code></pre><p>安装后按图修改配置文件，base_url 设置为 <code>https://ciyuan.fast/v1</code>，API Key 使用词元.fast 控制台令牌。</p><pre><code>droid</code></pre>
+          <h3>macOS / Linux 端图文指引</h3>
+          <pre><code>curl -fsSL https://app.factory.ai/cli/install.sh | sh
+droid</code></pre><p>如需第三方 API，修改配置文件并填入词元.fast 的 Base URL 与密钥。</p>
+          <h3>常见问题</h3>
+          <ul><li>Windows 权限问题：以管理员身份运行 PowerShell。</li><li>路径问题：确认 CLI 安装目录在 PATH 中。</li><li>模型不可用：检查 base_url、API Key 和模型 ID。</li></ul>
         `
       },
       {
-        id: 'cc-switch', category: 'coding', title: 'CC Switch', subtitle: 'AI CLI 统一管理工具', tags: ['配置管理', 'Deep Link', 'MCP'],
-        summary: '统一管理 Claude Code、Codex、Gemini CLI 的 Provider、MCP 与提示词配置。',
+        id: 'cc-switch', category: 'coding', title: 'CC Switch', subtitle: 'AI CLI 统一管理工具', tags: ['Provider', 'MCP', 'Prompts'],
+        summary: '完整整理 CC Switch 教程，用于统一管理 Claude Code、Codex、Gemini CLI 配置。',
         body: `
           <h2>CC Switch - AI CLI 统一管理工具</h2>
-          <p class="lead">CC Switch 的价值是减少多 CLI 配置混乱。把词元.fast 设成一个 Provider 后，可以在 Claude Code、Codex、Gemini CLI 等工具之间复用。</p>
-          <h3>适合谁</h3><ul><li>同时使用多个终端 AI 编程工具的人。</li><li>需要管理多个 Provider、模型、MCP Server 的团队。</li><li>希望快速切换系统提示词和工作区配置的人。</li></ul>
-          <h3>Provider 配置</h3>${commonSetup}
-          <pre><code>{
-  "name": "词元.fast",
-  "baseUrl": "https://ciyuan.fast/v1",
-  "apiKey": "你的词元.fast API Key",
-  "models": ["gpt-4.1", "claude-sonnet-4-5"]
-}</code></pre>
-          <h3>使用建议</h3><ol><li>把 Provider 名称统一写成 <code>ciyuan-fast</code> 或 <code>词元.fast</code>。</li><li>MCP Server 单独管理，避免和模型网关配置混在一起。</li><li>切换后用一次简单对话确认当前 CLI 读到了新配置。</li></ol>
+          <p class="lead">CC Switch 用来统一管理 Claude Code、Codex、Gemini CLI 的 Provider 配置、MCP 服务器与系统提示词。</p>
+          <h3>核心特性</h3>
+          <table><tr><th>模块</th><th>说明</th></tr><tr><td>Provider 管理</td><td>统一维护不同 AI CLI 的模型供应商。</td></tr><tr><td>MCP 服务器管理</td><td>集中管理 MCP Server，减少重复配置。</td></tr><tr><td>Prompts 管理</td><td>维护系统提示词和工作区模板。</td></tr><tr><td>多平台支持</td><td>覆盖 macOS、Windows、Linux 和 Web 版本。</td></tr></table>
+          <h3>词元.fast 接入方法</h3>
+          <ol><li>打开 CC Switch。</li><li>新增 Provider。</li><li>名称填写 <code>词元.fast</code>。</li><li>Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 填写词元.fast 控制台令牌。</li><li>按需填写模型列表并保存。</li></ol>
+          <h3>安装方式</h3>
+          <pre><code># macOS 示例
+brew install cc-switch
+
+# Windows / Linux 可从 Releases 下载</code></pre>
+          <h3>使用建议</h3>
+          <ul><li>Provider 名称统一，避免不同工具里写多个别名。</li><li>MCP Server 单独管理，不要混进模型网关配置。</li><li>每次切换后用简单对话确认当前 CLI 读到了新配置。</li></ul>
         `
       },
       {
         id: 'cherry-studio', category: 'desktop', title: 'Cherry Studio', subtitle: '桌面 AI 客户端', tags: ['桌面端', '多助手', 'NewAPI'],
-        summary: '面向日常对话、知识处理和多模型切换的桌面客户端。可手动添加词元.fast 作为 OpenAI 兼容供应商。',
+        summary: '完整整理 Cherry Studio 教程，包含模型接入、图文指引和画图模型配置。',
         body: `
           <h2>Cherry Studio - 桌面 AI 客户端</h2>
-          <p class="lead">Cherry Studio 内置多种助手和模型管理能力，适合把词元.fast 配成统一的桌面 AI 入口。</p>
-          <h3>接入步骤</h3>${commonSetup}
-          <ol><li>进入设置里的模型服务或供应商管理。</li><li>新增 OpenAI 兼容或 NewAPI 类型供应商。</li><li>填写 API 地址 <code>https://ciyuan.fast</code> 或 <code>https://ciyuan.fast/v1</code>，以客户端提示为准。</li><li>粘贴词元.fast API Key。</li><li>同步或手动填写模型名称并测试对话。</li></ol>
-          <h3>推荐配置表</h3><table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>供应商名称</td><td>词元.fast</td></tr><tr><td>API 密钥</td><td>词元.fast 控制台创建的 Key</td></tr><tr><td>API 地址</td><td>https://ciyuan.fast/v1</td></tr><tr><td>模型</td><td>控制台中已启用的模型 ID</td></tr></table>
+          <p class="lead">Cherry Studio 内置 30+ 专业 AI 助手，适合把词元.fast 配成统一桌面 AI 入口。</p>
+          <h3>参数填写</h3>
+          <table><tr><th>配置项</th><th>内容</th></tr><tr><td>供应商类型</td><td>OpenAI 兼容 / NewAPI</td></tr><tr><td>API Key</td><td>词元.fast 控制台密钥</td></tr><tr><td>API 地址</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>模型</td><td>控制台中已启用的模型 ID</td></tr></table>
+          <h3>图文指引</h3>
+          <ol><li>复制词元.fast API Key。</li><li>进入 Cherry Studio 设置，添加供应商。</li><li>填写 API 地址和 Key。</li><li>添加聊天模型并保存。</li><li>回到聊天界面切换模型测试。</li></ol>
+          <h3>在 Cherry Studio 中画图</h3>
+          <p>如需画图，进入模型管理添加绘图模型，接口和密钥仍使用词元.fast；确认模型支持图像生成后再测试。</p>
         `
       },
       {
         id: 'aionui', category: 'desktop', title: 'AionUi', subtitle: '开源桌面办公 Agent', tags: ['办公 Agent', '多代理', '桌面'],
-        summary: '支持 Gemini CLI、Claude Code、Codex 等代理的桌面办公工作台，可把词元.fast 作为统一模型供应。',
+        summary: '完整整理 AionUi 教程，覆盖多会话、多模型、多代理、文件管理和图像能力。',
         body: `
           <h2>AionUi - 免费开源的桌面办公 Agent</h2>
-          <p class="lead">AionUi 把多个 AI 代理放进桌面工作台，适合处理办公、开发和自动化任务。接入词元.fast 后，可以统一管理多模型工作流。</p>
-          <h3>配置入口</h3>${commonSetup}
-          <ol><li>打开 AionUi 设置或模型提供商页面。</li><li>新增 OpenAI 兼容服务。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 使用词元.fast 控制台创建的密钥。</li><li>选择模型后新建会话测试。</li></ol>
-          <h3>使用建议</h3><ul><li>办公场景优先选择稳定、上下文长度合适的模型。</li><li>开发场景单独配置代码模型，避免和日常对话混用。</li><li>重要文档处理前先确认隐私与数据策略。</li></ul>
+          <p class="lead">AionUi 是免费开源桌面办公 Agent，支持 Gemini CLI、Claude Code、Codex 等多种 AI 代理。</p>
+          <h3>核心特性</h3>
+          <table><tr><th>能力</th><th>说明</th></tr><tr><td>多会话聊天</td><td>可同时维护多个任务会话。</td></tr><tr><td>多模型支持</td><td>接入不同模型提供商。</td></tr><tr><td>多代理模式</td><td>支持 Gemini CLI、Claude Code、Codex 等代理。</td></tr><tr><td>文件管理</td><td>面向本地文件的办公工作流。</td></tr><tr><td>预览面板</td><td>查看任务产物和中间结果。</td></tr><tr><td>AI 图像生成与编辑</td><td>可接入图像模型能力。</td></tr></table>
+          <h3>词元.fast 接入方法</h3>
+          <table><tr><th>参数</th><th>填写</th></tr><tr><td>Provider</td><td>OpenAI Compatible</td></tr><tr><td>Base URL</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>API Key</td><td>词元.fast 控制台令牌</td></tr><tr><td>Model</td><td>已启用模型 ID</td></tr></table>
+          <h3>配置步骤</h3>
+          <ol><li>打开 AionUi 设置。</li><li>进入模型提供商。</li><li>新增 OpenAI 兼容服务。</li><li>填写 URL、Key、模型。</li><li>新建会话测试。</li></ol>
         `
       },
       {
         id: 'fluent-read', category: 'reading', title: '流畅阅读', subtitle: 'FluentRead 开源翻译插件', tags: ['浏览器插件', '双语阅读', '翻译'],
-        summary: '支持多种翻译引擎和 AI 大模型翻译。用词元.fast 可获得更统一的模型与密钥管理。',
+        summary: '完整整理 FluentRead 教程，包含核心特性、安装方式、控制台导入和手动配置。',
         body: `
-          <h2>流畅阅读 FluentRead - 开源翻译插件</h2>
-          <p class="lead">FluentRead 面向网页双语阅读和沉浸式翻译。接入词元.fast 后，可使用统一 API Key 调用大模型翻译。</p>
-          <h3>手动配置</h3>${commonSetup}
-          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>翻译服务</td><td>NewAPI 或 OpenAI 兼容</td></tr><tr><td>访问令牌</td><td>词元.fast API Key</td></tr><tr><td>接口地址</td><td>https://ciyuan.fast</td></tr><tr><td>模型</td><td>选择或手动输入模型 ID</td></tr></table>
-          <h3>验收方式</h3><ol><li>打开一篇外文网页。</li><li>触发划词或全文翻译。</li><li>如果返回 401，检查 Key；如果返回模型不存在，检查模型 ID。</li></ol>
+          <h2>流畅阅读 (FluentRead) - 开源翻译插件</h2>
+          <p class="lead">FluentRead 支持 20+ 翻译引擎与 AI 大模型翻译，可用词元.fast 实现沉浸式双语阅读。</p>
+          <h3>核心特性</h3>
+          <table><tr><th>能力</th><th>说明</th></tr><tr><td>智能翻译引擎</td><td>支持传统翻译与大模型翻译。</td></tr><tr><td>沉浸式阅读</td><td>网页双语对照、划词和全文翻译。</td></tr><tr><td>隐私与定制</td><td>自行配置 API Key 和模型。</td></tr></table>
+          <h3>安装方式</h3>
+          <p>可从 Chrome 应用商店、Edge 应用商店、Firefox 附加组件或项目仓库安装。</p>
+          <h3>控制台导入配置</h3>
+          <ol><li>安装插件后打开词元.fast 控制台令牌页。</li><li>出现添加流畅阅读提示后选择模型。</li><li>点击一键填充到 FluentRead。</li><li>确认 API Key、接口地址和模型。</li></ol>
+          <h3>手动填写配置</h3>
+          <table><tr><th>配置项</th><th>内容</th></tr><tr><td>翻译服务</td><td>NewAPI</td></tr><tr><td>访问令牌</td><td>词元.fast API Key</td></tr><tr><td>NewAPI 接口</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>模型</td><td>选择或自定义模型名称</td></tr></table>
         `
       },
       {
@@ -1109,30 +1119,18 @@ model = "选择控制台中的模型 ID"</code></pre>
         body: `
           <h2>异步生图接口使用说明</h2>
           <p class="lead">服务地址：<code>https://img.ciyuan.fast</code>。这份接口说明可以直接丢给 AI 助手，让它根据你的语言和框架生成接入代码。接口是异步流程：先创建任务，拿到 <code>job_id</code>，再轮询任务状态，成功后读取图片 URL。</p>
-          <h3>接口概览</h3><table><tr><th>能力</th><th>接口</th><th>用途</th></tr><tr><td>文生图</td><td><code>POST /v1/images/generations</code></td><td>根据提示词创建生图任务</td></tr><tr><td>修改图片 / 图生图</td><td><code>POST /v1/images/edits</code></td><td>上传图片或传图片 URL 进行修改</td></tr><tr><td>查询任务</td><td><code>GET /v1/image-jobs/:jobId</code></td><td>查询 queued、running、succeeded、failed</td></tr></table>
-          <h3>鉴权方式</h3><pre><code>Authorization: Bearer &lt;你的API Key&gt;</code></pre><p>创建任务和查询任务必须使用同一个 API Key。</p>
+          <h3>接口概览</h3>
+          <table><tr><th>能力</th><th>接口</th><th>用途</th></tr><tr><td>文生图</td><td><code>POST /v1/images/generations</code></td><td>根据提示词创建生图任务</td></tr><tr><td>修改图片 / 图生图</td><td><code>POST /v1/images/edits</code></td><td>上传图片或传图片 URL 进行修改</td></tr><tr><td>查询任务</td><td><code>GET /v1/image-jobs/:jobId</code></td><td>查询 queued、running、succeeded、failed</td></tr></table>
+          <h3>鉴权方式</h3>
+          <pre><code>Authorization: Bearer &lt;你的API Key&gt;</code></pre><p>创建任务和查询任务必须使用同一个 API Key。</p>
           <h3>文生图最简示例</h3>
           <pre><code>curl -sS https://img.ciyuan.fast/v1/images/generations \
   -H "Authorization: Bearer &lt;你的API Key&gt;" \
   -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-image-1",
-    "prompt": "a clean product photo of a white ceramic mug",
-    "size": "1024x1024",
-    "n": 1
-  }'</code></pre>
+  -d '{"model":"gpt-image-1","prompt":"a clean product photo of a white ceramic mug","size":"1024x1024","n":1}'</code></pre>
           <h3>查询任务</h3>
           <pre><code>curl -sS https://img.ciyuan.fast/v1/image-jobs/imgjob_xxx \
   -H "Authorization: Bearer &lt;同一个API Key&gt;"</code></pre>
-          <h3>成功结果位置</h3><p>当 <code>status</code> 为 <code>succeeded</code> 时，图片地址在 <code>result.data[0].url</code>。</p>
-          <pre><code>{
-  "status": "succeeded",
-  "result": {
-    "data": [
-      { "url": "https://img.ciyuan.fast/chat-assets/images/xxxx.png" }
-    ]
-  }
-}</code></pre>
           <h3>图生图 / 修改图片</h3>
           <pre><code>curl -sS https://img.ciyuan.fast/v1/images/edits \
   -H "Authorization: Bearer &lt;你的API Key&gt;" \
@@ -1140,29 +1138,38 @@ model = "选择控制台中的模型 ID"</code></pre>
   -F "prompt=make the background white" \
   -F "size=1024x1024" \
   -F "image[]=@./input.png"</code></pre>
-          <h3>轮询建议</h3><p>建议每 2 到 5 秒查询一次任务状态，不要高频轮询。如果系统需要稳定保存图片，拿到 URL 后建议立即下载并转存。</p>
+          <h3>轮询建议</h3>
+          <p>建议每 2 到 5 秒查询一次任务状态，不要高频轮询。如果系统需要稳定保存图片，拿到 URL 后建议立即下载并转存。</p>
         `
       },
       {
         id: 'langbot', category: 'bot', title: 'LangBot', subtitle: '即时通信机器人开发平台', tags: ['飞书', '钉钉', '知识库'],
-        summary: '支持飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等渠道，并支持知识库、Agent、MCP。',
+        summary: '完整整理 LangBot 教程，覆盖 NewAPI 模型、流水线调试和知识库嵌入模型。',
         body: `
           <h2>LangBot - 即时通信机器人开发平台</h2>
-          <p class="lead">LangBot 是开源 IM 机器人开发平台，可把大模型能力接入飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等渠道。</p>
-          <h3>接入词元.fast</h3>${commonSetup}
-          <ol><li>在词元.fast 控制台创建 API Key。</li><li>进入 LangBot 模型设置，新增 NewAPI 或 OpenAI 兼容供应商。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>选择聊天模型，并在流水线中启用。</li><li>通过对话调试或已绑定机器人发送测试消息。</li></ol>
-          <h3>知识库向量模型</h3><p>如果词元.fast 中启用了嵌入模型，可在 LangBot 中新增嵌入模型，并在新建知识库时选择该向量模型。</p>
+          <p class="lead">LangBot 支持飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等即时通信平台，并支持知识库、Agent、MCP。</p>
+          <h3>接入词元.fast</h3>
+          <ol><li>从词元.fast 控制台获取 API Key。</li><li>在 LangBot 中添加模型，选择 NewAPI 供应商。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>在流水线中选择使用模型。</li><li>在对话调试或已绑定机器人中测试。</li></ol>
+          <h3>使用 LangBot 知识库</h3>
+          <ol><li>在 LangBot 中添加嵌入模型，选择 NewAPI 供应商。</li><li>在新建知识库时选用该嵌入模型。</li><li>如果召回异常，优先检查嵌入模型 ID 与维度配置。</li></ol>
+          <h3>相关链接</h3>
+          <ul><li>官网：<a href="https://langbot.app" target="_blank" rel="noreferrer">https://langbot.app</a></li><li>文档：<a href="https://docs.langbot.app" target="_blank" rel="noreferrer">https://docs.langbot.app</a></li></ul>
         `
       },
       {
         id: 'astrbot', category: 'bot', title: 'AstrBot', subtitle: 'Agent 聊天机器人', tags: ['QQ', '企业微信', 'Agent'],
-        summary: '一站式 Agent 聊天机器人平台，适合把 QQ、飞书、钉钉、企业微信等会话接入大模型。',
+        summary: '完整整理 AstrBot 教程，覆盖 API Key、OpenAI 提供商和默认模型应用。',
         body: `
           <h2>AstrBot - Agent 聊天机器人</h2>
-          <p class="lead">AstrBot 可把大模型能力接入 QQ、飞书、钉钉、企业微信等平台，用于个人 AI 伙伴、智能客服、知识库和自动化助手。</p>
-          <h3>配置步骤</h3>${commonSetup}
-          <ol><li>登录词元.fast，进入控制台创建 API Key。</li><li>打开 AstrBot 管理面板，进入模型提供商。</li><li>新增 OpenAI 提供商。</li><li>API Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 填入词元.fast 密钥并保存。</li><li>在配置文件中把默认聊天模型切换到刚创建的提供商。</li></ol>
-          <h3>排错清单</h3><ul><li>无法保存：检查 URL 是否包含协议头。</li><li>模型不可用：确认模型 ID 与词元.fast 控制台一致。</li><li>机器人无回复：检查平台绑定、流水线和默认模型是否同时启用。</li></ul>
+          <p class="lead">AstrBot 是一站式 Agent 聊天机器人平台，可将大模型能力接入 QQ、飞书、钉钉、企业微信等主流即时通讯软件。</p>
+          <h3>获取 API Key</h3>
+          <p>在词元.fast 注册并登录后，进入控制台令牌管理，点击添加令牌，创建后立即复制 API Key。</p>
+          <h3>配置 NewAPI 服务提供商</h3>
+          <ol><li>打开 AstrBot 管理面板，进入模型提供商。</li><li>点击新增模型提供商。</li><li>选择 OpenAI。</li><li>API Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 填入词元.fast 密钥并保存。</li></ol>
+          <h3>应用服务提供商</h3>
+          <p>进入配置文件页面，在模型一节把默认聊天模型改为刚创建的提供商，保存后测试机器人回复。</p>
+          <h3>排错清单</h3>
+          <ul><li>无法保存：检查 URL 是否包含协议头。</li><li>模型不可用：确认模型 ID 与控制台一致。</li><li>机器人无回复：检查平台绑定、流水线和默认模型是否同时启用。</li></ul>
         `
       }
     ];
