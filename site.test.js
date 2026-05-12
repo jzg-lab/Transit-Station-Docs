@@ -24,6 +24,8 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.match(html, /选择应用，复制配置，快速接入词元\.fast。/);
   assert.match(html, /class="hero-finder"/);
   assert.match(html, /id="heroSearchInput"/);
+  assert.match(html, /class="pill theme-toggle"/);
+  assert.match(html, /data-theme-toggle/);
   assert.match(html, /你要接入哪个工具？/);
   assert.match(html, /应用接入地图/);
   assert.match(html, /按场景筛选，打开对应教程页。/);
@@ -103,6 +105,22 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(html, /function showMapTransition/);
   assert.match(html, /heroSearchInput\.addEventListener/);
   assert.match(html, /IntersectionObserver/);
+});
+
+test('site supports dark theme and embedded theme control', () => {
+  const html = readFileSync('index.html', 'utf8') + readFileSync('scripts/build-doc-pages.js', 'utf8');
+  const app = readFileSync('app.js', 'utf8');
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(html, /data-theme-toggle/);
+  assert.match(app, /const themeQuery = new URLSearchParams\(window\.location\.search\)\.get\('theme'\)/);
+  assert.match(app, /window\.matchMedia\('\(prefers-color-scheme: dark\)'\)/);
+  assert.match(app, /function getStoredTheme/);
+  assert.match(app, /localStorage\.getItem\(themeStorageKey\)/);
+  assert.match(app, /function setStoredTheme/);
+  assert.match(app, /document\.documentElement\.dataset\.theme = theme/);
+  assert.match(css, /:root\[data-theme="dark"\]/);
+  assert.match(css, /color-scheme: dark/);
+  assert.match(css, /\.theme-toggle/);
 });
 
 test('landing page supports wheel-driven full-page switching', () => {

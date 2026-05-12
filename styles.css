@@ -1,4 +1,5 @@
 :root {
+      color-scheme: light;
       --ink: #17211b;
       --muted: #617065;
       --paper: #fffaf0;
@@ -16,6 +17,20 @@
       --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --ink: #ecf4ee;
+      --muted: #9aaea4;
+      --paper: #101b28;
+      --paper-2: #0b1420;
+      --moss: #7ad9b3;
+      --moss-2: #2e7a62;
+      --gold: #ffd676;
+      --clay: #f19a7b;
+      --line: rgba(178, 214, 198, 0.18);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+    }
+
     * { box-sizing: border-box; }
 
     html { scroll-behavior: auto; }
@@ -29,6 +44,13 @@
         radial-gradient(circle at 8% 4%, rgba(214, 164, 65, 0.28), transparent 28rem),
         radial-gradient(circle at 100% 8%, rgba(63, 107, 82, 0.20), transparent 32rem),
         linear-gradient(135deg, #fffaf0 0%, #f3ead6 48%, #e9efe6 100%);
+    }
+
+    :root[data-theme="dark"] body {
+      background:
+        radial-gradient(circle at 8% 4%, rgba(255, 214, 118, 0.12), transparent 28rem),
+        radial-gradient(circle at 100% 8%, rgba(122, 217, 179, 0.14), transparent 32rem),
+        linear-gradient(135deg, #08111f 0%, #101827 48%, #13231d 100%);
     }
 
     body::before {
@@ -109,6 +131,50 @@
       font-family: ui-sans-serif, "Noto Sans SC", sans-serif;
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .theme-toggle { cursor: pointer; }
+
+    :root[data-theme="dark"] .topbar,
+    :root[data-theme="dark"] .hero-card,
+    :root[data-theme="dark"] .workspace,
+    :root[data-theme="dark"] .doc,
+    :root[data-theme="dark"] .toc-panel,
+    :root[data-theme="dark"] .nav-panel,
+    :root[data-theme="dark"] .content-panel {
+      background: rgba(15, 26, 39, 0.82);
+      border-color: var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    :root[data-theme="dark"] .pill,
+    :root[data-theme="dark"] .button.ghost,
+    :root[data-theme="dark"] .hero-finder,
+    :root[data-theme="dark"] .hero-chip,
+    :root[data-theme="dark"] .search-box,
+    :root[data-theme="dark"] .category-tab,
+    :root[data-theme="dark"] .product-tab,
+    :root[data-theme="dark"] .product-card,
+    :root[data-theme="dark"] .api-badge,
+    :root[data-theme="dark"] .tag,
+    :root[data-theme="dark"] .route-step,
+    :root[data-theme="dark"] .resource-link,
+    :root[data-theme="dark"] .tutorial-step,
+    :root[data-theme="dark"] .shot,
+    :root[data-theme="dark"] .callout {
+      background: rgba(255, 255, 255, 0.055);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    :root[data-theme="dark"] .pill.primary,
+    :root[data-theme="dark"] .button,
+    :root[data-theme="dark"] .category-tab.active,
+    :root[data-theme="dark"] .product-tab.active,
+    :root[data-theme="dark"] .signal-card {
+      color: #07120e;
+      background: linear-gradient(135deg, #7ad9b3, #ffd676);
+      border-color: rgba(122, 217, 179, 0.42);
     }
 
     .pill.primary {

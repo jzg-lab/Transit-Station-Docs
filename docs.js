@@ -1,3 +1,52 @@
+const themeQuery = new URLSearchParams(window.location.search).get('theme');
+const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+const themeStorageKey = 'ciyuan-docs-theme';
+
+function getStoredTheme() {
+  try {
+    return localStorage.getItem(themeStorageKey);
+  } catch (error) {
+    return null;
+  }
+}
+
+function setStoredTheme(theme) {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch (error) {
+  }
+}
+
+function preferredTheme() {
+  if (themeQuery === 'dark' || themeQuery === 'light') return themeQuery;
+  const storedTheme = getStoredTheme();
+  if (storedTheme === 'dark' || storedTheme === 'light') return storedTheme;
+  return themeMedia.matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme, persist = false) {
+  document.documentElement.dataset.theme = theme;
+  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+    button.textContent = theme === 'dark' ? '浅色模式' : '夜间模式';
+    button.setAttribute('aria-pressed', String(theme === 'dark'));
+  });
+  if (persist) setStoredTheme(theme);
+}
+
+function initTheme() {
+  applyTheme(preferredTheme());
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-theme-toggle]');
+    if (!button) return;
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme, true);
+  });
+  themeMedia.addEventListener('change', event => {
+    if (themeQuery || getStoredTheme()) return;
+    applyTheme(event.matches ? 'dark' : 'light');
+  });
+}
+
 function openLightbox(src, alt) {
   const lightbox = document.querySelector('#imageLightbox');
   if (!lightbox || !src) return;
@@ -70,3 +119,4 @@ document.addEventListener('keydown', event => {
 
 addCopyButtons();
 renderToc();
+initTheme();

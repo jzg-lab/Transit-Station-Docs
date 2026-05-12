@@ -7,6 +7,57 @@ const categories = [
   { id: 'hub', label: '部署', intro: '托管与 API' }
 ];
 
+const themeQuery = new URLSearchParams(window.location.search).get('theme');
+const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+const themeStorageKey = 'ciyuan-docs-theme';
+
+function getStoredTheme() {
+  try {
+    return localStorage.getItem(themeStorageKey);
+  } catch (error) {
+    return null;
+  }
+}
+
+function setStoredTheme(theme) {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch (error) {
+  }
+}
+
+function preferredTheme() {
+  if (themeQuery === 'dark' || themeQuery === 'light') return themeQuery;
+  const storedTheme = getStoredTheme();
+  if (storedTheme === 'dark' || storedTheme === 'light') return storedTheme;
+  return themeMedia.matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme, persist = false) {
+  document.documentElement.dataset.theme = theme;
+  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
+    button.textContent = theme === 'dark' ? '浅色模式' : '夜间模式';
+    button.setAttribute('aria-pressed', String(theme === 'dark'));
+  });
+  if (persist) setStoredTheme(theme);
+}
+
+function initTheme() {
+  applyTheme(preferredTheme());
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-theme-toggle]');
+    if (!button) return;
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme, true);
+  });
+  themeMedia.addEventListener('change', event => {
+    if (themeQuery || getStoredTheme()) return;
+    applyTheme(event.matches ? 'dark' : 'light');
+  });
+}
+
+initTheme();
+
 const commonSetup = `
   <div class="callout"><strong>词元.fast 通用配置</strong>在词元.fast 控制台创建 API Key。OpenAI 兼容应用通常填写 <code>https://ciyuan.fast/v1</code>；少数工具如果单独要求 Base URL、不自动拼接 <code>/v1</code>，则填写 <code>https://ciyuan.fast</code>。</div>
   <pre><code>API Key: 在 https://ciyuan.fast 控制台创建

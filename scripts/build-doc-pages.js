@@ -1,17 +1,16 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('node:fs');
 const vm = require('node:vm');
 
-const source = readFileSync('index.html', 'utf8');
-const rawScript = source.match(/<script>([\s\S]*)<\/script>/)[1];
-const script = rawScript.slice(0, rawScript.lastIndexOf('renderAll();'))
+const source = readFileSync('app.js', 'utf8');
+const script = source.slice(0, source.lastIndexOf('renderAll();'))
   + 'globalThis.__EXPORT__ = { categories, products, productResources, productScreenshots, renderResources, renderScreenshots };';
 
 const noopElement = () => ({
-  innerHTML: '',
-  hidden: false,
-  dataset: {},
-  style: {},
-  classList: { add() {}, remove() {} },
+      innerHTML: '',
+      hidden: false,
+      dataset: {},
+      style: {},
+      classList: { add() {}, remove() {}, toggle() {} },
   querySelector: () => noopElement(),
   querySelectorAll: () => [],
   addEventListener() {},
@@ -25,13 +24,22 @@ const noopElement = () => ({
 const sandbox = {
   console,
   document: {
+    documentElement: noopElement(),
     body: noopElement(),
     querySelector: () => noopElement(),
     querySelectorAll: () => [],
     addEventListener() {}
   },
+  localStorage: { getItem: () => null, setItem() {} },
   navigator: { clipboard: { writeText: async () => {} } },
-  window: {},
+  window: {
+    location: { search: '' },
+    matchMedia: () => ({ matches: false, addEventListener() {} }),
+    addEventListener() {},
+    clearTimeout() {}
+  },
+  URLSearchParams,
+  Element: function Element() {},
   setTimeout
 };
 vm.createContext(sandbox);
@@ -66,6 +74,7 @@ function pageFor(product) {
     <header class="topbar">
       <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast文档</span></a>
       <nav class="top-links" aria-label="教程导航">
+        <button class="pill theme-toggle" type="button" data-theme-toggle aria-label="切换深浅色主题">夜间模式</button>
         <a class="pill" href="../index.html#docs">返回应用地图</a>
         <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
       </nav>
