@@ -776,7 +776,7 @@ function renderProductList() {
 function renderCards() {
   const visible = filteredProducts();
   setStableHtml(cards, visible.map((product, index) => `
-    <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}" style="--stagger: ${Math.min(index * 42, 260)}ms">
+    <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}">
       <h3>${product.title}</h3>
       <p>${product.summary}</p>
       <div class="card-meta"><span>${categoryLabel(product.category)}</span><span>预计 5-15 分钟</span></div>
@@ -965,7 +965,6 @@ let landingSwitchLocked = false;
 const landingWheelThreshold = 220;
 const landingWheelMaxStep = 90;
 const landingBoundaryTolerance = 12;
-const landingObserverThreshold = 0.22;
 const landingTransitionMs = 460;
 let wheelProgress = 0;
 let wheelDirection = 0;
@@ -1029,10 +1028,6 @@ function landingPageBoundary(direction) {
   return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - landingBoundaryTolerance;
 }
 
-function isNearMapLandingBoundary() {
-  return window.scrollY >= mapLandingTop() - landingBoundaryTolerance;
-}
-
 function syncLandingPage(page) {
   currentLandingPage = page;
   document.body.classList.add('js-landing-ready');
@@ -1047,13 +1042,9 @@ function switchLandingPage(page, options = {}) {
   if (typeof options.search === 'string') setSearchTerm(options.search);
 
   landingSwitchLocked = true;
-  if (page === 'map') {
-    document.body.classList.add('map-preparing');
-  }
   window.requestAnimationFrame(() => {
     document.body.classList.add(page === 'map' ? 'map-entering' : 'intro-entering');
     syncLandingPage(page);
-    document.body.classList.remove('map-preparing');
     scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
   });
   resetWheelProgress();
@@ -1061,7 +1052,6 @@ function switchLandingPage(page, options = {}) {
   setTimeout(() => {
     document.body.classList.remove('map-entering', 'intro-entering');
     landingSwitchLocked = false;
-    if (page === 'map') scrollToLandingPage('map', 'auto');
   }, landingTransitionMs);
 }
 
@@ -1093,6 +1083,12 @@ function handleLandingWheel(event) {
   switchLandingPage(nextPage);
 }
 
+function handleLandingScroll() {
+  if (landingSwitchLocked) return;
+  const nextPage = window.scrollY >= mapLandingTop() - landingBoundaryTolerance ? 'map' : 'intro';
+  if (nextPage !== currentLandingPage) syncLandingPage(nextPage);
+}
+
 document.addEventListener('click', event => {
   const categoryButton = event.target.closest('[data-category].category-tab');
   if (categoryButton) setCategory(categoryButton.dataset.category);
@@ -1122,18 +1118,8 @@ heroSearchInput.addEventListener('keydown', event => {
 });
 
 window.addEventListener('wheel', handleLandingWheel, { passive: false });
+window.addEventListener('scroll', handleLandingScroll, { passive: true });
 window.addEventListener('resize', updateTopbarOffset);
-
-if ('IntersectionObserver' in window) {
-  const mapObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= landingObserverThreshold && isNearMapLandingBoundary()) syncLandingPage('map');
-    });
-  }, { threshold: landingObserverThreshold });
-  mapObserver.observe(document.querySelector('#docs'));
-} else {
-  syncLandingPage('intro');
-}
 
 document.addEventListener('keydown', event => {
   if (event.key !== 'Enter') return;

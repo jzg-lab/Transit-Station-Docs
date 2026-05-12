@@ -34,9 +34,9 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
-  assert.match(html, /<link rel="stylesheet" href="styles\.css\?v=20260512-map-fix">/);
-  assert.match(html, /<script src="theme\.js\?v=20260512-map-fix"><\/script>/);
-  assert.match(html, /<script src="app\.js\?v=20260512-map-fix"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="styles\.css\?v=20260513-smooth-map">/);
+  assert.match(html, /<script src="theme\.js\?v=20260513-smooth-map"><\/script>/);
+  assert.match(html, /<script src="app\.js\?v=20260513-smooth-map"><\/script>/);
   for (const product of expectedProducts) {
     assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
@@ -116,14 +116,14 @@ test('left selector uses compact categories with counts', () => {
 test('landing page includes gentle interaction polish', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
-  assert.match(css, /@keyframes riseIn/);
-  assert.match(css, /--stagger/);
+  assert.doesNotMatch(css, /@keyframes riseIn/);
+  assert.doesNotMatch(html, /--stagger/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /\.route-step/);
   assert.match(css, /\.product-card::after/);
   assert.match(css, /\.content-panel::before/);
   assert.match(css, /body\.map-entering:not\(\.landing-intro\) \.hero/);
-  assert.match(css, /body\.map-preparing \.workspace/);
+  assert.doesNotMatch(css, /body\.landing-switching \.product-card/);
   assert.match(css, /body\.intro-entering \.workspace/);
   assert.match(css, /body\.js-landing-ready\.map-visible \.workspace/);
   assert.doesNotMatch(css, /body\.landing-intro \.workspace\s*\{[\s\S]*?opacity: 0/);
@@ -131,7 +131,7 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(css, /\.hero-chip/);
   assert.match(html, /function showMapTransition/);
   assert.match(html, /heroSearchInput\.addEventListener/);
-  assert.match(html, /IntersectionObserver/);
+  assert.match(html, /function handleLandingScroll/);
 });
 
 test('site supports dark theme and embedded theme control', () => {
@@ -154,7 +154,7 @@ test('site supports dark theme and embedded theme control', () => {
   assert.match(theme, /themeMedia\.addListener/);
   assert.match(css, /:root\[data-theme="dark"\]/);
   assert.match(css, /body\.theme-dark/);
-  assert.match(html, /styles\.css\?v=20260512-theme/);
+  assert.match(html, /styles\.css\?v=20260513-smooth-map/);
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /\.theme-toggle/);
 });
@@ -280,20 +280,18 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /window\.getComputedStyle\(topbar\)\.top/);
   assert.match(html, /docs\.offsetTop - updateTopbarOffset\(\)/);
   assert.match(html, /window\.location\.hash === '#docs'/);
-  assert.match(html, /const landingObserverThreshold = 0\.22/);
-  assert.match(html, /entry\.intersectionRatio >= landingObserverThreshold/);
-  assert.match(html, /isNearMapLandingBoundary\(\)/);
   assert.match(html, /function switchLandingPage/);
   assert.match(html, /document\.body\.classList\.add\('js-landing-ready'\)/);
-  assert.match(html, /document\.body\.classList\.add\('map-preparing'\)/);
+  assert.doesNotMatch(html, /document\.body\.classList\.add\('landing-switching'\)/);
   assert.match(html, /window\.requestAnimationFrame/);
   assert.doesNotMatch(html, /document\.body\.offsetHeight/);
   assert.match(html, /handleLandingWheel/);
+  assert.match(html, /function handleLandingScroll/);
   assert.match(html, /event\.deltaY > 0/);
   assert.match(html, /function canScrollWithin/);
   assert.match(html, /window\.addEventListener\('wheel', handleLandingWheel, \{ passive: false \}\)/);
-  assert.match(css, /body\.landing-map \.hero/);
-  assert.match(css, /body\.js-landing-ready\.landing-map:not\(\.map-entering\) \.hero[\s\S]*?display: none/);
+  assert.match(html, /window\.addEventListener\('scroll', handleLandingScroll, \{ passive: true \}\)/);
+  assert.doesNotMatch(css, /body\.js-landing-ready\.landing-map:not\(\.map-entering\) \.hero[\s\S]*?display: none/);
   assert.match(css, /body\.js-landing-ready\.landing-map \.workspace/);
   assert.doesNotMatch(css, /body\.js-landing-ready \.workspace\s*\{[\s\S]*?pointer-events: none/);
   assert.match(css, /--topbar-offset/);
@@ -315,14 +313,14 @@ test('landing map switch slides without scaling the layout', () => {
   assert.doesNotMatch(html, /scrollToLandingPage\(page, 'auto'\)/);
   assert.match(css, /\.hero[\s\S]*?transition: opacity 0\.46s var\(--page-ease\), transform 0\.46s var\(--page-ease\)/);
   assert.match(css, /\.workspace[\s\S]*?transition: opacity 0\.46s var\(--page-ease\), transform 0\.46s var\(--page-ease\)/);
-  assert.match(css, /body\.map-preparing \.workspace,[\s\S]*?transform: translate3d\(0, 34px, 0\)/);
-  assert.match(css, /body\.landing-map \.hero,[\s\S]*?transform: translate3d\(0, -34px, 0\)/);
+  assert.doesNotMatch(css, /body\.map-preparing \.workspace/);
+  assert.match(css, /body\.map-entering:not\(\.landing-intro\) \.hero[\s\S]*?transform: translate3d\(0, -34px, 0\)/);
   assert.doesNotMatch(css, /body\.(?:map-preparing|intro-entering|landing-map|map-entering)[\s\S]{0,180}scale\(/);
-  assert.match(css, /\.product-card[\s\S]*?animation: riseIn 0\.56s ease both/);
-  assert.doesNotMatch(css, /body\.(?:map-entering|intro-entering) \.product-card[\s\S]*?animation: none/);
+  assert.doesNotMatch(css, /\.product-card[\s\S]*?animation: riseIn/);
+  assert.doesNotMatch(css, /body\.landing-switching \.product-card[\s\S]*?animation: none/);
 });
 
-test('map observer does not hide the intro before the map is aligned', () => {
+test('scroll sync does not hide the intro before the map is aligned', () => {
   const app = readFileSync('app.js', 'utf8');
   const bodyClasses = new Set();
   const rootStyle = new Map();
@@ -337,7 +335,7 @@ test('map observer does not hide the intro before the map is aligned', () => {
     getBoundingClientRect: () => ({ height: 68 }),
     parentElement: null
   };
-  let observerCallback;
+  const windowListeners = {};
   const body = {
     classList: {
       add: (...classes) => classes.forEach(className => bodyClasses.add(className)),
@@ -345,10 +343,6 @@ test('map observer does not hide the intro before the map is aligned', () => {
       toggle: (className, force) => force ? bodyClasses.add(className) : bodyClasses.delete(className)
     }
   };
-  function TestIntersectionObserver(callback) {
-    observerCallback = callback;
-    return { observe() {} };
-  }
   const context = {
     document: {
       body,
@@ -379,7 +373,9 @@ test('map observer does not hide the intro before the map is aligned', () => {
       innerHeight: 900,
       scrollY: 0,
       location: { hash: '' },
-      addEventListener() {},
+      addEventListener(type, handler) {
+        windowListeners[type] = handler;
+      },
       clearTimeout() {},
       setTimeout() {},
       requestAnimationFrame(handler) {
@@ -389,20 +385,18 @@ test('map observer does not hide the intro before the map is aligned', () => {
       getComputedStyle: () => ({
         top: '16px',
         overflowY: 'visible'
-      }),
-      IntersectionObserver: TestIntersectionObserver
+      })
     },
     Element: function Element() {},
-    IntersectionObserver: TestIntersectionObserver,
     setTimeout() {}
   };
 
   vm.runInNewContext(app, context);
-  observerCallback([{ isIntersecting: true, intersectionRatio: 0.3 }]);
+  windowListeners.scroll();
   assert.equal(bodyClasses.has('landing-map'), false);
 
   context.window.scrollY = 662;
-  observerCallback([{ isIntersecting: true, intersectionRatio: 0.3 }]);
+  windowListeners.scroll();
   assert.equal(bodyClasses.has('landing-map'), true);
 });
 

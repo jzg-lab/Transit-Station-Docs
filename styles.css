@@ -386,22 +386,16 @@
       transition: opacity 0.46s var(--page-ease), transform 0.46s var(--page-ease);
     }
 
-    body.map-preparing .workspace,
     body.intro-entering .workspace {
       opacity: 0;
       transform: translate3d(0, 34px, 0);
       pointer-events: none;
     }
 
-    body.landing-map .hero,
     body.map-entering:not(.landing-intro) .hero {
       opacity: 0;
       transform: translate3d(0, -34px, 0);
       pointer-events: none;
-    }
-
-    body.js-landing-ready.landing-map:not(.map-entering) .hero {
-      display: none;
     }
 
     body.js-landing-ready.landing-map .workspace,
@@ -687,8 +681,6 @@
       padding: 18px;
       background: rgba(255, 255, 255, 0.44);
       cursor: pointer;
-      animation: riseIn 0.56s ease both;
-      animation-delay: var(--stagger, 0ms);
       transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
     }
 
@@ -1210,17 +1202,6 @@
 
 @media (max-width: 1120px) {
   .doc-layout { grid-template-columns: 1fr; }
-}
-
-@keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 @media (max-width: 1120px) {
