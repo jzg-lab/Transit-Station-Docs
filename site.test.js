@@ -47,7 +47,7 @@ test('page exposes category navigation and grouped cards', () => {
   for (const category of ['编程助手', '桌面客户端', '机器人平台', '阅读翻译', '部署中枢']) {
     assert.match(html, new RegExp(category));
   }
-  assert.match(html, /class="product-card"/);
+  assert.match(html, /product-card/);
   assert.match(html, /category: 'coding'/);
 });
 
@@ -72,9 +72,22 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(css, /\.content-panel::before/);
 });
 
+test('application map highlights priority choices before the full catalog', () => {
+  const html = readFileSync('index.html', 'utf8');
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(html, /class="featured-routes"/);
+  assert.match(html, /id="featuredRoutes"/);
+  assert.match(html, /推荐优先看这几个/);
+  assert.match(html, /const featuredProductIds = \['claude-code', 'codex-cli', 'cherry-studio'\]/);
+  assert.match(html, /function renderFeaturedRoutes/);
+  assert.match(css, /\.featured-route/);
+  assert.match(css, /\.catalog-head/);
+  assert.match(css, /\.product-card\.compact/);
+});
+
 test('product tutorials are published as independent pages', () => {
   const html = readFileSync('index.html', 'utf8');
-  assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);
+  assert.match(html, /<a class="product-card compact" href="docs\/\$\{product\.id\}\.html"/);
   assert.match(html, /<a class="product-tab [\s\S]*?href="docs\/\$\{product\.id\}\.html"/);
   for (const page of [
     'docs/openclaw.html',

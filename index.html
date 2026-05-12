@@ -71,6 +71,15 @@
               <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
             </div>
             <input class="search-box" id="searchInput" type="search" placeholder="搜索应用、场景或标签，例如 Codex、机器人、翻译" aria-label="搜索应用文档">
+            <p class="panel-title">推荐优先看这几个</p>
+            <div class="featured-routes" id="featuredRoutes" aria-label="推荐优先教程"></div>
+            <div class="catalog-head">
+              <div>
+                <p class="panel-title">完整目录</p>
+                <strong>其他工具按需查找</strong>
+              </div>
+              <span id="resultCount"></span>
+            </div>
             <div class="cards" id="cards"></div>
           </section>
         </div>
@@ -89,6 +98,14 @@
       { id: 'reading', label: '阅读翻译', intro: '双语阅读' },
       { id: 'hub', label: '部署中枢', intro: '自托管与 API' }
     ];
+
+    const featuredProductIds = ['claude-code', 'codex-cli', 'cherry-studio'];
+
+    const featuredReasons = {
+      'claude-code': '开发者最常用，先把终端 AI 助手跑通。',
+      'codex-cli': '适合代码代理和自动化改项目。',
+      'cherry-studio': '桌面用户最容易上手，验证 API Key 很快。'
+    };
 
     const commonSetup = `
       <div class="callout"><strong>词元.fast 通用配置</strong>在词元.fast 控制台创建 API Key。OpenAI 兼容应用通常填写 <code>https://ciyuan.fast/v1</code>；少数工具如果单独要求 Base URL、不自动拼接 <code>/v1</code>，则填写 <code>https://ciyuan.fast</code>。</div>
@@ -822,6 +839,8 @@ codex
     const categoryTabs = document.querySelector('#categoryTabs');
     const productList = document.querySelector('#productList');
     const cards = document.querySelector('#cards');
+    const featuredRoutes = document.querySelector('#featuredRoutes');
+    const resultCount = document.querySelector('#resultCount');
     const searchInput = document.querySelector('#searchInput');
 
     function filteredProducts() {
@@ -855,10 +874,27 @@ codex
       `).join('') || '<p class="empty-state">没有匹配的应用，换个关键词试试。</p>';
     }
 
+    function renderFeaturedRoutes() {
+      const featured = featuredProductIds
+        .map(id => products.find(product => product.id === id))
+        .filter(Boolean);
+      featuredRoutes.innerHTML = featured.map((product, index) => `
+        <a class="featured-route" href="docs/${product.id}.html" style="--stagger: ${index * 70}ms">
+          <span class="feature-rank">0${index + 1}</span>
+          <div>
+            <strong>${product.title}</strong>
+            <p>${featuredReasons[product.id]}</p>
+          </div>
+          <em>优先教程</em>
+        </a>
+      `).join('');
+    }
+
     function renderCards() {
-      const visible = filteredProducts();
+      const visible = filteredProducts().filter(product => searchTerm || !featuredProductIds.includes(product.id));
+      resultCount.textContent = `${visible.length} 个教程`;
       cards.innerHTML = visible.map((product, index) => `
-        <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}" style="--stagger: ${Math.min(index * 42, 260)}ms">
+        <a class="product-card compact" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}" style="--stagger: ${Math.min(index * 36, 220)}ms">
           <h3>${product.title}</h3>
           <p>${product.summary}</p>
           <div class="card-meta"><span>${categoryLabel(product.category)}</span><span>预计 5-15 分钟</span></div>
@@ -1034,6 +1070,7 @@ codex
     function renderAll() {
       renderCategories();
       renderProductList();
+      renderFeaturedRoutes();
       renderCards();
     }
 
