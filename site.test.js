@@ -45,7 +45,7 @@ test('tutorials include local screenshots and project resource links', () => {
   assert.match(html, /GitHub/);
   assert.match(html, /下载/);
   assert.match(html, /function renderScreenshots/);
-  assert.match(html, /<img src="\$\{shot\.src\}"/);
+  assert.match(html, /<img src="\$\{step\.src\}"/);
   for (const image of [
     'images/claude-code/introduce-01.webp',
     'images/codex-cli/introduce-01.webp',
@@ -64,5 +64,8 @@ test('tutorials are beginner friendly and support image zoom', () => {
   assert.match(html, /新手步骤/);
   assert.match(html, /class="image-lightbox"/);
   assert.match(html, /function openLightbox/);
-  assert.match(html, /data-full="\$\{shot\.src\}"/);
+  assert.match(html, /data-full="\$\{step\.src\}"/);
+  assert.match(html, /class="tutorial-step"/);
+  assert.match(html, /step\.detail/);
+  assert.doesNotMatch(html, /看不清时点击图片放大查看/);
 });

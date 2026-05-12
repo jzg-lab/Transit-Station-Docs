@@ -469,9 +469,40 @@
 
     .screenshot-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 14px;
       margin: 18px 0 28px;
+    }
+
+    .tutorial-step {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.38);
+    }
+
+    .step-copy {
+      display: grid;
+      gap: 8px;
+    }
+
+    .step-kicker {
+      color: var(--clay);
+      font: 900 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+      letter-spacing: 0.08em;
+    }
+
+    .step-copy h4 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .step-copy p {
+      margin: 0;
     }
 
     .shot {
@@ -691,6 +722,7 @@
       .hero-card { padding: 28px; }
       .cards, .product-list, .category-tabs, .collection-head { grid-template-columns: 1fr; }
       .resource-grid, .screenshot-grid { grid-template-columns: 1fr; }
+      .tutorial-step { grid-template-columns: 1fr; }
       .api-badge { white-space: normal; }
       .content-panel { padding: 16px; }
       .doc { padding: 22px; }
@@ -784,19 +816,9 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
 
     const apiKeyGuide = {
       title: '密钥创建通用步骤',
-      body: `
-        <div class="beginner-steps">
-          <h4>新手步骤：先准备词元.fast API Key</h4>
-          <ol>
-            <li>打开 <a href="https://ciyuan.fast" target="_blank" rel="noreferrer">https://ciyuan.fast</a> 并登录账号。</li>
-            <li>进入控制台后找到“令牌管理”或“API Key”页面。</li>
-            <li>点击“添加令牌”或“创建密钥”，名称可以写当前工具名，例如 Claude Code、Cherry Studio。</li>
-            <li>创建成功后立刻复制密钥。密钥通常只完整显示一次，不要发给别人，也不要提交到 GitHub。</li>
-            <li>回到当前教程，把密钥粘贴到工具里的 API Key、访问令牌或 Token 输入框。</li>
-          </ol>
-        </div>
-      `,
-      shot: { src: 'images/ciyuan-api-key.png', alt: '词元.fast 创建和复制 API Key' }
+      detail: '先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。',
+      src: 'images/ciyuan-api-key.png',
+      alt: '词元.fast 创建和复制 API Key'
     };
 
     const productResources = {
@@ -854,55 +876,55 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
 
     const productScreenshots = {
       'claude-code': [
-        { src: 'images/claude-code/introduce-01.webp', alt: 'Claude Code 代码库理解演示' },
-        { src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
-        { src: 'images/claude-code/windows_configure.webp', alt: 'Windows 环境变量配置' },
-        { src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
+        { title: '确认 Claude Code 能做什么', detail: '先看演示图，理解 Claude Code 是在终端里帮你读代码、改代码、跑命令的工具，不是普通聊天窗口。', src: 'images/claude-code/introduce-01.webp', alt: 'Claude Code 代码库理解演示' },
+        { title: '理解多文件编辑效果', detail: '这一步让你知道后面配置成功后，可以让 Claude Code 同时处理多个文件，适合真实项目。', src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
+        { title: 'Windows 填入词元.fast 配置', detail: '在 Windows 终端或系统环境变量里填入 Base URL、API Key 和模型名。API Key 就是第 1 步复制的密钥。', src: 'images/claude-code/windows_configure.webp', alt: 'Windows 环境变量配置' },
+        { title: 'macOS/Linux 填入词元.fast 配置', detail: 'macOS 或 Linux 用户在终端里设置环境变量。设置完成后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
       ],
       'codex-cli': [
-        { src: 'images/codex-cli/introduce-01.webp', alt: 'Codex CLI 使用演示' },
-        { src: 'images/codex-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
-        { src: 'images/codex-cli/windows_configure.webp', alt: 'Windows 配置 Codex CLI' },
-        { src: 'images/codex-cli/macos_configure.webp', alt: 'macOS 配置 Codex CLI' }
+        { title: '确认 Codex CLI 使用场景', detail: '先看 Codex CLI 的工作方式：它在终端里读项目、改文件、运行命令，适合开发者做真实代码任务。', src: 'images/codex-cli/introduce-01.webp', alt: 'Codex CLI 使用演示' },
+        { title: 'Windows 打开终端', detail: 'Windows 用户先打开 PowerShell、Windows Terminal 或命令提示符。后续安装和配置命令都在这里输入。', src: 'images/codex-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
+        { title: 'Windows 配置 Codex CLI', detail: '把 OPENAI_API_KEY 设置成第 1 步复制的词元.fast 密钥，把 OPENAI_BASE_URL 设置成 https://ciyuan.fast/v1。', src: 'images/codex-cli/windows_configure.webp', alt: 'Windows 配置 Codex CLI' },
+        { title: 'macOS/Linux 配置 Codex CLI', detail: 'macOS 或 Linux 用户在终端导出 OPENAI_API_KEY 和 OPENAI_BASE_URL，配置后再运行 codex。', src: 'images/codex-cli/macos_configure.webp', alt: 'macOS 配置 Codex CLI' }
       ],
       'factory-droid-cli': [
-        { src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
-        { src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
-        { src: 'images/factory-droid-cli/windows_install_droid.webp', alt: 'Windows 安装 Droid' },
-        { src: 'images/factory-droid-cli/factory_cli_setup_windows.webp', alt: 'Factory CLI Windows 配置' }
+        { title: '认识 Droid 的命令行界面', detail: '先看示例图，确认后续安装成功后会在终端里和 Droid 交互。', src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
+        { title: '打开终端准备安装', detail: 'Windows 用户先打开终端窗口。不要在浏览器地址栏里输入命令，命令都要在终端里执行。', src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
+        { title: '安装 Droid CLI', detail: '按照截图里的安装命令安装 Droid。安装完成后可以输入版本命令确认是否安装成功。', src: 'images/factory-droid-cli/windows_install_droid.webp', alt: 'Windows 安装 Droid' },
+        { title: '填入词元.fast 地址和密钥', detail: '配置时把 base_url 填成 https://ciyuan.fast，把 API Key 填成第 1 步复制的密钥。', src: 'images/factory-droid-cli/factory_cli_setup_windows.webp', alt: 'Factory CLI Windows 配置' }
       ],
       'cc-switch': [
-        { src: 'images/cc-switch/fill_dialog.webp', alt: 'CC Switch 一键填入 Provider 弹窗' }
+        { title: '确认 CC Switch 导入弹窗', detail: '打开导入弹窗后，检查 Provider 名称、Base URL 和模型是否正确，再确认保存。', src: 'images/cc-switch/fill_dialog.webp', alt: 'CC Switch 一键填入 Provider 弹窗' }
       ],
       'cherry-studio': [
-        { src: 'images/cherry-studio/copy_api_key.webp', alt: '复制词元.fast API Key' },
-        { src: 'images/cherry-studio/add_provider.webp', alt: '添加 Cherry Studio 供应商' },
-        { src: 'images/cherry-studio/add_models.webp', alt: '添加模型' },
-        { src: 'images/cherry-studio/switch_model.webp', alt: '切换模型' }
+        { title: '准备 API Key', detail: '所有 Cherry Studio 里的 API 密钥都使用第 1 步从词元.fast 复制的密钥，不要使用截图里的旧站点密钥。', src: 'images/ciyuan-api-key.png', alt: '复制词元.fast API Key' },
+        { title: '新增模型供应商', detail: '进入 Cherry Studio 的供应商设置，新增 OpenAI 兼容或 NewAPI 类型供应商，名称建议写词元.fast。', src: 'images/cherry-studio/add_provider.webp', alt: '添加 Cherry Studio 供应商' },
+        { title: '添加可用模型', detail: '把词元.fast 控制台里可用的模型 ID 填到模型列表。模型名要完全一致，大小写和符号都不要改。', src: 'images/cherry-studio/add_models.webp', alt: '添加模型' },
+        { title: '回到聊天页切换模型', detail: '保存供应商后回到聊天页面，在模型下拉框里选择刚刚添加的词元.fast 模型，然后发送一句话测试。', src: 'images/cherry-studio/switch_model.webp', alt: '切换模型' }
       ],
       'aionui': [
-        { src: 'images/aionuilogo.webp', alt: 'AionUi 标识' },
-        { src: 'images/copy_apikey.webp', alt: '复制词元.fast API Key' },
-        { src: 'images/add-model-1.webp', alt: '打开模型设置' },
-        { src: 'images/newapi_provider.webp', alt: '添加 NewAPI 提供商' }
+        { title: '确认正在配置 AionUi', detail: '打开 AionUi 后先确认应用界面，后续要进入设置页面添加模型供应商。', src: 'images/aionuilogo.webp', alt: 'AionUi 标识' },
+        { title: '准备 API Key', detail: 'API Key 统一使用第 1 步从词元.fast 复制的密钥。复制后不要截图公开，也不要发给别人。', src: 'images/ciyuan-api-key.png', alt: '复制词元.fast API Key' },
+        { title: '打开模型设置', detail: '在 AionUi 中进入模型或 Provider 设置页面，准备新增一个 OpenAI 兼容服务。', src: 'images/add-model-1.webp', alt: '打开模型设置' },
+        { title: '添加 NewAPI 提供商', detail: '供应商类型选择 NewAPI 或 OpenAI 兼容，API 地址填 https://ciyuan.fast/v1，密钥填第 1 步复制的 Key。', src: 'images/newapi_provider.webp', alt: '添加 NewAPI 提供商' }
       ],
       'fluent-read': [
-        { src: 'images/fluent-read/hint.webp', alt: '流畅阅读添加提示' },
-        { src: 'images/fluent-read/confirm.webp', alt: '确认导入配置' },
-        { src: 'images/fluent-read/fluentread.webp', alt: '配置结果' },
-        { src: 'images/fluent-read/configuration.webp', alt: '手动配置 FluentRead' }
+        { title: '打开流畅阅读配置入口', detail: '安装插件后进入配置页面。如果出现添加提示，先确认它要填的是 NewAPI 或 OpenAI 兼容配置。', src: 'images/fluent-read/hint.webp', alt: '流畅阅读添加提示' },
+        { title: '确认导入信息', detail: '检查接口地址、模型和访问令牌。访问令牌就是第 1 步复制的词元.fast API Key。', src: 'images/fluent-read/confirm.webp', alt: '确认导入配置' },
+        { title: '确认配置启用', detail: '配置保存后，确认 NewAPI 配置已经启用，再打开网页测试翻译。', src: 'images/fluent-read/fluentread.webp', alt: '配置结果' },
+        { title: '手动填写配置', detail: '如果不能自动导入，就手动填写接口地址 https://ciyuan.fast、访问令牌和模型名称。', src: 'images/fluent-read/configuration.webp', alt: '手动配置 FluentRead' }
       ],
       'langbot': [
-        { src: 'images/langbot/get_api_key.webp', alt: '获取 API Key' },
-        { src: 'images/langbot/add_newapi_model.webp', alt: '添加 NewAPI 模型' },
-        { src: 'images/langbot/select_model.webp', alt: '选择模型' },
-        { src: 'images/langbot/debug_chat.webp', alt: '对话调试' }
+        { title: '准备 API Key', detail: 'LangBot 需要 API Key 才能调用模型。这里统一使用第 1 步从词元.fast 创建并复制的密钥。', src: 'images/ciyuan-api-key.png', alt: '获取 API Key' },
+        { title: '添加 NewAPI 模型', detail: '进入 LangBot 模型设置，选择 NewAPI 或 OpenAI 兼容供应商，填写 https://ciyuan.fast/v1 和 API Key。', src: 'images/langbot/add_newapi_model.webp', alt: '添加 NewAPI 模型' },
+        { title: '在流水线里选择模型', detail: '模型添加成功后，还要在流水线中选择它。只添加模型但不绑定流水线，机器人不会使用它。', src: 'images/langbot/select_model.webp', alt: '选择模型' },
+        { title: '发送测试消息', detail: '进入对话调试，发送一句简单消息。如果能回复，说明词元.fast、模型和流水线都配置成功。', src: 'images/langbot/debug_chat.webp', alt: '对话调试' }
       ],
       'astrbot': [
-        { src: 'images/astrbot/image.webp', alt: '创建 API Key' },
-        { src: 'images/astrbot/image-1.webp', alt: '复制 API Key' },
-        { src: 'images/astrbot/image-2.webp', alt: '配置 AstrBot OpenAI 提供商' },
-        { src: 'images/astrbot/image-3.webp', alt: '应用模型提供商' }
+        { title: '准备 API Key', detail: 'AstrBot 也统一使用第 1 步创建的词元.fast API Key。不要把密钥发到群里或提交到仓库。', src: 'images/ciyuan-api-key.png', alt: '创建 API Key' },
+        { title: '复制 API Key', detail: '复制密钥后先放在本地临时记事本或密码管理器里，等 AstrBot 提示填写 API Key 时再粘贴。', src: 'images/ciyuan-api-key.png', alt: '复制 API Key' },
+        { title: '配置 OpenAI 提供商', detail: '在 AstrBot 模型提供商里选择 OpenAI，Base URL 填 https://ciyuan.fast/v1，API Key 填词元.fast 密钥。', src: 'images/astrbot/image-2.webp', alt: '配置 AstrBot OpenAI 提供商' },
+        { title: '应用到默认聊天模型', detail: '保存提供商后，还要到配置文件或默认模型设置里选中它，否则机器人仍然可能使用旧模型。', src: 'images/astrbot/image-3.webp', alt: '应用模型提供商' }
       ]
     };
 
@@ -1118,17 +1140,23 @@ model = "选择控制台中的模型 ID"</code></pre>
     }
 
     function renderScreenshots(product) {
-      const screenshots = [apiKeyGuide.shot, ...(productScreenshots[product.id] || [])];
-      if (!screenshots.length) return '';
+      const steps = [apiKeyGuide, ...(productScreenshots[product.id] || [])];
+      if (!steps.length) return '';
       return `
         <h3>图文步骤</h3>
-        ${apiKeyGuide.body}
         <div class="screenshot-grid">
-          ${screenshots.map((shot, index) => `
-            <figure class="shot">
-              <img src="${shot.src}" alt="${shot.alt}" loading="lazy" data-full="${shot.src}">
-              <figcaption>第 ${index + 1} 步：${shot.alt}。看不清时点击图片放大查看。</figcaption>
-            </figure>
+          ${steps.map((step, index) => `
+            <section class="tutorial-step">
+              <div class="step-copy">
+                <span class="step-kicker">新手步骤 ${index + 1}</span>
+                <h4>${step.title}</h4>
+                <p>${step.detail}</p>
+              </div>
+              <figure class="shot">
+                <img src="${step.src}" alt="${step.alt}" loading="lazy" data-full="${step.src}">
+                <figcaption>${step.alt}</figcaption>
+              </figure>
+            </section>
           `).join('')}
         </div>
       `;
