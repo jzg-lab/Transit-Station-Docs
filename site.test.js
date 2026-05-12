@@ -260,15 +260,18 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /data-page="intro"/);
   assert.match(html, /data-page="map"/);
   assert.match(html, /let currentLandingPage = 'intro'/);
-  assert.match(html, /const landingWheelThreshold = 360/);
+  assert.match(html, /const landingWheelThreshold = 220/);
+  assert.match(html, /const landingWheelMaxStep = 90/);
+  assert.match(html, /function normalizedWheelStep/);
   assert.match(html, /function landingPageBoundary/);
   assert.match(html, /window\.scrollY <= 2/);
-  assert.match(html, /const mapTop = document\.querySelector\('#docs'\)\.offsetTop - updateTopbarOffset\(\)/);
-  assert.match(html, /return window\.scrollY <= mapTop \+ 2/);
-  assert.match(html, /if \(currentLandingPage === 'intro'\) return window\.scrollY \+ window\.innerHeight >= document\.querySelector\('#docs'\)\.offsetTop - 2/);
-  assert.match(html, /window\.innerHeight \+ window\.scrollY >= document\.documentElement\.scrollHeight - 2/);
+  assert.match(html, /const landingBoundaryTolerance = 12/);
+  assert.match(html, /return window\.scrollY <= mapTop \+ landingBoundaryTolerance/);
+  assert.match(html, /if \(currentLandingPage === 'intro'\) return window\.scrollY \+ window\.innerHeight >= document\.querySelector\('#docs'\)\.offsetTop - landingBoundaryTolerance/);
+  assert.match(html, /window\.innerHeight \+ window\.scrollY >= document\.documentElement\.scrollHeight - landingBoundaryTolerance/);
   assert.match(html, /if \(!landingPageBoundary\(direction\)\) \{[\s\S]*?resetWheelProgress\(\);[\s\S]*?return;[\s\S]*?\}/);
-  assert.match(html, /wheelProgress \+= Math\.abs\(event\.deltaY\)/);
+  assert.match(html, /const wheelStep = normalizedWheelStep\(event\)/);
+  assert.match(html, /wheelProgress \+= wheelStep/);
   assert.match(html, /if \(wheelProgress < landingWheelThreshold\) return/);
   assert.match(html, /function scrollToLandingPage/);
   assert.match(html, /topbar\.getBoundingClientRect\(\)\.height/);
@@ -289,6 +292,12 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.doesNotMatch(css, /body\.js-landing-ready \.workspace\s*\{[\s\S]*?pointer-events: none/);
   assert.match(css, /--topbar-offset/);
   assert.match(css, /scroll-behavior: auto/);
+});
+
+test('wheel switching uses normalized intent instead of raw delta spikes', () => {
+  const app = readFileSync('app.js', 'utf8');
+  assert.match(app, /Math\.min\(Math\.abs\(deltaY\), landingWheelMaxStep\)/);
+  assert.doesNotMatch(app, /wheelProgress \+= Math\.abs\(event\.deltaY\)/);
 });
 
 test('landing map switch slides without scaling the layout', () => {

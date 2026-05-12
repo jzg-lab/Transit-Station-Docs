@@ -962,7 +962,9 @@ function renderAll() {
 
 let currentLandingPage = 'intro';
 let landingSwitchLocked = false;
-const landingWheelThreshold = 360;
+const landingWheelThreshold = 220;
+const landingWheelMaxStep = 90;
+const landingBoundaryTolerance = 12;
 const landingTransitionMs = 460;
 let wheelProgress = 0;
 let wheelDirection = 0;
@@ -991,6 +993,11 @@ function resetWheelProgress() {
   window.clearTimeout(wheelResetTimer);
 }
 
+function normalizedWheelStep(event) {
+  const deltaY = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY;
+  return Math.min(Math.abs(deltaY), landingWheelMaxStep);
+}
+
 function canScrollWithin(element, direction) {
   let node = element instanceof Element ? element : element && element.parentElement;
   while (node && node !== document.body) {
@@ -1009,11 +1016,11 @@ function canScrollWithin(element, direction) {
 function landingPageBoundary(direction) {
   if (direction < 0 && currentLandingPage === 'map') {
     const mapTop = document.querySelector('#docs').offsetTop - updateTopbarOffset();
-    return window.scrollY <= mapTop + 2;
+    return window.scrollY <= mapTop + landingBoundaryTolerance;
   }
   if (direction < 0) return window.scrollY <= 2;
-  if (currentLandingPage === 'intro') return window.scrollY + window.innerHeight >= document.querySelector('#docs').offsetTop - 2;
-  return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+  if (currentLandingPage === 'intro') return window.scrollY + window.innerHeight >= document.querySelector('#docs').offsetTop - landingBoundaryTolerance;
+  return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - landingBoundaryTolerance;
 }
 
 function syncLandingPage(page) {
@@ -1048,7 +1055,8 @@ function switchLandingPage(page, options = {}) {
 }
 
 function handleLandingWheel(event) {
-  if (Math.abs(event.deltaY) < 16 || event.ctrlKey) return;
+  const wheelStep = normalizedWheelStep(event);
+  if (wheelStep < 16 || event.ctrlKey) return;
   const direction = event.deltaY > 0 ? 1 : -1;
   if (currentLandingPage === 'map' && canScrollWithin(event.target, direction)) return;
   if (!landingPageBoundary(direction)) {
@@ -1062,7 +1070,7 @@ function handleLandingWheel(event) {
     wheelProgress = 0;
     wheelDirection = direction;
   }
-  wheelProgress += Math.abs(event.deltaY);
+  wheelProgress += wheelStep;
   window.clearTimeout(wheelResetTimer);
   wheelResetTimer = window.setTimeout(resetWheelProgress, 520);
   if (wheelProgress < landingWheelThreshold) return;
