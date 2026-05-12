@@ -33,18 +33,33 @@ function applyTheme(theme, persist = false) {
   if (persist) setStoredTheme(theme);
 }
 
+function closestThemeToggle(target) {
+  let node = target;
+  while (node && node !== document) {
+    if (node.matches?.('[data-theme-toggle]')) return node;
+    node = node.parentElement;
+  }
+  return null;
+}
+
+function handleThemeMediaChange(event) {
+  if (themeQuery || getStoredTheme()) return;
+  applyTheme(event.matches ? 'dark' : 'light');
+}
+
 function initTheme() {
   applyTheme(preferredTheme());
   document.addEventListener('click', event => {
-    const button = event.target.closest('[data-theme-toggle]');
+    const button = closestThemeToggle(event.target);
     if (!button) return;
     const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     applyTheme(nextTheme, true);
   });
-  themeMedia.addEventListener('change', event => {
-    if (themeQuery || getStoredTheme()) return;
-    applyTheme(event.matches ? 'dark' : 'light');
-  });
+  if (themeMedia.addEventListener) {
+    themeMedia.addEventListener('change', handleThemeMediaChange);
+  } else if (themeMedia.addListener) {
+    themeMedia.addListener(handleThemeMediaChange);
+  }
 }
 
 function openLightbox(src, alt) {

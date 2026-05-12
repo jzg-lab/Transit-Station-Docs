@@ -139,6 +139,9 @@ test('site supports dark theme and embedded theme control', () => {
   assert.match(app, /localStorage\.getItem\(themeStorageKey\)/);
   assert.match(app, /function setStoredTheme/);
   assert.match(app, /document\.documentElement\.dataset\.theme = theme/);
+  assert.match(app, /function closestThemeToggle/);
+  assert.match(app, /if \(themeMedia\.addEventListener\)/);
+  assert.match(app, /themeMedia\.addListener/);
   assert.match(css, /:root\[data-theme="dark"\]/);
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /\.theme-toggle/);
