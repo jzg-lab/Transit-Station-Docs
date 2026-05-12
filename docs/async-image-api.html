@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>异步生图接口 接入教程｜词元.fast</title>
+  <meta name="description" content="异步生图接口 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">部署中枢</p>
+        <h1>异步生图接口 接入教程</h1>
+        <p class="lead">词元.fast 异步生图接口文档。可以直接丢给 AI 助手，让它按接口说明帮你写接入代码。</p>
+        <div class="tag-row"><span class="tag">API</span><span class="tag">生图</span><span class="tag">可交给 AI</span></div>
+        
+          <h2>异步生图接口使用说明</h2>
+          <p class="lead">服务地址：<code>https://img.ciyuan.fast</code>。这份接口说明可以直接丢给 AI 助手，让它根据你的语言和框架生成接入代码。接口是异步流程：先创建任务，拿到 <code>job_id</code>，再轮询任务状态，成功后读取图片 URL。</p>
+        <div class="resource-grid" aria-label="异步生图接口 项目地址">
+          
+            <a class="resource-link" href="https://img.ciyuan.fast" target="_blank" rel="noreferrer">
+              <span>接口域名</span>
+              <strong>img.ciyuan.fast</strong>
+            </a>
+          
+            <a class="resource-link" href="https://ciyuan.fast" target="_blank" rel="noreferrer">
+              <span>控制台</span>
+              <strong>词元.fast</strong>
+            </a>
+          
+            <a class="resource-link" href="https://ciyuan.fast" target="_blank" rel="noreferrer">
+              <span>说明</span>
+              <strong>可直接丢给 AI 助手</strong>
+            </a>
+          
+        </div>
+      
+          <h3>接口概览</h3>
+          <table><tr><th>能力</th><th>接口</th><th>用途</th></tr><tr><td>文生图</td><td><code>POST /v1/images/generations</code></td><td>根据提示词创建生图任务</td></tr><tr><td>修改图片 / 图生图</td><td><code>POST /v1/images/edits</code></td><td>上传图片或传图片 URL 进行修改</td></tr><tr><td>查询任务</td><td><code>GET /v1/image-jobs/:jobId</code></td><td>查询 queued、running、succeeded、failed</td></tr></table>
+          <h3>鉴权方式</h3>
+          <pre><code>Authorization: Bearer &lt;你的API Key&gt;</code></pre><p>创建任务和查询任务必须使用同一个 API Key。</p>
+          <h3>文生图最简示例</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/images/generations   -H "Authorization: Bearer &lt;你的API Key&gt;"   -H "Content-Type: application/json"   -d '{"model":"gpt-image-1","prompt":"a clean product photo of a white ceramic mug","size":"1024x1024","n":1}'</code></pre>
+          <h3>查询任务</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/image-jobs/imgjob_xxx   -H "Authorization: Bearer &lt;同一个API Key&gt;"</code></pre>
+          <h3>图生图 / 修改图片</h3>
+          <pre><code>curl -sS https://img.ciyuan.fast/v1/images/edits   -H "Authorization: Bearer &lt;你的API Key&gt;"   -F "model=gpt-image-1"   -F "prompt=make the background white"   -F "size=1024x1024"   -F "image[]=@./input.png"</code></pre>
+          <h3>轮询建议</h3>
+          <p>建议每 2 到 5 秒查询一次任务状态，不要高频轮询。如果系统需要稳定保存图片，拿到 URL 后建议立即下载并转存。</p>
+        
+        <h3>补充图文步骤</h3>
+        <div class="screenshot-grid">
+          
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 1</span>
+            <h4>密钥创建通用步骤</h4>
+            <p>先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/ciyuan-api-key.png" alt="词元.fast 创建和复制 API Key" loading="lazy" data-full="../images/ciyuan-api-key.png">
+            <figcaption>词元.fast 创建和复制 API Key</figcaption>
+          </figure>
+        </section>
+      
+        </div>
+      
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

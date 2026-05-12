@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AionUi 接入教程｜词元.fast</title>
+  <meta name="description" content="AionUi 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">桌面客户端</p>
+        <h1>AionUi 接入教程</h1>
+        <p class="lead">完整复刻源站 AionUi 教程密度：核心特性、多代理能力和词元.fast NewAPI 接入步骤。</p>
+        <div class="tag-row"><span class="tag">办公 Agent</span><span class="tag">多代理</span><span class="tag">桌面</span></div>
+        
+          <div class="callout"><strong>项目介绍</strong><p>🚀 AionUi 是一款免费、本地、开源的Cowork，支持 Gemini CLI、Claude Code、Codex、OpenCode、Qwen Code、Goose CLI、Auggie 等多种 AI 代理。它提供了完整的 GUI 界面和 WebUI 远程访问功能，是 Cowork 的开源替代方案。</p>
+        <div class="resource-grid" aria-label="AionUi 项目地址">
+          
+            <a class="resource-link" href="https://github.com/office-sec/AionUi" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>office-sec/AionUi</strong>
+            </a>
+          
+            <a class="resource-link" href="https://aionui.com" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>aionui.com</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/office-sec/AionUi/releases" target="_blank" rel="noreferrer">
+              <span>下载</span>
+              <strong>AionUi Releases</strong>
+            </a>
+          
+        </div>
+      </div>
+          <ul><li>官网地址：<a href="https://www.aionui.com" target="_blank" rel="noreferrer">https://www.aionui.com</a></li></ul>
+          <ul><li>GitHub 仓库：<a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noreferrer">https://github.com/iOfficeAI/AionUi</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/iOfficeAI/AionUi/releases" target="_blank" rel="noreferrer">https://github.com/iOfficeAI/AionUi/releases</a></li></ul>
+          <figure class="shot doc-shot"><img src="../images/aionuilogo.webp" alt="AionUi Logo" loading="lazy" data-full="../images/aionuilogo.webp"><figcaption>AionUi Logo</figcaption></figure>
+          <h2>核心特性</h2>
+          <h3>💬 多会话聊天</h3>
+          <ul><li><strong>多会话 + 独立上下文</strong> - 可同时打开多个聊天会话，每个会话拥有独立的上下文记忆</li></ul>
+          <ul><li><strong>本地存储</strong> - 所有对话数据保存在本地 SQLite 数据库中，不会丢失</li></ul>
+          <h3>🤖 多模型支持</h3>
+          <ul><li><strong>多平台支持</strong> - 支持 Gemini、OpenAI、Claude、Qwen 等主流模型，灵活切换</li></ul>
+          <ul><li><strong>本地模型支持</strong> - 支持 Ollama、LM Studio 等本地模型部署</li></ul>
+          <h3>🤝 多代理模式</h3>
+          <ul><li><strong>同时运行多个 AI 代理</strong> - 可同时运行多个 AI 代理（如 Gemini CLI、Claude Code、Codex、OpenCode、Qwen Code、Goose CLI、Auggie 等）</li></ul>
+          <ul><li><strong>MCP 统一管理</strong> - 通过 Model Context Protocol (MCP) 统一管理和配置所有代理，简化操作流程</li></ul>
+          <ul><li><strong>Skills 配置</strong> - 支持为不同代理配置专属的 Skills，扩展代理能力</li></ul>
+          <ul><li><strong>助手自定义</strong> - 支持自定义助手配置，打造个性化的 AI 工作流</li></ul>
+          <ul><li><strong>独立配置</strong> - 每个代理可独立配置和使用，互不干扰</li></ul>
+          <ul><li><strong>灵活切换</strong> - 在不同代理之间灵活切换，满足不同场景需求</li></ul>
+          <h3>🗂️ 文件管理</h3>
+          <ul><li><strong>文件树浏览 + 拖拽上传</strong> - 像文件夹一样浏览文件，支持拖拽文件或文件夹一键导入</li></ul>
+          <ul><li><strong>智能整理</strong> - 可让 AI 帮助整理文件夹，自动分类</li></ul>
+          <h3>📄 预览面板</h3>
+          <ul><li><strong>9+ 格式预览</strong> - 支持 PDF、Word、Excel、PPT、代码、Markdown、图片等格式</li></ul>
+          <ul><li><strong>实时跟踪 + 可编辑</strong> - 自动跟踪文件变化，支持实时编辑和调试 Markdown、代码、HTML</li></ul>
+          <h3>🎨 AI 图像生成与编辑</h3>
+          <ul><li><strong>智能图像生成</strong> - 支持 Gemini 2.5 Flash Image Preview、Nano、Banana 等多种图像生成模型</li></ul>
+          <ul><li><strong>图像识别与编辑</strong> - AI 驱动的图像分析和编辑功能</li></ul>
+          <h3>🌐 多渠道访问</h3>
+          <ul><li><strong>WebUI 远程访问</strong> - 可通过浏览器从网络上的任何设备访问，支持移动设备</li></ul>
+          <ul><li><strong>Telegram 集成</strong> - 支持通过 Telegram 机器人进行交互</li></ul>
+          <ul><li><strong>飞书集成</strong> - 支持通过飞书进行访问和交互</li></ul>
+          <ul><li><strong>本地数据安全</strong> - 所有数据存储在本地 SQLite 数据库中，适合服务器部署</li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <h3>参数填写</h3>
+          <p>提供商类型：词元.fast API 支持的类型 API 密钥：于 词元.fast API 获取 API 地址：词元.fast API站点地址（例如：<code>https://ciyuan.fast/v1</code>）</p>
+          <h3>配置步骤</h3>
+          <p>1. <strong>在 词元.fast API 中复制 API key</strong></p>
+          <figure class="shot doc-shot"><img src="../images/copy_apikey.webp" alt="复制 API 密钥" loading="lazy" data-full="../images/copy_apikey.webp"><figcaption>复制 API 密钥</figcaption></figure>
+          <p>2. <strong>打开 AionUi 设置</strong></p>
+          <ul><li>在 AionUi 中进入设置页面</li></ul>
+          <ul><li>找到 模型配置 Tab</li></ul>
+          <ul><li>点击"添加模型"</li></ul>
+          <figure class="shot doc-shot"><img src="../images/add-model-1.webp" alt="打开设置" loading="lazy" data-full="../images/add-model-1.webp"><figcaption>打开设置</figcaption></figure>
+          <p>3. <strong>添加新的提供商</strong></p>
+          <ul><li>点击"添加模型"</li></ul>
+          <ul><li>选择 NewAPI</li></ul>
+          <figure class="shot doc-shot"><img src="../images/newapi_provider.webp" alt="添加 NewAPI 提供商" loading="lazy" data-full="../images/newapi_provider.webp"><figcaption>添加 NewAPI 提供商</figcaption></figure>
+          <p>4. <strong>配置 API 信息</strong></p>
+          <ul><li>API 地址：填写您的 词元.fast API 站点地址（格式：https://ciyuan.fast/v1`）</li></ul>
+          <ul><li>API 密钥：粘贴从 词元.fast API 控制台复制的 API Key</li></ul>
+          <p>5. <strong>添加模型</strong></p>
+          <ul><li>下拉选择需要添加的模型</li></ul>
+          <ul><li>模型名称应与 词元.fast API 中配置的模型名称一致</li></ul>
+          <ul><li>选择合适的请求协议</li></ul>
+          <p>6. <strong>开始使用</strong></p>
+          <ul><li>返回聊天页面</li></ul>
+          <ul><li>选择已配置的 词元.fast API 模型开始对话</li></ul>
+          <h2>相关链接</h2>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noreferrer">GitHub 仓库</a></li></ul>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi#-detailed-usage-guide" target="_blank" rel="noreferrer">完整使用指南</a></li></ul>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi#-support--help" target="_blank" rel="noreferrer">FAQ 常见问题</a></li></ul>
+        
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

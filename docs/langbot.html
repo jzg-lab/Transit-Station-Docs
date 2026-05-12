@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LangBot 接入教程｜词元.fast</title>
+  <meta name="description" content="LangBot 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">机器人平台</p>
+        <h1>LangBot 接入教程</h1>
+        <p class="lead">完整复刻源站 LangBot 教程密度：NewAPI 接入、流水线调试、微信适配和知识库嵌入模型。</p>
+        <div class="tag-row"><span class="tag">飞书</span><span class="tag">钉钉</span><span class="tag">知识库</span></div>
+        
+          <div class="callout"><strong>项目介绍</strong><p class="lead">LangBot 是一个开源的即时通信机器人开发平台，支持多种即时通信平台，如飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等。接入全球主流的 AI 模型，支持知识库、Agent、MCP等多种 AI 应用能力，并完美适配 词元.fast API。</p>
+        <div class="resource-grid" aria-label="LangBot 项目地址">
+          
+            <a class="resource-link" href="https://langbot.app" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>langbot.app</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/langbot-app/LangBot" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>langbot-app/LangBot</strong>
+            </a>
+          
+            <a class="resource-link" href="https://docs.langbot.app" target="_blank" rel="noreferrer">
+              <span>文档</span>
+              <strong>docs.langbot.app</strong>
+            </a>
+          
+        </div>
+      </div>
+          <ul><li>官网地址：<a href="https://langbot.app/" target="_blank" rel="noreferrer">https://langbot.app</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/langbot-app/LangBot/releases" target="_blank" rel="noreferrer">https://github.com/langbot-app/LangBot/releases</a></li></ul>
+          <ul><li>官方文档：<a href="https://docs.langbot.app/" target="_blank" rel="noreferrer">https://docs.langbot.app</a></li></ul>
+          <ul><li>开源地址：<a href="https://github.com/langbot-app/LangBot" target="_blank" rel="noreferrer">https://github.com/langbot-app/LangBot</a></li></ul>
+          <h2>接入 词元.fast API</h2>
+          <p>LangBot 支持接入词元.fast API 服务。</p>
+          <h3>使用方式</h3>
+          <p>1.  从 词元.fast API 中获取 API key</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/get_api_key.webp" alt="获取 API key" loading="lazy" data-full="../images/langbot/get_api_key.webp"><figcaption>获取 API key</figcaption></figure>
+          <p>若使用 词元.fast API 服务，请配置API地址。注意，地址后需要添加<code>/v1</code>，如：https://ciyuan.fast/v1。</p>
+          <p>2.  在 LangBot 中添加模型，选择使用 NewAPI 供应商，填写对应的 API key 和 API 地址</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/add_newapi_model.webp" alt="添加 NewAPI 模型" loading="lazy" data-full="../images/langbot/add_newapi_model.webp"><figcaption>添加 NewAPI 模型</figcaption></figure>
+          <p>3.  在流水线中选择使用模型</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/select_model.webp" alt="选择模型" loading="lazy" data-full="../images/langbot/select_model.webp"><figcaption>选择模型</figcaption></figure>
+          <p>4.  在对话调试中对话或与绑定至流水线的机器人对话即可使用</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/debug_chat.webp" alt="对话" loading="lazy" data-full="../images/langbot/debug_chat.webp"><figcaption>对话</figcaption></figure>
+          <figure class="shot doc-shot"><img src="../images/langbot/wechat.webp" alt="微信对话" loading="lazy" data-full="../images/langbot/wechat.webp"><figcaption>微信对话</figcaption></figure>
+          <p>部署配置机器人请参考<a href="https://docs.langbot.app/zh/deploy/platforms/readme.html" target="_blank" rel="noreferrer">部署机器人</a>。</p>
+          <h3>使用 LangBot 知识库</h3>
+          <p>LangBot 支持使用词元.fast API 的嵌入模型，并将其作为知识库的向量模型。</p>
+          <p>1. 在 LangBot 中添加嵌入模型，选择使用 NewAPI 供应商</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/add_embedding_model.webp" alt="添加嵌入模型" loading="lazy" data-full="../images/langbot/add_embedding_model.webp"><figcaption>添加嵌入模型</figcaption></figure>
+          <p>2. 在新建知识库时选用嵌入模型</p>
+          <figure class="shot doc-shot"><img src="../images/langbot/use_embedding_model.webp" alt="使用嵌入模型" loading="lazy" data-full="../images/langbot/use_embedding_model.webp"><figcaption>使用嵌入模型</figcaption></figure>
+          <p>更多使用方式请查看 LangBot 官方文档：<a href="https://docs.langbot.app/" target="_blank" rel="noreferrer">https://docs.langbot.app</a></p>
+        
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

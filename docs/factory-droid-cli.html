@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factory Droid CLI 接入教程｜词元.fast</title>
+  <meta name="description" content="Factory Droid CLI 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">编程助手</p>
+        <h1>Factory Droid CLI 接入教程</h1>
+        <p class="lead">完整复刻源站 Droid CLI 教程密度：效果演示、特性、Windows/macOS/Linux 安装配置、启动示例。</p>
+        <div class="tag-row"><span class="tag">Droid</span><span class="tag">工程代理</span><span class="tag">CLI</span></div>
+        
+          <div class="callout"><strong>项目介绍</strong><p>Droid CLI 是由 Factory AI 开发的命令行工具，旨在作为 AI 软件工程代理运行。它允许用户通过终端与各种大型语言模型交互，构建、调试和重构代码，甚至创建完整的应用程序。</p>
+        <div class="resource-grid" aria-label="Factory Droid CLI 项目地址">
+          
+            <a class="resource-link" href="https://factory.ai" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>Factory AI</strong>
+            </a>
+          
+            <a class="resource-link" href="https://docs.factory.ai" target="_blank" rel="noreferrer">
+              <span>文档</span>
+              <strong>Factory Docs</strong>
+            </a>
+          
+            <a class="resource-link" href="https://docs.factory.ai" target="_blank" rel="noreferrer">
+              <span>安装</span>
+              <strong>Factory CLI</strong>
+            </a>
+          
+        </div>
+      <ul><li>官方主页：<a href="https://factory.ai/product/cli" target="_blank" rel="noreferrer">https://factory.ai/product/cli</a></li><li>官方文档：<a href="https://docs.factory.ai/cli/getting-started/quickstart" target="_blank" rel="noreferrer">https://docs.factory.ai/cli/getting-started/quickstart</a></li></ul></div>
+          <h2>效果演示</h2>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/droid_example.webp" alt="droid.webp" loading="lazy" data-full="../images/factory-droid-cli/droid_example.webp"><figcaption>droid.webp</figcaption></figure>
+          <h3>特性</h3>
+          <table><tr><th>类别</th><th>特性</th><th>价值/能力</th><th>示例/备注</th></tr><tr><td>快速上手与 CLI</td><td>30 秒安装；在项目目录中启动 droid 交互会话；支持 macOS/Linux 与 Windows</td><td>快速接入当前工程，无需新工具</td><td>Windows 安装：<code>irm https://app.factory.ai/cli/windows | iex</code>；启动：<code>droid</code></td></tr><tr><td>端到端特性开发</td><td>从规划到实现到测试的全流程自动化；透明的评审流程</td><td>提升交付速度，保持人类把控</td><td>原生 diff 查看与批准流程（见"透明与可控"）</td></tr><tr><td>代码库深度理解</td><td>融合组织在代码库、文档、Issue 追踪中的共享知识；上下文感知，效果随时间提升</td><td>更准确的建议与改动</td><td>持续利用跨仓库与文档的知识</td></tr><tr><td>工程系统集成</td><td>原生集成 Jira、Notion、Slack 等工具；开发工作与团队流程保持同步</td><td>减少工具切换与信息孤岛</td><td>"等"表示还有更多集成</td></tr><tr><td>生产级自动化</td><td>工作流可在本地与 CI/CD 复用；企业级安全与合规内建</td><td>一致性与可审计性</td><td>适配流水线与企业环境</td></tr><tr><td>企业级能力</td><td>私有部署选项、SOC-2 合规、空气隔离（air-gapped）环境</td><td>满足安全与合规要求</td><td>以安全与质量优先</td></tr><tr><td>现有工具增强</td><td>在终端、IDE 与既有开发环境中工作；无需切换编辑器或学习新界面</td><td>保持现有工作习惯、低迁移成本</td><td>与熟悉工具深度集成</td></tr><tr><td>透明与可控</td><td>每个决策可见且可审阅；对代码变更保持完全监督；原生 diff 查看与审批工作流</td><td>降低风险、提升可控性</td><td>审核友好、可追踪</td></tr><tr><td>模型灵活性</td><td>不锁定单一 AI 提供商；按任务选择最佳模型；组织级一致行为与记忆</td><td>在性能与成本间做最优选择</td><td>支持多模型路由</td></tr><tr><td>下一步与资源</td><td>Quickstart、Common Use Cases、IDE Integration、Configuration、AGENTS.md</td><td>便于落地与实践</td><td>见页面 "Next steps/Additional resources"</td></tr></table>
+          <h2>AI 模型配置方法</h2>
+          <h3>Windows 端图文指引</h3>
+          <h4>1.打开终端</h4>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/windows_open_terminal.webp" alt="windows_open_terminal" loading="lazy" data-full="../images/factory-droid-cli/windows_open_terminal.webp"><figcaption>windows_open_terminal</figcaption></figure>
+          <h4>2.安装 Factory Droid CLI</h4>
+          <p>官方一键安装命令：</p>
+          <div class="callout"><strong>一键安装命令</strong><pre><code>irm https://app.factory.ai/cli/windows | iex</code></pre></div>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/windows_install_droid.webp" alt="windows-install" loading="lazy" data-full="../images/factory-droid-cli/windows_install_droid.webp"><figcaption>windows-install</figcaption></figure>
+          <h4>3.修改配置文件</h4>
+          <p>Droid CLI 使用第三方 API 需要修改配置文件。</p>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/factory_cli_setup_windows.webp" alt="windows-configure.webp" loading="lazy" data-full="../images/factory-droid-cli/factory_cli_setup_windows.webp"><figcaption>windows-configure.webp</figcaption></figure>
+          <div class="callout"><strong>修改环境变量</strong><pre><code>iex (irm 'https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/factory-cli-setup.ps1')</code></pre></div>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>4.开始使用 Droid CLI</h4>
+          <p>现在你可以开始使用 Droid CLI 了！</p>
+          <div class="callout"><strong>启动 Droid CLI</strong><p>直接启动 Droid CLI：</p><pre><code>droid</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd C:path	oyourproject
+          
+          # 启动 Droid CLI
+          droid</code></pre><p>按 Enter 启动 Droid CLI。</p></div>
+          <p>Droid CLI 要求用户登录官方账号（免费）后才能使用。</p>
+          <h4>5.Windows 常见问题解决</h4>
+          <div class="callout"><strong>安装时提示 permission denied 错误</strong><p>这通常是权限问题，尝试以下解决方法：</p><ul><li>以管理员身份运行 PowerShell</li><li>或者配置 <code>npm</code> 使用用户目录：<code>npm config set prefix %APPDATA%
+pm</code></li></ul></div>
+          <div class="callout"><strong>PowerShell 执行策略错误</strong><p>如果遇到执行策略限制，运行：</p><pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre></div>
+          <h3>macOS/Linux 端图文指引</h3>
+          <h4>1.安装 Droid CLI</h4>
+          <div class="callout"><strong>安装 Droid CLI</strong><p>打开终端，运行以下命令：</p><pre><code>curl -fsSL https://app.factory.ai/cli | sh</code></pre></div>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/macos_install_droid.webp" alt="macos-open-terminal" loading="lazy" data-full="../images/factory-droid-cli/macos_install_droid.webp"><figcaption>macos-open-terminal</figcaption></figure>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/macos_install_droid_2.webp" alt="macos-img-02.webp" loading="lazy" data-full="../images/factory-droid-cli/macos_install_droid_2.webp"><figcaption>macos-img-02.webp</figcaption></figure>
+          <p>按照安装提示修改环境变量（直接复制安装提示代码）：</p>
+          <p>Linux 视情况选择 <code>~/.bashrc</code> 或 <code>~/.zshrc</code></p>
+          <div class="callout"><strong>Droid CLI 环境变量 (仅作示例)</strong><pre><code>echo 'export PATH=/Users/修改此处/.local/bin:$PATH' &gt;&gt; ~/.zshrc
+          source ~/.zshrc</code></pre></div>
+          <h4>2.修改配置文件</h4>
+          <p>Droid CLI 使用第三方 API 需要修改配置文件。</p>
+          <div class="callout"><strong>一键修改配置文件</strong><pre><code>curl -fsSL https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/factory-cli-setup.sh | bash</code></pre></div>
+          <figure class="shot doc-shot"><img src="../images/factory-droid-cli/macos_configure.webp" alt="macos-img-03.webp" loading="lazy" data-full="../images/factory-droid-cli/macos_configure.webp"><figcaption>macos-img-03.webp</figcaption></figure>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>3.开始使用 Droid CLI</h4>
+          <p>现在你可以开始使用 Droid CLI 了！</p>
+          <div class="callout"><strong>启动 Droid CLI</strong><p>直接启动 Droid CLI：</p><pre><code>droid</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd /path/to/your/project
+          
+          # 启动 Droid CLI
+          droid</code></pre><p>按 Enter 启动 Droid CLI。</p></div>
+          <blockquote>Droid CLI 要求用户登录官方账号（免费）后才能使用。</blockquote>
+        
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

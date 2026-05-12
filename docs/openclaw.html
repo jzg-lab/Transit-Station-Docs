@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenClaw 接入教程｜词元.fast</title>
+  <meta name="description" content="OpenClaw 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">部署中枢</p>
+        <h1>OpenClaw 接入教程</h1>
+        <p class="lead">OpenClaw 图文部署详细指南：按上传 Word 文档从安装、模型配置、技能选择、安全审计到附录完整整理。</p>
+        <div class="tag-row"><span class="tag">自托管</span><span class="tag">多渠道</span><span class="tag">Gateway</span></div>
+        
+          <h2>OpenClaw部署详细指南（图文版）</h2>
+          <p class="lead">项目地址：<a href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">https://github.com/openclaw/openclaw</a>。这部分按你上传的 Word 文档完整整理，保持当前卡片式排版和图文步骤。注意：你上传的文档写的是 <code>https://ciyuan.fast/v1</code>，但 OpenClaw 安装向导这里应填 <code>https://ciyuan.fast</code>，不要加 <code>/v1</code>。</p>
+        <div class="resource-grid" aria-label="OpenClaw 项目地址">
+          
+            <a class="resource-link" href="https://openclaw.ai" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>openclaw.ai</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/openclaw/openclaw" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>openclaw/openclaw</strong>
+            </a>
+          
+            <a class="resource-link" href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">
+              <span>安装依赖</span>
+              <strong>OpenClaw Install Docs</strong>
+            </a>
+          
+        </div>
+      
+          <h3>一、推荐安装方式：官方一键脚本</h3>
+          <p>Windows 系统建议在 WSL2 下运行 OpenClaw。Mac、Linux、WSL2 用户使用官方一键脚本最省事，脚本会自动检测环境、安装 Node.js（如果缺失）并启动初始配置引导。</p><pre><code># Mac / Linux / WSL2
+curl -fsSL https://openclaw.ai/install.sh | bash</code></pre><p>如果 Mac 出现 <code>Homebrew not found</code>，先安装 Homebrew 并配置环境变量。</p><pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/admin/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+brew --version</code></pre><p>Windows PowerShell 用户执行：</p><pre><code>iwr -useb https://openclaw.ai/install.ps1 | iex</code></pre><p>安装文档：<a href="https://docs.openclaw.ai/install" target="_blank" rel="noreferrer">https://docs.openclaw.ai/install</a>。</p>
+          <h3>二、安装配置细节</h3>
+          <ol><li>开始安装后选择 <strong>yes</strong>。</li><li>选择快速开始。</li><li>选择模型厂商：自定义提供商（ciyuan.fast）。</li><li>填入 URL：<strong>https://ciyuan.fast</strong>。OpenClaw 安装向导里填写 URL 时不要加 /v1，填写 https://ciyuan.fast，不是 https://ciyuan.fast/v1。</li><li>填入你的 API Key。</li><li>选择 OpenAI 格式。</li><li>填入模型名称，例如 <code>gpt-5.3-codex</code>；如按 Codex 教程则可用 <code>gpt-5.5</code>。</li><li>后面两个字段相当于代号，可以按向导提示填写。</li><li>连接 App 的步骤可以先跳过。</li><li>进入技能选择界面，不知道选什么时先按图选择推荐项。</li><li>包管理器推荐 npm。</li><li>生图、笔记、语音对话等额外 API，不确定时先全部选 no；开通后再选 yes。</li><li>最后选择 restart，进入对话框后先发一句简单消息测试。</li></ol>
+          <h3>三、部署后的验证与日常命令</h3>
+          <pre><code>openclaw doctor         # 检查配置问题
+openclaw status         # 网关状态
+openclaw dashboard      # 打开浏览器用户界面</code></pre><p>常用指令：<code>openclaw dashboard</code> 打开可视化面板，<code>openclaw onboard</code> 重新配置，<code>openclaw gateway restart</code> 重启，<code>openclaw update</code> 升级，<code>openclaw status</code> 检查状态，<code>openclaw doctor</code> 诊断配置健康度。</p>
+          <h3>四、安全：先最小权限，再逐步扩大</h3>
+          <p>定期运行安全审计，尤其是在更改配置或暴露网络接口后。它会标记网关身份验证暴露、浏览器控制暴露、提升的允许列表、文件系统权限等常见漏洞。</p><pre><code>openclaw security audit
+openclaw security audit --deep
+openclaw security audit --fix
+openclaw security audit --json</code></pre><p>OpenClaw 既是一款产品，也是一项实验。不存在“绝对安全”的设置。你要先想清楚：谁可以和机器人对话？机器人被允许在哪里行动？机器人可以触摸哪些东西？</p><p>高危命令：赋予 OpenClaw 全部权限，慎重执行。</p><pre><code>openclaw config set tools.profile full
+openclaw gateway restart</code></pre>
+          <h3>五、其他扩展</h3>
+          <ul><li><strong>Claw 与飞书集成</strong>：可在连接 App 阶段或 dashboard 中补充飞书凭证。</li><li><strong>自定义 skill</strong>：把你的脚本、工具、业务流程包装成 OpenClaw 可调用能力。</li></ul>
+          <h3>附录 1：技能详情</h3>
+          <p><strong>核心扩展与视觉自动化</strong>：<code>mcporter</code> 是 MCP 桥接器；<code>peekaboo</code> 是 Mac 视觉自动化工具；<code>clawhub</code> 是官方技能包中心；<code>model-usage</code> 用于监控 Token 和账单。</p><p><strong>凭证与系统操作</strong>：<code>1password</code> 安全提取密码和 API Key；<code>camsnap</code> 调用 Mac 摄像头。</p><p><strong>通讯与信息处理</strong>：<code>himalaya</code> 是终端邮件客户端；<code>imsg</code> / <code>wacli</code> 可绑定 iMessage 或 WhatsApp。</p><p><strong>效率笔记与日程监控</strong>：<code>obsidian</code>、<code>bear-notes</code>、<code>apple-notes</code> 读写笔记；<code>things-mac</code>、<code>apple-reminders</code> 管理任务；<code>blogwatcher</code> 监控博客和 RSS。</p><p><strong>多媒体与特定领域</strong>：<code>video-frames</code> 视频抽帧；<code>nano-pdf</code> 解析 PDF；<code>goplaces</code> 接 Google Places；<code>openai-whisper</code> 语音转文字；<code>gemini</code> 处理多模态或复杂推理。</p>
+          <h3>附录 2：可能需要接入的其他 API Key</h3>
+          <table><tr><th>能力</th><th>环境变量</th><th>场景</th></tr><tr><td>goplaces</td><td><code>GOOGLE_PLACES_API_KEY</code></td><td>地理位置、店铺信息、评分和路线规划。</td></tr><tr><td>nano-banana-pro</td><td><code>GEMINI_API_KEY</code></td><td>图像生成与编辑。</td></tr><tr><td>notion</td><td><code>NOTION_API_KEY</code></td><td>读写 Notion 工作区。</td></tr><tr><td>openai-image-gen</td><td><code>OPENAI_API_KEY</code></td><td>图像生成。</td></tr><tr><td>openai-whisper-api</td><td><code>OPENAI_API_KEY</code></td><td>语音识别。</td></tr><tr><td>sag</td><td><code>ELEVENLABS_API_KEY</code></td><td>拟真人声合成。</td></tr></table>
+          <h3>附录 3：组成完整 Claw 大脑的脑区</h3>
+          <p><strong>boot-md</strong> 类似启动脚本，每次网关启动读取并执行 <code>BOOT.md</code>。</p><p><strong>bootstrap-extra-files</strong> 用于上下文预加载，把项目代码或日志注入初始上下文。</p><p><strong>command-logger</strong> 集中记录 Agent 执行过的 Shell 命令，方便追溯。</p><p><strong>session-memory</strong> 把短期会话记忆沉淀为长期记忆。</p>
+        
+        <h3>补充图文步骤</h3>
+        <div class="screenshot-grid">
+          
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 1</span>
+            <h4>密钥创建通用步骤</h4>
+            <p>先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/ciyuan-api-key.png" alt="词元.fast 创建和复制 API Key" loading="lazy" data-full="../images/ciyuan-api-key.png">
+            <figcaption>词元.fast 创建和复制 API Key</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 2</span>
+            <h4>OpenClaw 图文步骤 1</h4>
+            <p>打开安装向导，Windows 用户建议先进入 WSL2；Mac、Linux、WSL2 执行官方一键脚本。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image1.png" alt="OpenClaw 部署截图 1" loading="lazy" data-full="../images/openclaw-guide/image1.png">
+            <figcaption>OpenClaw 部署截图 1</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 3</span>
+            <h4>OpenClaw 图文步骤 2</h4>
+            <p>选择 yes 继续安装。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image2.png" alt="OpenClaw 部署截图 2" loading="lazy" data-full="../images/openclaw-guide/image2.png">
+            <figcaption>OpenClaw 部署截图 2</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 4</span>
+            <h4>OpenClaw 图文步骤 3</h4>
+            <p>选择快速开始。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image3.png" alt="OpenClaw 部署截图 3" loading="lazy" data-full="../images/openclaw-guide/image3.png">
+            <figcaption>OpenClaw 部署截图 3</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 5</span>
+            <h4>OpenClaw 图文步骤 4</h4>
+            <p>选择自定义提供商，把词元.fast 当作兼容模型网关接入。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image4.png" alt="OpenClaw 部署截图 4" loading="lazy" data-full="../images/openclaw-guide/image4.png">
+            <figcaption>OpenClaw 部署截图 4</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 6</span>
+            <h4>OpenClaw 图文步骤 5</h4>
+            <p>填写 URL：OpenClaw 这里填 https://ciyuan.fast，不要加 /v1。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image5.png" alt="OpenClaw 部署截图 5" loading="lazy" data-full="../images/openclaw-guide/image5.png">
+            <figcaption>OpenClaw 部署截图 5</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 7</span>
+            <h4>OpenClaw 图文步骤 6</h4>
+            <p>粘贴词元.fast API Key。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image6.png" alt="OpenClaw 部署截图 6" loading="lazy" data-full="../images/openclaw-guide/image6.png">
+            <figcaption>OpenClaw 部署截图 6</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 8</span>
+            <h4>OpenClaw 图文步骤 7</h4>
+            <p>选择 OpenAI 格式。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image7.png" alt="OpenClaw 部署截图 7" loading="lazy" data-full="../images/openclaw-guide/image7.png">
+            <figcaption>OpenClaw 部署截图 7</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 9</span>
+            <h4>OpenClaw 图文步骤 8</h4>
+            <p>填写模型名称，例如 gpt-5.3-codex 或控制台可用模型。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image8.png" alt="OpenClaw 部署截图 8" loading="lazy" data-full="../images/openclaw-guide/image8.png">
+            <figcaption>OpenClaw 部署截图 8</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 10</span>
+            <h4>OpenClaw 图文步骤 9</h4>
+            <p>连接 App 的步骤可以先跳过。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image9.png" alt="OpenClaw 部署截图 9" loading="lazy" data-full="../images/openclaw-guide/image9.png">
+            <figcaption>OpenClaw 部署截图 9</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 11</span>
+            <h4>OpenClaw 图文步骤 10</h4>
+            <p>选择官方技能，不确定时先选推荐技能。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image10.png" alt="OpenClaw 部署截图 10" loading="lazy" data-full="../images/openclaw-guide/image10.png">
+            <figcaption>OpenClaw 部署截图 10</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 12</span>
+            <h4>OpenClaw 图文步骤 11</h4>
+            <p>包管理器推荐 npm。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image11.png" alt="OpenClaw 部署截图 11" loading="lazy" data-full="../images/openclaw-guide/image11.png">
+            <figcaption>OpenClaw 部署截图 11</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 13</span>
+            <h4>OpenClaw 图文步骤 12</h4>
+            <p>额外 API 能力不确定时先选 no。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image12.png" alt="OpenClaw 部署截图 12" loading="lazy" data-full="../images/openclaw-guide/image12.png">
+            <figcaption>OpenClaw 部署截图 12</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 14</span>
+            <h4>OpenClaw 图文步骤 13</h4>
+            <p>如果已开通生图、笔记、语音等能力，可按需开启。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image13.png" alt="OpenClaw 部署截图 13" loading="lazy" data-full="../images/openclaw-guide/image13.png">
+            <figcaption>OpenClaw 部署截图 13</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 15</span>
+            <h4>OpenClaw 图文步骤 14</h4>
+            <p>确认配置并 restart。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image14.png" alt="OpenClaw 部署截图 14" loading="lazy" data-full="../images/openclaw-guide/image14.png">
+            <figcaption>OpenClaw 部署截图 14</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 16</span>
+            <h4>OpenClaw 图文步骤 15</h4>
+            <p>进入对话框后先测试一句简单消息。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image15.png" alt="OpenClaw 部署截图 15" loading="lazy" data-full="../images/openclaw-guide/image15.png">
+            <figcaption>OpenClaw 部署截图 15</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 17</span>
+            <h4>OpenClaw 图文步骤 16</h4>
+            <p>检查 dashboard 是否能正常打开。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image16.png" alt="OpenClaw 部署截图 16" loading="lazy" data-full="../images/openclaw-guide/image16.png">
+            <figcaption>OpenClaw 部署截图 16</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 18</span>
+            <h4>OpenClaw 图文步骤 17</h4>
+            <p>检查状态与网关连接。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image17.png" alt="OpenClaw 部署截图 17" loading="lazy" data-full="../images/openclaw-guide/image17.png">
+            <figcaption>OpenClaw 部署截图 17</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 19</span>
+            <h4>OpenClaw 图文步骤 18</h4>
+            <p>查看技能和应用连接状态。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image18.png" alt="OpenClaw 部署截图 18" loading="lazy" data-full="../images/openclaw-guide/image18.png">
+            <figcaption>OpenClaw 部署截图 18</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 20</span>
+            <h4>OpenClaw 图文步骤 19</h4>
+            <p>确认模型回复可用。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image19.png" alt="OpenClaw 部署截图 19" loading="lazy" data-full="../images/openclaw-guide/image19.png">
+            <figcaption>OpenClaw 部署截图 19</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 21</span>
+            <h4>OpenClaw 图文步骤 20</h4>
+            <p>完成部署后按日常命令维护。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/openclaw-guide/image20.png" alt="OpenClaw 部署截图 20" loading="lazy" data-full="../images/openclaw-guide/image20.png">
+            <figcaption>OpenClaw 部署截图 20</figcaption>
+          </figure>
+        </section>
+      
+        </div>
+      
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

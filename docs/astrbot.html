@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AstrBot 接入教程｜词元.fast</title>
+  <meta name="description" content="AstrBot 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">机器人平台</p>
+        <h1>AstrBot 接入教程</h1>
+        <p class="lead">完整复刻源站 AstrBot 教程密度：API Key、OpenAI 服务商、默认聊天模型和后台验证。</p>
+        <div class="tag-row"><span class="tag">QQ</span><span class="tag">企业微信</span><span class="tag">Agent</span></div>
+        
+          <div class="callout"><strong>项目介绍</strong><p class="lead">AstrBot 是一个开源的一站式 Agent 聊天机器人平台，可将大模型能力无缝接入 QQ、飞书、钉钉、企业微信等主流即时通讯软件，为个人、开发者和团队打造可靠、可扩展的对话式智能基础设施。无论是个人 AI 伙伴、智能客服、自动化助手，还是企业知识库，AstrBot 都能在你的即时通讯软件平台的工作流中快速构建生产可用的 AI 应用。</p>
+        <div class="resource-grid" aria-label="AstrBot 项目地址">
+          
+            <a class="resource-link" href="https://astrbot.app" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>astrbot.app</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/astrbotdevs/astrbot" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>astrbotdevs/astrbot</strong>
+            </a>
+          
+            <a class="resource-link" href="https://docs.astrbot.app" target="_blank" rel="noreferrer">
+              <span>文档</span>
+              <strong>docs.astrbot.app</strong>
+            </a>
+          
+        </div>
+      </div>
+          <ul><li>官方网站：<a href="https://astrbot.app" target="_blank" rel="noreferrer">https://astrbot.app</a></li></ul>
+          <ul><li>官方文档：<a href="https://docs.astrbot.app" target="_blank" rel="noreferrer">https://docs.astrbot.app</a></li></ul>
+          <ul><li>项目主页：<a href="https://github.com/astrbotdevs/astrbot" target="_blank" rel="noreferrer">https://github.com/astrbotdevs/astrbot</a></li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <p>AstrBot 支持接入 词元.fast API 作为模型提供商，用户可以通过 词元.fast API来访问和使用各种 AI 模型服务。</p>
+          <h3>配置步骤</h3>
+          <h4>获取 词元.fast API API Key 密钥</h4>
+          <p>在词元.fast API 注册并登录后，点击上方导航栏的「控制台」，点击「令牌管理」，然后点击「添加令牌」按钮，创建一个新的 API Key 密钥，选择适当的权限，然后点击「创建」。</p>
+          <figure class="shot doc-shot"><img src="../images/astrbot/image.webp" alt="create-api-key" loading="lazy" data-full="../images/astrbot/image.webp"><figcaption>create-api-key</figcaption></figure>
+          <p>创建成功后，点击复制密钥按钮，复制生成的 API Key 密钥。</p>
+          <figure class="shot doc-shot"><img src="../images/astrbot/image-1.webp" alt="copy-api-key" loading="lazy" data-full="../images/astrbot/image-1.webp"><figcaption>copy-api-key</figcaption></figure>
+          <h4>在 AstrBot 中配置 NewAPI 服务提供商</h4>
+          <p>打开 AstrBot 管理面板，进入「模型提供商」页面，然后，点击「新增模型提供商」按钮。</p>
+          <p>词元.fast API 完美地支持了 OpenAI Chat Completion 和 Responses 接口，我们点击 「OpenAI」，进入 OpenAI 提供商的配置页面。</p>
+          <p>在弹出的对话框中，将 API Base URL 设置为 词元.fast API的接口地址，例如 <code>https://ciyuan.fast/v1</code>。</p>
+          <p>然后，将 API Key 填入「API Key」字段中，点击「保存」按钮。</p>
+          <figure class="shot doc-shot"><img src="../images/astrbot/image-2.webp" alt="astrbot-provider-config" loading="lazy" data-full="../images/astrbot/image-2.webp"><figcaption>astrbot-provider-config</figcaption></figure>
+          <p>然后点击保存，完成 NewAPI 提供商的配置。</p>
+          <h4>应用服务提供商</h4>
+          <p>进入「配置文件」页面，找到模型一节，将「默认聊天模型」修改为刚刚创建的 NewAPI 提供商，点击「保存」按钮。</p>
+          <figure class="shot doc-shot"><img src="../images/astrbot/image-3.webp" alt="apply" loading="lazy" data-full="../images/astrbot/image-3.webp"><figcaption>apply</figcaption></figure>
+          <p>至此，您已经成功配置了 词元.fast API 作为 AstrBot 的模型提供商。现在，您可以通过 AstrBot 来访问和使用 词元.fast API 提供的各种 AI 模型服务了。</p>
+        
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CC Switch 接入教程｜词元.fast</title>
+  <meta name="description" content="CC Switch 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">编程助手</p>
+        <h1>CC Switch 接入教程</h1>
+        <p class="lead">完整复刻源站 CC Switch 教程密度：核心特性、Provider/MCP/Prompts 管理、词元.fast 接入和三端安装方式。</p>
+        <div class="tag-row"><span class="tag">Provider</span><span class="tag">MCP</span><span class="tag">Prompts</span></div>
+        
+          <div class="callout"><strong>项目介绍</strong><p>🔀 CC Switch 是一款开源、跨平台的 AI CLI 统一管理工具，支持 Claude Code、Codex 和 Gemini CLI 的 Provider 配置一键切换、MCP 服务器统一管理、系统提示词（Prompts）管理以及 Skills 扩展管理， 让你在多个 AI 编程助手之间自由切换，无需手动编辑配置文件。</p>
+        <div class="resource-grid" aria-label="CC Switch 项目地址">
+          
+            <a class="resource-link" href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>farion1231/cc-switch</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">
+              <span>下载</span>
+              <strong>CC Switch Releases</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">
+              <span>协议</span>
+              <strong>ccswitch:// Deep Link</strong>
+            </a>
+          
+        </div>
+      </div>
+          <ul><li>GitHub 仓库：<a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">https://github.com/farion1231/cc-switch</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">GitHub Releases</a></li></ul>
+          <h2>核心特性</h2>
+          <h3>🔌 Provider 管理</h3>
+          <ul><li><strong>一键切换</strong> — 在 Claude Code、Codex、Gemini 的 API 配置之间一键切换，无需手动修改环境变量或配置文件</li></ul>
+          <ul><li><strong>多端点支持</strong> — 每个 Provider 可配置多个端点，支持 API Key 管理与延迟测速</li></ul>
+          <ul><li><strong>4 层模型配置</strong> — 支持 Haiku / Sonnet / Opus / Custom 四级模型粒度配置</li></ul>
+          <h3>🛠️ MCP 服务器管理</h3>
+          <ul><li><strong>跨应用统一管理</strong> — 单面板管理 Claude / Codex / Gemini 三端的 MCP 服务器</li></ul>
+          <ul><li><strong>三种传输类型</strong> — 支持 stdio、HTTP、SSE（Server-Sent Events）</li></ul>
+          <ul><li><strong>自动同步</strong> — 统一导入导出 + 双向同步</li></ul>
+          <h3>💬 Prompts 管理</h3>
+          <ul><li><strong>多预设系统提示词</strong> — 无限预设、快速切换</li></ul>
+          <ul><li><strong>跨应用支持</strong> — Claude（<code>CLAUDE.md</code>）、Codex（<code>AGENTS.md</code>）、Gemini（<code>GEMINI.md</code>）</li></ul>
+          <ul><li><strong>Markdown 编辑器</strong> — CodeMirror 6 + 实时预览</li></ul>
+          <h3>🌐 多平台支持</h3>
+          <ul><li><strong>桌面应用</strong> — Windows、macOS、Linux 原生安装包</li></ul>
+          <ul><li><strong>Web 版本</strong> — 适用于无头服务器 / SSH 远程环境的浏览器访问方案</li></ul>
+          <ul><li><strong>CLI 版本</strong> — 命令行交互模式与命令模式双支持</li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <p>CC Switch 支持 <code>ccswitch://</code> Deep Link 协议，可从 词元.fast 令牌管理页一键导入 Provider 配置。</p>
+          <h3>配置步骤</h3>
+          <p>1. <strong>在 词元.fast API 令牌管理页，点击对应令牌的下拉菜单</strong> 在菜单中选择 <strong>CC Switch</strong> 选项，系统会自动唤起 CC Switch 应用并弹出配置弹窗。</p>
+          <p>2. <strong>在弹窗中完成配置</strong></p>
+          <figure class="shot doc-shot"><img src="../images/cc-switch/fill_dialog.webp" alt="填入 CC Switch 弹窗" loading="lazy" data-full="../images/cc-switch/fill_dialog.webp"><figcaption>填入 CC Switch 弹窗</figcaption></figure>
+          <p>弹窗各字段说明：</p>
+          <ul><li><strong>应用</strong>：顶部切换应用类型 — <strong>Claude</strong> / <strong>Codex</strong> / <strong>Gemini</strong>，根据需要选择目标应用</li></ul>
+          <ul><li><strong>名称</strong>：为该配置填写一个名称（例如 <code>My Claude</code>），方便后续在 CC Switch 中识别和切换</li></ul>
+          <ul><li><strong>主模型</strong>（必填）— 默认使用的主力模型</li></ul>
+          <ul><li><strong>Haiku 模型</strong> — 轻量快速模型</li></ul>
+          <ul><li><strong>Sonnet 模型</strong> — 均衡模型</li></ul>
+          <ul><li><strong>Opus 模型</strong> — 最强模型</li></ul>
+          <p>所有模型均为下拉选择，未选择时显示「请选择模型」。</p>
+          <p>3. <strong>完成配置</strong> 点击 <strong>「打开 CC Switch」</strong> 即可将配置导入 CC Switch 并开始使用；点击 <strong>「取消」</strong> 放弃本次操作。</p>
+          <h2>安装方式</h2>
+          <h3>macOS（推荐 Homebrew）</h3>
+          <pre><code>brew tap farion1231/ccswitch
+          brew install --cask cc-switch</code></pre>
+          <h3>Windows</h3>
+          <p>从 <a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">Releases</a> 下载 <code>.msi</code> 安装包或便携版 <code>.zip</code>。</p>
+          <h3>Linux</h3>
+          <p>从 <a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">Releases</a> 下载 <code>.deb</code> 包或 <code>.AppImage</code>。</p>
+          <p>ArchLinux 用户：</p>
+          <pre><code>paru -S cc-switch-bin</code></pre>
+          <h3>Web 版本（无头 / SSH 服务器）</h3>
+          <pre><code>wget https://github.com/farion1231/cc-switch/releases/latest/download/cc-switch-web-linux-x64.tar.gz
+          tar -xzf cc-switch-web-linux-x64.tar.gz
+          cd cc-switch-web/
+          ./cc-switch-web</code></pre>
+          <p>默认端口 <code>17666</code>，通过浏览器访问 <code>http://localhost:17666</code>。</p>
+          <h2>相关链接</h2>
+          <ul><li><a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">GitHub 仓库</a></li></ul>
+          <ul><li><a href="https://github.com/farion1231/cc-switch/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer">更新日志</a></li></ul>
+          <ul><li><a href="https://github.com/cp-yu/cc-switch-web" target="_blank" rel="noreferrer">Web 版本仓库</a></li></ul>
+          <ul><li><a href="https://github.com/thomas-jack/cc-switch-cli" target="_blank" rel="noreferrer">CLI 版本仓库</a></li></ul>
+        
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>

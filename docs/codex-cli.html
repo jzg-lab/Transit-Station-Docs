@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenAI Codex CLI 接入教程｜词元.fast</title>
+  <meta name="description" content="OpenAI Codex CLI 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast AI 应用部署中转站</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">编程助手</p>
+        <h1>OpenAI Codex CLI 接入教程</h1>
+        <p class="lead">按指定知乎教程整理：Codex CLI 和客户端共用 .codex、auth.json、config.toml，模型使用 gpt-5.5。</p>
+        <div class="tag-row"><span class="tag">Codex</span><span class="tag">auth.json</span><span class="tag">config.toml</span></div>
+        
+          <h2>OpenAI Codex CLI / Codex 客户端</h2>
+          <p class="lead">这部分按你指定的知乎教程重写：Codex CLI 和 VS Code Codex 客户端都是这个流程，核心是用户目录下的 <code>.codex</code> 文件夹，共用 <code>auth.json</code> 和 <code>config.toml</code>。默认模型按来源写 <code>gpt-5.5</code>。</p>
+        <div class="resource-grid" aria-label="OpenAI Codex CLI 项目地址">
+          
+            <a class="resource-link" href="https://chatgpt.com/codex" target="_blank" rel="noreferrer">
+              <span>官网</span>
+              <strong>ChatGPT Codex</strong>
+            </a>
+          
+            <a class="resource-link" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
+              <span>GitHub</span>
+              <strong>openai/codex</strong>
+            </a>
+          
+            <a class="resource-link" href="https://nodejs.org" target="_blank" rel="noreferrer">
+              <span>安装依赖</span>
+              <strong>Node.js 下载</strong>
+            </a>
+          
+        </div>
+      
+          <h3>项目介绍</h3>
+          <p>Codex CLI 是 OpenAI 的终端编码代理，可在本地项目中读代码、改文件、生成补丁并运行命令；Codex 客户端通过 VS Code 扩展提供图形化入口。两者接入词元.fast 时，统一检查 <code>.codex</code> 目录。</p>
+          <h3>安装 Codex CLI</h3>
+          <pre><code>npm install -g @openai/codex
+codex --version</code></pre><p>Windows 建议在 WSL2 中安装和运行；macOS / Linux 直接在终端执行。若没有 Node.js，请先安装 Node.js LTS。</p>
+          <h3>VS Code Codex 客户端</h3>
+          <ol><li>打开 VS Code 扩展市场，搜索 Codex / OpenAI Codex。</li><li>安装后打开 Codex 面板。</li><li>客户端读取的仍是用户目录下 <code>.codex</code> 配置；CLI 和客户端都是这个流程。</li></ol>
+          <h3>找到 .codex 配置目录</h3>
+          <p>Windows 通常是 <code>C:Users你的用户名.codex</code>；macOS / Linux 通常是 <code>~/.codex</code>。如果目录不存在，先运行一次 <code>codex</code> 或手动创建。</p>
+          <h3>auth.json：写入 API Key</h3>
+          <pre><code>{
+  "OPENAI_API_KEY": "你的词元.fast API Key"
+}</code></pre><p>把词元.fast 控制台创建的密钥写入 <code>auth.json</code>。密钥只放这一处，避免多个文件互相覆盖导致排错困难。</p>
+          <h3>config.toml：写入模型和 Provider</h3>
+          <pre><code>model = "gpt-5.5"
+model_provider = "ciyuan-fast"
+
+[model_providers.ciyuan-fast]
+name = "词元.fast"
+base_url = "https://ciyuan.fast/v1"
+wire_api = "responses"
+env_key = "OPENAI_API_KEY"</code></pre><p>如果你使用的 Codex 版本要求 Chat Completions，可把 <code>wire_api</code> 按版本提示调整；但先按教程使用 Responses 流程验证。</p>
+          <h3>开始使用</h3>
+          <pre><code>cd /path/to/your/project
+codex
+
+# 进入后可切换模型
+/model</code></pre><p>启动后先问一句简单问题，再让它读取当前目录文件。确认模型、权限、沙箱策略都正常后，再交给它做真实修改。</p>
+          <h3>常见问题</h3>
+          <ul><li><strong>401</strong>：检查 <code>auth.json</code> 里的 API Key 是否复制完整。</li><li><strong>模型不存在</strong>：确认 <code>gpt-5.5</code> 在词元.fast 控制台可用；不可用时换成你实际开通的模型 ID。</li><li><strong>客户端和 CLI 表现不一致</strong>：优先检查它们是否读取同一个用户目录下的 <code>.codex</code>。</li><li><strong>旧教程脚本残留</strong>：不要再使用旧品牌脚本地址和 endpoint；统一用 <code>https://ciyuan.fast/v1</code>。</li></ul>
+        
+        <h3>补充图文步骤</h3>
+        <div class="screenshot-grid">
+          
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 1</span>
+            <h4>密钥创建通用步骤</h4>
+            <p>先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/ciyuan-api-key.png" alt="词元.fast 创建和复制 API Key" loading="lazy" data-full="../images/ciyuan-api-key.png">
+            <figcaption>词元.fast 创建和复制 API Key</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 2</span>
+            <h4>打开 Codex 中文教程对应界面</h4>
+            <p>以中文教程为准：CLI 和客户端都是这个流程。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/codex-zh/codex-client.png" alt="Codex 中文教程客户端界面" loading="lazy" data-full="../images/codex-zh/codex-client.png">
+            <figcaption>Codex 中文教程客户端界面</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 3</span>
+            <h4>找到 .codex 配置目录</h4>
+            <p>Windows 通常是 C:Users你的用户名.codex，macOS/Linux 通常是 ~/.codex。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/codex-zh/codex-dir.png" alt="Codex 中文教程 .codex 目录" loading="lazy" data-full="../images/codex-zh/codex-dir.png">
+            <figcaption>Codex 中文教程 .codex 目录</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 4</span>
+            <h4>在 auth.json 写入 API Key</h4>
+            <p>按中文教程流程，在 auth.json 写入词元.fast API Key。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/codex-cli/windows_configure.webp" alt="Codex auth.json 配置" loading="lazy" data-full="../images/codex-cli/windows_configure.webp">
+            <figcaption>Codex auth.json 配置</figcaption>
+          </figure>
+        </section>
+      
+        <section class="tutorial-step" data-inline="false" data-compact="false">
+          <div class="step-copy">
+            <span class="step-kicker">补充步骤 5</span>
+            <h4>在 config.toml 写入模型配置</h4>
+            <p>provider 指向词元.fast，model 写 gpt-5.5 或控制台可用模型。</p>
+          </div>
+          <figure class="shot">
+            <img src="../images/codex-cli/macos_configure.webp" alt="Codex config.toml 配置" loading="lazy" data-full="../images/codex-cli/macos_configure.webp">
+            <figcaption>Codex config.toml 配置</figcaption>
+          </figure>
+        </section>
+      
+        </div>
+      
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../docs.js"></script>
+</body>
+</html>
