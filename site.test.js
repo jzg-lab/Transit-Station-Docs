@@ -58,6 +58,27 @@ test('old provider branding and endpoints are not shipped', () => {
   }
 });
 
+test('api key entry points go directly to the keys page', () => {
+  const files = ['index.html', 'scripts/build-doc-pages.js', ...[
+    'docs/openclaw.html',
+    'docs/claude-code.html',
+    'docs/codex-cli.html',
+    'docs/factory-droid-cli.html',
+    'docs/cc-switch.html',
+    'docs/cherry-studio.html',
+    'docs/aionui.html',
+    'docs/fluent-read.html',
+    'docs/langbot.html',
+    'docs/astrbot.html',
+    'docs/async-image-api.html'
+  ].filter(existsSync)];
+  for (const file of files) {
+    const html = readFileSync(file, 'utf8');
+    assert.match(html, /href="https:\/\/ciyuan\.fast\/keys"[^>]*>获取 API Key<\/a>/, `${file} should link API key CTA to /keys`);
+    assert.doesNotMatch(html, /href="https:\/\/ciyuan\.fast"[^>]*>获取 API Key<\/a>/, `${file} should not send API key CTA to the site root`);
+  }
+});
+
 test('page exposes category navigation and grouped cards', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   for (const category of ['编程', '桌面', '机器人', '阅读', '部署']) {
