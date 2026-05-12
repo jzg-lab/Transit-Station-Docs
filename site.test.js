@@ -17,6 +17,7 @@ const expectedProducts = [
 
 test('landing page carries the ciyuan.fast documentation hub content', () => {
   const html = readFileSync('index.html', 'utf8');
+  const app = readFileSync('app.js', 'utf8');
   assert.match(html, /<title>词元\.fast文档<\/title>/);
   assert.match(html, />词元\.fast文档<\/span>/);
   assert.match(html, /AI 工具接入，一页找到答案。/);
@@ -30,8 +31,9 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
+  assert.match(html, /<script src="app\.js"><\/script>/);
   for (const product of expectedProducts) {
-    assert.match(html, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 });
 
@@ -54,7 +56,7 @@ test('old provider branding and endpoints are not shipped', () => {
 });
 
 test('page exposes category navigation and grouped cards', () => {
-  const html = readFileSync('index.html', 'utf8');
+  const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   for (const category of ['编程', '桌面', '机器人', '阅读', '部署']) {
     assert.match(html, new RegExp(category));
   }
@@ -74,7 +76,7 @@ test('layout separates entry discovery from focused reading', () => {
 });
 
 test('left selector uses compact categories with counts', () => {
-  const html = readFileSync('index.html', 'utf8');
+  const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(html, /function categoryCount/);
   assert.match(html, /<span>\$\{category\.label\}<\/span><small>\$\{categoryCount\(category\.id\)\}<\/small>/);
@@ -85,7 +87,7 @@ test('left selector uses compact categories with counts', () => {
 });
 
 test('landing page includes gentle interaction polish', () => {
-  const html = readFileSync('index.html', 'utf8');
+  const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(css, /@keyframes riseIn/);
   assert.match(css, /--stagger/);
@@ -103,7 +105,7 @@ test('landing page includes gentle interaction polish', () => {
 });
 
 test('landing page supports wheel-driven full-page switching', () => {
-  const html = readFileSync('index.html', 'utf8');
+  const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(html, /data-page="intro"/);
   assert.match(html, /data-page="map"/);
@@ -135,7 +137,7 @@ test('landing page supports wheel-driven full-page switching', () => {
 });
 
 test('product tutorials are published as independent pages', () => {
-  const html = readFileSync('index.html', 'utf8');
+  const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);
   assert.match(html, /<a class="product-tab [\s\S]*?href="docs\/\$\{product\.id\}\.html"/);
   for (const page of [
@@ -188,7 +190,7 @@ test('tutorials are beginner friendly and support image zoom', () => {
 
 test('client scripts avoid unsafe toc html injection and non-element wheel targets', () => {
   const docsScript = readFileSync('docs.js', 'utf8');
-  const indexHtml = readFileSync('index.html', 'utf8');
+  const indexHtml = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   assert.match(docsScript, /toc\.replaceChildren/);
   assert.match(docsScript, /document\.createElement\('a'\)/);
   assert.match(docsScript, /link\.textContent = heading\.textContent/);
