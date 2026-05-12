@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const { existsSync, readFileSync } = require('node:fs');
 const test = require('node:test');
+const vm = require('node:vm');
 
 const expectedProducts = [
   'OpenClaw',
@@ -149,6 +150,59 @@ test('site supports dark theme and embedded theme control', () => {
   assert.match(html, /styles\.css\?v=20260512-theme/);
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /\.theme-toggle/);
+});
+
+test('theme toggle runs in legacy embedded browsers', () => {
+  const source = readFileSync('app.js', 'utf8');
+  const themeScript = source.slice(0, source.indexOf('const commonSetup'));
+  const classes = new Set();
+  let clickHandler;
+  const button = {
+    textContent: '夜间模式',
+    parentElement: null,
+    attributes: {},
+    matches(selector) { return selector === '[data-theme-toggle]'; },
+    setAttribute(name, value) { this.attributes[name] = value; }
+  };
+  const child = {
+    parentElement: button,
+    matches() { return false; }
+  };
+  const sandbox = {
+    document: {
+      documentElement: { dataset: {} },
+      body: {
+        classList: {
+          add(name) { classes.add(name); },
+          remove(...names) { names.forEach(name => classes.delete(name)); }
+        }
+      },
+      querySelectorAll(selector) { return selector === '[data-theme-toggle]' ? [button] : []; },
+      addEventListener(type, handler) { if (type === 'click') clickHandler = handler; }
+    },
+    window: {
+      location: { search: '?theme=dark' },
+      URLSearchParams: undefined,
+      matchMedia: undefined
+    },
+    localStorage: {
+      value: null,
+      getItem() { return this.value; },
+      setItem(name, value) { this.value = value; }
+    }
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(themeScript, sandbox);
+  assert.equal(sandbox.document.documentElement.dataset.theme, 'dark');
+  assert.equal(classes.has('theme-dark'), true);
+  assert.equal(button.textContent, '浅色模式');
+  assert.equal(button.attributes['aria-pressed'], 'true');
+  clickHandler({ target: child });
+  assert.equal(sandbox.document.documentElement.dataset.theme, 'light');
+  assert.equal(classes.has('theme-light'), true);
+  assert.equal(classes.has('theme-dark'), false);
+  assert.equal(button.textContent, '夜间模式');
+  assert.equal(button.attributes['aria-pressed'], 'false');
 });
 
 test('landing page supports wheel-driven full-page switching', () => {
