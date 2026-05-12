@@ -133,8 +133,9 @@ test('site supports dark theme and embedded theme control', () => {
   const app = readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(html, /data-theme-toggle/);
-  assert.match(app, /const themeQuery = new URLSearchParams\(window\.location\.search\)\.get\('theme'\)/);
-  assert.match(app, /window\.matchMedia\('\(prefers-color-scheme: dark\)'\)/);
+  assert.match(app, /function themeQueryValue/);
+  assert.match(app, /window\.URLSearchParams/);
+  assert.match(app, /window\.matchMedia \? window\.matchMedia\('\(prefers-color-scheme: dark\)'\)/);
   assert.match(app, /function getStoredTheme/);
   assert.match(app, /localStorage\.getItem\(themeStorageKey\)/);
   assert.match(app, /function setStoredTheme/);

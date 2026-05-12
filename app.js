@@ -7,9 +7,20 @@ const categories = [
   { id: 'hub', label: '部署', intro: '托管与 API' }
 ];
 
-const themeQuery = new URLSearchParams(window.location.search).get('theme');
-const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 const themeStorageKey = 'ciyuan-docs-theme';
+const themeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : { matches: false };
+
+function themeQueryValue() {
+  try {
+    if (window.URLSearchParams) return new URLSearchParams(window.location.search).get('theme');
+    const match = window.location.search.match(/[?&]theme=(dark|light)(?:&|$)/);
+    return match ? match[1] : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+const themeQuery = themeQueryValue();
 
 function getStoredTheme() {
   try {

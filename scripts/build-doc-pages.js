@@ -34,6 +34,7 @@ const sandbox = {
   navigator: { clipboard: { writeText: async () => {} } },
   window: {
     location: { search: '' },
+    URLSearchParams,
     matchMedia: () => ({ matches: false, addEventListener() {} }),
     addEventListener() {},
     clearTimeout() {}
