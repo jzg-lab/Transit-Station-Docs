@@ -470,19 +470,37 @@
     .screenshot-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 16px;
       margin: 18px 0 28px;
     }
 
     .tutorial-step {
       display: grid;
-      grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
-      gap: 18px;
+      grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+      gap: 20px;
       align-items: start;
-      padding: 18px;
+      padding: clamp(16px, 2.4vw, 24px);
       border: 1px solid var(--line);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.38);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 250, 240, 0.36));
+      box-shadow: 0 14px 34px rgba(40, 75, 58, 0.08);
+      scroll-margin-top: 92px;
+    }
+
+    .tutorial-step[data-inline="true"] {
+      margin: 16px 0 22px;
+    }
+
+    .tutorial-step[data-inline="true"] + .tutorial-step[data-inline="true"] {
+      margin-top: -6px;
+    }
+
+    .tutorial-step[data-compact="true"] {
+      grid-template-columns: minmax(220px, 0.88fr) minmax(0, 1.12fr);
+    }
+
+    .tutorial-step .step-copy > :last-child {
+      margin-bottom: 0;
     }
 
     .step-copy {
@@ -722,7 +740,7 @@
       .hero-card { padding: 28px; }
       .cards, .product-list, .category-tabs, .collection-head { grid-template-columns: 1fr; }
       .resource-grid, .screenshot-grid { grid-template-columns: 1fr; }
-      .tutorial-step { grid-template-columns: 1fr; }
+      .tutorial-step, .tutorial-step[data-compact="true"] { grid-template-columns: 1fr; }
       .api-badge { white-space: normal; }
       .content-panel { padding: 16px; }
       .doc { padding: 22px; }
@@ -832,6 +850,12 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' },
         { label: 'Windows 依赖', title: 'Git for Windows', href: 'https://git-scm.com/download/win' }
       ],
+      'factory-droid-cli': [
+        { heading: /Windows|macOS|Linux|常见问题/, indexes: [0] }
+      ],
+      'cc-switch': [
+        { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
+      ],
       'codex-cli': [
         { label: '官网', title: 'ChatGPT Codex', href: 'https://chatgpt.com/codex' },
         { label: 'GitHub', title: 'openai/codex', href: 'https://github.com/openai/codex' },
@@ -846,6 +870,9 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { label: 'GitHub', title: 'farion1231/cc-switch', href: 'https://github.com/farion1231/cc-switch' },
         { label: '下载', title: 'CC Switch Releases', href: 'https://github.com/farion1231/cc-switch/releases' },
         { label: '协议', title: 'ccswitch:// Deep Link', href: 'https://github.com/farion1231/cc-switch' }
+      ],
+      'aionui': [
+        { heading: /词元\.fast 接入方法|配置步骤/, indexes: [0] }
       ],
       'cherry-studio': [
         { label: '官网', title: 'cherry-ai.com', href: 'https://cherry-ai.com' },
@@ -907,11 +934,20 @@ OpenAI Compatible Base URL: https://ciyuan.fast/v1
         { title: '理解多文件编辑效果', detail: '配置成功后可让 Claude Code 同时处理多个文件，适合真实项目。', src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
         { title: 'macOS/Linux 填入词元.fast 配置', detail: '设置环境变量后重新打开终端，再启动 Claude Code 测试。', src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
       ],
+      'factory-droid-cli': [
+        { heading: /Windows|macOS|Linux|常见问题/, indexes: [0] }
+      ],
+      'cc-switch': [
+        { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
+      ],
       'codex-cli': [
         { title: '打开 Codex 中文教程对应界面', detail: '以中文教程为准：CLI 和客户端都是这个流程。', src: 'images/codex-zh/codex-client.png', alt: 'Codex 中文教程客户端界面' },
         { title: '找到 .codex 配置目录', detail: 'Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex 中文教程 .codex 目录' },
         { title: '在 auth.json 写入 API Key', detail: '按中文教程流程，在 auth.json 写入词元.fast API Key。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex auth.json 配置位置' },
         { title: '在 config.toml 写入 provider 和模型', detail: 'model 使用 gpt-5.5，provider 指向词元.fast。保存后重启 CLI 或客户端。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex config.toml 配置位置' }
+      ],
+      'aionui': [
+        { heading: /词元\.fast 接入方法|配置步骤/, indexes: [0] }
       ],
       'cherry-studio': [
         { title: '复制 API Key', detail: '在词元.fast 创建并复制 API Key。', src: 'images/cherry-studio/copy_api_key.webp', alt: '复制 API Key' },
@@ -1228,33 +1264,148 @@ brew install cc-switch
       `;
     }
 
-    function renderScreenshots(product) {
-      const steps = [apiKeyGuide, ...(productScreenshots[product.id] || [])];
-      if (!steps.length) return '';
+    function renderStepCard(step, index, options = {}) {
+      const kicker = options.kicker || `新手步骤 ${index + 1}`;
+      const inline = options.inline ? 'true' : 'false';
+      const compact = options.compact ? 'true' : 'false';
       return `
-        <h3>图文步骤</h3>
+        <section class="tutorial-step" data-inline="${inline}" data-compact="${compact}">
+          <div class="step-copy">
+            <span class="step-kicker">${kicker}</span>
+            <h4>${step.title}</h4>
+            <p>${step.detail}</p>
+          </div>
+          <figure class="shot">
+            <img src="${step.src}" alt="${step.alt}" loading="lazy" data-full="${step.src}">
+            <figcaption>${step.alt}</figcaption>
+          </figure>
+        </section>
+      `;
+    }
+
+    function renderScreenshots(product, usedIndexes = new Set()) {
+      const steps = [apiKeyGuide, ...(productScreenshots[product.id] || [])];
+      const remaining = steps.filter((_, index) => !usedIndexes.has(index));
+      if (!remaining.length) return '';
+      return `
+        <h3>补充图文步骤</h3>
         <div class="screenshot-grid">
-          ${steps.map((step, index) => `
-            <section class="tutorial-step">
-              <div class="step-copy">
-                <span class="step-kicker">新手步骤 ${index + 1}</span>
-                <h4>${step.title}</h4>
-                <p>${step.detail}</p>
-              </div>
-              <figure class="shot">
-                <img src="${step.src}" alt="${step.alt}" loading="lazy" data-full="${step.src}">
-                <figcaption>${step.alt}</figcaption>
-              </figure>
-            </section>
-          `).join('')}
+          ${remaining.map((step, index) => renderStepCard(step, index, { kicker: `补充步骤 ${index + 1}` })).join('')}
         </div>
       `;
+    }
+
+    const sectionStepMap = {
+      'openclaw': [
+        { heading: /安装配置细节/, indexes: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+        { heading: /其他扩展/, indexes: [9, 10, 11, 12, 13, 14, 15] },
+        { heading: /部署后的验证|日常命令/, indexes: [16, 17, 18, 19, 20] }
+      ],
+      'claude-code': [
+        { heading: /核心特性/, indexes: [1, 2] },
+        { heading: /AI 模型配置方法|macOS/, indexes: [0, 3] }
+      ],
+      'factory-droid-cli': [
+        { heading: /Windows|macOS|Linux|常见问题/, indexes: [0] }
+      ],
+      'cc-switch': [
+        { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
+      ],
+      'codex-cli': [
+        { heading: /VS Code/, indexes: [1] },
+        { heading: /\.codex|配置目录/, indexes: [2] },
+        { heading: /auth\.json/, indexes: [0, 3] },
+        { heading: /config\.toml/, indexes: [4] }
+      ],
+      'aionui': [
+        { heading: /词元\.fast 接入方法|配置步骤/, indexes: [0] }
+      ],
+      'cherry-studio': [
+        { heading: /参数填写|图文指引/, indexes: [0, 1, 2, 3, 4] }
+      ],
+      'fluent-read': [
+        { heading: /控制台导入配置/, indexes: [0, 1, 2, 3] },
+        { heading: /手动填写配置/, indexes: [4] }
+      ],
+      'langbot': [
+        { heading: /接入词元\.fast/, indexes: [0, 1, 2, 3, 4] },
+        { heading: /知识库/, indexes: [5, 6] }
+      ],
+      'astrbot': [
+        { heading: /获取 API Key/, indexes: [0, 1, 2] },
+        { heading: /配置 NewAPI|服务提供商/, indexes: [3] },
+        { heading: /应用服务提供商/, indexes: [4] }
+      ]
+    };
+
+    function stepMatchScore(step, headingText, sectionText) {
+      const source = `${headingText} ${sectionText}`;
+      const titleWords = step.title.match(/[A-Za-z0-9.]+|[一-龥]{2,}/g) || [];
+      const detailWords = step.detail.match(/[A-Za-z0-9.]+|[一-龥]{2,}/g) || [];
+      const words = [...new Set([...titleWords, ...detailWords])].filter(word => word.length >= 2);
+      return words.reduce((score, word) => score + (source.includes(word) ? 1 : 0), 0);
+    }
+
+    function insertStepGroup(heading, sectionNodes, matched, usedIndexes) {
+      if (!matched.length) return;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'screenshot-grid inline-screenshot-grid';
+      wrapper.innerHTML = matched
+        .map((item, localIndex) => {
+          usedIndexes.add(item.index);
+          return renderStepCard(item.step, item.index, {
+            inline: true,
+            compact: matched.length > 3,
+            kicker: `配套图 ${localIndex + 1}`
+          });
+        })
+        .join('');
+      const insertAfter = sectionNodes.find(node => ['P', 'OL', 'UL', 'TABLE', 'PRE'].includes(node.tagName)) || heading;
+      insertAfter.insertAdjacentElement('afterend', wrapper);
+    }
+
+    function injectInlineSteps(product) {
+      const steps = [apiKeyGuide, ...(productScreenshots[product.id] || [])];
+      const usedIndexes = new Set();
+      if (!steps.length) return usedIndexes;
+
+      const headings = [...doc.querySelectorAll('h3')];
+      const mappedSections = sectionStepMap[product.id] || [];
+      headings.forEach(heading => {
+        const sectionNodes = [];
+        let cursor = heading.nextElementSibling;
+        while (cursor && cursor.tagName !== 'H3') {
+          sectionNodes.push(cursor);
+          cursor = cursor.nextElementSibling;
+        }
+        const headingText = heading.textContent || '';
+        const mapped = mappedSections.find(section => section.heading.test(headingText));
+        if (mapped) {
+          const matched = mapped.indexes
+            .filter(index => steps[index] && !usedIndexes.has(index))
+            .map(index => ({ step: steps[index], index }));
+          insertStepGroup(heading, sectionNodes, matched, usedIndexes);
+          return;
+        }
+
+        if (mappedSections.length) return;
+        const sectionText = sectionNodes.map(node => node.textContent || '').join(' ');
+        const matched = steps
+          .map((step, index) => ({ step, index, score: usedIndexes.has(index) ? -1 : stepMatchScore(step, headingText, sectionText) }))
+          .filter(item => item.score >= 2)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 2);
+        insertStepGroup(heading, sectionNodes, matched, usedIndexes);
+      });
+      return usedIndexes;
     }
 
     function renderDoc() {
       const product = products.find(item => item.id === activeProduct) || filteredProducts()[0] || products[0];
       activeProduct = product.id;
-      doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}${renderScreenshots(product)}`);
+      doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}`);
+      const usedIndexes = injectInlineSteps(product);
+      doc.insertAdjacentHTML('beforeend', renderScreenshots(product, usedIndexes));
       addCopyButtons();
       renderToc();
     }
