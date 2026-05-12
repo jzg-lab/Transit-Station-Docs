@@ -291,21 +291,22 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(css, /scroll-behavior: auto/);
 });
 
-test('landing map switch uses a short instant transition', () => {
+test('landing map switch slides without scaling the layout', () => {
   const html = readFileSync('app.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
-  assert.match(html, /const landingTransitionMs = 320/);
+  assert.match(html, /const landingTransitionMs = 460/);
   assert.match(html, /setTimeout\(\(\) => \{[\s\S]*?\}, landingTransitionMs\)/);
-  assert.match(html, /scrollToLandingPage\(page, 'auto'\)/);
-  assert.doesNotMatch(html, /scrollToLandingPage\(page, options\.instant \? 'auto' : 'smooth'\)/);
-  assert.match(css, /\.hero[\s\S]*?transition: opacity 0\.32s var\(--page-ease\), transform 0\.32s var\(--page-ease\)/);
-  assert.match(css, /\.workspace[\s\S]*?transition: opacity 0\.32s var\(--page-ease\), transform 0\.32s var\(--page-ease\)/);
-  assert.match(css, /body\.map-preparing \.workspace,[\s\S]*?transform: translate3d\(0, 18px, 0\) scale\(0\.995\)/);
-  assert.match(css, /body\.landing-map \.hero,[\s\S]*?transform: translate3d\(0, -18px, 0\) scale\(0\.995\)/);
+  assert.match(html, /scrollToLandingPage\(page, options\.instant \? 'auto' : 'smooth'\)/);
+  assert.doesNotMatch(html, /scrollToLandingPage\(page, 'auto'\)/);
+  assert.match(css, /\.hero[\s\S]*?transition: opacity 0\.46s var\(--page-ease\), transform 0\.46s var\(--page-ease\)/);
+  assert.match(css, /\.workspace[\s\S]*?transition: opacity 0\.46s var\(--page-ease\), transform 0\.46s var\(--page-ease\)/);
+  assert.match(css, /body\.map-preparing \.workspace,[\s\S]*?transform: translate3d\(0, 34px, 0\)/);
+  assert.match(css, /body\.landing-map \.hero,[\s\S]*?transform: translate3d\(0, -34px, 0\)/);
+  assert.doesNotMatch(css, /body\.(?:map-preparing|intro-entering|landing-map|map-entering)[\s\S]{0,180}scale\(/);
   assert.match(css, /body\.map-entering \.product-card[\s\S]*?animation: none/);
 });
 
-test('map jump clicks scroll instantly and unlock after the transition', () => {
+test('map jump clicks scroll smoothly and unlock after the transition', () => {
   const app = readFileSync('app.js', 'utf8');
   const listeners = {};
   const bodyClasses = new Set();
@@ -401,9 +402,9 @@ test('map jump clicks scroll instantly and unlock after the transition', () => {
 
   listeners.pageJump.handler({ preventDefault() {} });
 
-  assert.equal(scrollCalls.at(-1).behavior, 'auto');
+  assert.equal(scrollCalls.at(-1).behavior, 'smooth');
   assert.equal(scrollCalls.at(-1).top, 662);
-  assert.equal(timeouts.at(-1).delay, 320);
+  assert.equal(timeouts.at(-1).delay, 460);
   assert.equal(bodyClasses.has('map-entering'), true);
   timeouts.at(-1).handler();
   assert.equal(bodyClasses.has('map-entering'), false);
