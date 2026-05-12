@@ -546,6 +546,29 @@
       font: 750 13px/1.45 ui-sans-serif, "Noto Sans SC", sans-serif;
     }
 
+    .doc-shot {
+      margin: 18px 0 28px;
+    }
+
+    .callout-warn {
+      border-color: rgba(166, 83, 63, 0.28);
+      background: linear-gradient(135deg, rgba(166, 83, 63, 0.10), rgba(214, 164, 65, 0.12));
+    }
+
+    .callout-tip {
+      border-color: rgba(214, 164, 65, 0.38);
+      background: linear-gradient(135deg, rgba(214, 164, 65, 0.18), rgba(255, 255, 255, 0.42));
+    }
+
+    blockquote {
+      margin: 20px 0;
+      padding: 14px 18px;
+      border-left: 4px solid var(--gold);
+      border-radius: 14px;
+      background: rgba(214, 164, 65, 0.12);
+      color: var(--muted);
+    }
+
     .beginner-steps {
       margin: 22px 0 30px;
       padding: 20px;
@@ -1046,44 +1069,125 @@ openclaw gateway restart</code></pre>
       },
       {
         id: 'claude-code', category: 'coding', title: 'Claude Code', subtitle: 'Anthropic 终端编程助手', tags: ["终端","代码理解","IDE"],
-        summary: '按源站教程结构补全 Claude Code：特性、Windows/macOS/Linux 安装、环境变量配置、启动与模型选择。',
+        summary: '完整复刻源站 Claude Code 教程密度：效果演示、特性表、Windows/macOS/Linux 全流程、环境变量、启动和常见问题。',
         body: `
-          <h2>Claude Code</h2>
-          <p class="lead">Claude Code 是 Anthropic 的终端编程助手，可以在项目目录中理解代码、编辑文件、运行命令，并与 VS Code、JetBrains 等开发环境配合使用。词元.fast 接入重点是把官方默认入口替换成兼容网关。</p>
+          <div class="callout"><strong>项目介绍</strong><p>直接在你的终端中释放 Claude 的强大能力。瞬间搜索百万行代码库。将耗时数小时的工作流程化为一条命令。你的工具，你的工作流，你的代码库，以思维速度进化。</p><ul><li>官方主页：<a href="https://www.anthropic.com/claude-code" target="_blank" rel="noreferrer">https://www.anthropic.com/claude-code</a></li></ul></div>
+          <h2>效果演示</h2>
+          <figure class="shot doc-shot"><img src="images/claude-code/introduce-01.webp" alt="introduce-01.webp" loading="lazy" data-full="images/claude-code/introduce-01.webp"><figcaption>introduce-01.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/introduce-02.webp" alt="introduce-02.webp" loading="lazy" data-full="images/claude-code/introduce-02.webp"><figcaption>introduce-02.webp</figcaption></figure>
           <h3>特性</h3>
-          <table><tr><th>能力</th><th>说明</th></tr><tr><td>代码理解</td><td>读取大型代码库、解释模块关系、定位错误来源。</td></tr><tr><td>编辑与重构</td><td>可处理跨文件修改、生成补丁、按现有代码风格落地。</td></tr><tr><td>终端工作流</td><td>在命令行中执行构建、测试、搜索和排错步骤。</td></tr><tr><td>IDE 集成</td><td>可与 VS Code、JetBrains 工作流结合，减少上下文切换。</td></tr></table>
-          <h3>Windows 安装 Node.js</h3>
-          <ol><li>访问 <a href="https://nodejs.org" target="_blank" rel="noreferrer">Node.js 官网</a>，下载 LTS 版本。</li><li>运行 <code>.msi</code> 安装包，默认选项一路继续即可。</li><li>重新打开 PowerShell，执行 <code>node --version</code> 和 <code>npm --version</code> 验证。</li></ol>
-          <pre><code>node --version
-          npm --version</code></pre>
-          <h3>Windows 安装 Git Bash</h3>
-          <p>Windows 下建议安装 Git for Windows。安装 Claude Code 时用 Git Bash 更少踩坑；后续配置和日常使用仍可回到 PowerShell。</p>
-          <pre><code>git --version</code></pre>
-          <h3>Windows 安装 Claude Code</h3>
-          <pre><code>npm install -g @anthropic-ai/claude-code
-          claude --version</code></pre>
-          <p>如果终端提示 <code>~/.local/bin</code> 不在 PATH，可把用户目录下的本地 bin 加入环境变量后重新打开终端。</p>
-          <pre><code>[Environment]::SetEnvironmentVariable('Path', ([Environment]::GetEnvironmentVariable('Path','User') + ";$HOME.localin"), 'User')</code></pre>
-          <h3>Windows 配置词元.fast</h3>
-          <p>用辅助脚本写入 Claude Code 所需环境变量。执行后把地址填为 <code>https://ciyuan.fast</code> 或脚本要求的 Base URL，把 API Key 填为词元.fast 控制台创建的令牌。</p>
+          <table><tr><th><strong>功能分类</strong></th><th><strong>特性</strong></th></tr><tr><td><strong>代码理解</strong></td><td>深度代码库分析，利用智能代理搜索理解项目结构和依赖</td></tr><tr><td></td><td>自动生成高层次代码概述，快速帮助用户理解代码库</td></tr><tr><td><strong>代码编辑</strong></td><td>支持多文件协同编辑，适用于复杂代码修改</td></tr><tr><td></td><td>提供符合项目模式和架构的实际可用代码建议</td></tr><tr><td><strong>集成能力</strong></td><td>支持在终端中直接运行，无需切换上下文</td></tr><tr><td></td><td>与VS Code和JetBrains IDE无缝集成，无需复制粘贴</td></tr><tr><td><strong>代码生成和优化</strong></td><td>自动生成代码、创建测试、修复错误，支持从概念到提交的完整流程</td></tr><tr><td></td><td>为代码生成和理解优化，结合Claude Opus 4等先进模型</td></tr><tr><td><strong>安全与灵活性</strong></td><td>改动需获得用户明确授权，文件和命令操作更安全</td></tr><tr><td></td><td>适应用户代码规范，支持自定义配置</td></tr><tr><td><strong>工具链整合</strong></td><td>支持与GitHub、GitLab等工具结合，实现自动化工作流程</td></tr><tr><td></td><td>与测试套件、构建系统集成，增强现有开发工具</td></tr><tr><td><strong>跨平台与扩展</strong></td><td>支持Windows、macOS、Linux操作系统</td></tr><tr><td></td><td>可配置运行在SDK或GitHub Actions中，灵活适配不同需求</td></tr><tr><td><strong>主要应用场景</strong></td><td>代码库入门和理解、新成员快速上手</td></tr><tr><td></td><td>代码问题修复与优化流程，从分析问题到提交PR</td></tr><tr><td></td><td>项目代码重构与新功能实现</td></tr><tr><td><strong>用户反馈亮点</strong></td><td>提升日常开发效率，省去例行任务消耗的时间</td></tr><tr><td></td><td>处理复杂多步骤任务表现优异，扩展开发可能性</td></tr></table>
+          <h2>AI 模型配置方法</h2>
+          <h3>Windows 端图文指引</h3>
+          <h4>1.安装 Node.js 环境</h4>
+          <p>Claude Code 需要 Node.js 环境才能运行。</p>
+          <div class="callout"><strong>Node.js 环境安装步骤</strong><ul><li>打开浏览器访问 https://nodejs.org/</li><li>点击 "LTS"版本进行下载（推荐长期支持版本）</li><li>下载完成后双击 .msi 文件</li><li>按照安装向导完成安装，保持默认设置即可</li></ul></div>
+          <div class="callout callout-warn"><strong>Windows 注意事项</strong><ul><li>建议使用 PowerShell 而不是 CMD</li><li>如果遇到权限问题，尝试以管理员身份运行</li><li>某些杀毒软件可能会误报，需要添加白名单</li></ul></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-01.webp" alt="windows-img-01.webp" loading="lazy" data-full="images/claude-code/windows-img-01.webp"><figcaption>windows-img-01.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-02.webp" alt="windows-img-02.webp" loading="lazy" data-full="images/claude-code/windows-img-02.webp"><figcaption>windows-img-02.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-03.webp" alt="windows-img-03.webp" loading="lazy" data-full="images/claude-code/windows-img-03.webp"><figcaption>windows-img-03.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-04.webp" alt="windows-img-04.webp" loading="lazy" data-full="images/claude-code/windows-img-04.webp"><figcaption>windows-img-04.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-05.webp" alt="windows-img-05.webp" loading="lazy" data-full="images/claude-code/windows-img-05.webp"><figcaption>windows-img-05.webp</figcaption></figure>
+          <div class="callout"><strong>验证安装是否成功</strong><p>安装完成后，打开 PowerShell 或 CMD，输入以下命令：</p><pre><code>node --version
+          npm --version</code></pre><p>如果显示版本号，说明安装成功。</p></div>
+          <h4>2.安装 Git Bash</h4>
+          <div class="callout callout-warn"><strong>Windows 注意事项</strong><p>Windows 环境下需要使用 Git Bash 安装 Claude code。安装完成后，环境变量设置和使用 Claude Code 仍然在普通的 PowerShell 或 CMD 中进行。</p></div>
+          <div class="callout"><strong>下载并安装 Git for Windows</strong><ul><li>访问 https://git-scm.com/downloads/win</li><li>点击 "Download for Windows" 下载安装包</li><li>运行下载的 .exe 安装文件</li><li>在安装过程中保持默认设置，直接点击 "Next" 完成安装</li></ul></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-06.webp" alt="windows-img-06.webp" loading="lazy" data-full="images/claude-code/windows-img-06.webp"><figcaption>windows-img-06.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-07.webp" alt="windows-img-07.webp" loading="lazy" data-full="images/claude-code/windows-img-07.webp"><figcaption>windows-img-07.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-08.webp" alt="windows-img-08.webp" loading="lazy" data-full="images/claude-code/windows-img-08.webp"><figcaption>windows-img-08.webp</figcaption></figure>
+          <div class="callout"><strong>验证 Git Bash 安装</strong><p>安装完成后，打开 Git Bash，输入以下命令验证：</p><pre><code>git --version</code></pre><p>如果显示版本号，说明安装成功。</p></div>
+          <h4>3.安装 Claude Code</h4>
+          <div class="callout"><strong>安装 Claude Code</strong><p>打开 PowerShell，运行以下命令：</p><pre><code>npm install -g @anthropic-ai/claude-code</code></pre><p>这个命令会从 npm 官方仓库下载并安装最新版本的 Claude Code。</p></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-09.webp" alt="windows-img-09.webp" loading="lazy" data-full="images/claude-code/windows-img-09.webp"><figcaption>windows-img-09.webp</figcaption></figure>
+          <div class="callout"><strong>将 ~/.local/bin 加入 PATH（仅当提示要求时）</strong><pre><code>[Environment]::SetEnvironmentVariable('Path', ([Environment]::GetEnvironmentVariable('Path','User') + ";$HOME\.local\bin"), 'User')</code></pre></div>
+          <div class="callout"><strong>验证 Claude Code 安装</strong><p>安装完成后，输入以下命令检查是否安装成功：</p><pre><code>claude --version</code></pre><p>如果显示版本号，恭喜你！Claude Code 已经成功安装了。</p></div>
+          <h4>4.设置环境变量</h4>
+          <div class="callout"><strong>一键设置命令 (Windows 系统)</strong><p>为了让 Claude Code 连接到词元.fast API服务，需要设置多个环境变量：</p></div>
           <pre><code>iex (irm 'https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/claude-cli-setup.ps1')</code></pre>
-          <h3>macOS 安装与配置</h3>
-          <ol><li>打开终端，确认已安装 Node.js 与 npm。</li><li>执行 npm 全局安装命令。</li><li>把 Base URL、API Key 写入 shell 配置文件，保存后重新打开终端。</li></ol>
-          <pre><code>npm install -g @anthropic-ai/claude-code
-          claude --version
-          export ANTHROPIC_BASE_URL="https://ciyuan.fast"
-          export ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"</code></pre>
-          <h3>Linux 安装与配置</h3>
-          <p>Linux 流程与 macOS 基本一致：先准备 Node.js，再安装 Claude Code，最后写入环境变量。</p>
-          <pre><code>npm install -g @anthropic-ai/claude-code
-          export ANTHROPIC_BASE_URL="https://ciyuan.fast"
-          export ANTHROPIC_AUTH_TOKEN="你的词元.fast API Key"</code></pre>
-          <h3>开始使用</h3>
-          <p>进入任意项目目录运行 <code>claude</code>。首次使用建议先让它解释项目结构，再逐步授权改文件和跑命令。</p>
-          <pre><code>cd C:path	oyourproject
-          claude
-          /model</code></pre>
-          <p>注意：环境变量生效后，包括官方预设模型在内的请求都会走自定义接入点。若要切回官方账号额度，需要清理或覆盖这些环境变量。</p>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows_configure.webp" alt="windows-configure" loading="lazy" data-full="images/claude-code/windows_configure.webp"><figcaption>windows-configure</figcaption></figure>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>5.开始使用 Claude Code</h4>
+          <p>现在你可以开始使用 Claude Code 了！</p>
+          <div class="callout"><strong>启动 Claude Code</strong><p>打开 PowerShell，直接启动 Claude Code：</p><pre><code>claude</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd C:\path\to\your\project
+          
+          # 启动 Claude Code
+          claude</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-11.webp" alt="windows-img-11.webp" loading="lazy" data-full="images/claude-code/windows-img-11.webp"><figcaption>windows-img-11.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-12.webp" alt="windows-img-12.webp" loading="lazy" data-full="images/claude-code/windows-img-12.webp"><figcaption>windows-img-12.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-13.webp" alt="windows-img-13.webp" loading="lazy" data-full="images/claude-code/windows-img-13.webp"><figcaption>windows-img-13.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-14.webp" alt="windows-img-14.webp" loading="lazy" data-full="images/claude-code/windows-img-14.webp"><figcaption>windows-img-14.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-15.webp" alt="windows-img-15.webp" loading="lazy" data-full="images/claude-code/windows-img-15.webp"><figcaption>windows-img-15.webp</figcaption></figure>
+          <div class="callout"><strong>选择模型</strong><p>输入命令：</p><pre><code>/model</code></pre><p>按 Enter 进入，选择模型，通常使用默认设置即可。</p></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-16.webp" alt="windows-img-16.webp" loading="lazy" data-full="images/claude-code/windows-img-16.webp"><figcaption>windows-img-16.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/windows-img-17.webp" alt="windows-img-17.webp" loading="lazy" data-full="images/claude-code/windows-img-17.webp"><figcaption>windows-img-17.webp</figcaption></figure>
+          <blockquote>注意：设置环境变量修改后，使用所有模型（包括官方预设模型）均调用自定义接入点，而不使用官方账号额度。</blockquote>
+          <h3>MacOS 端图文指引</h3>
+          <h4>1.安装 Claude Code CLI</h4>
+          <p>打开终端</p>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-01.webp" alt="macos-img-01.webp" loading="lazy" data-full="images/claude-code/macos-img-01.webp"><figcaption>macos-img-01.webp</figcaption></figure>
+          <div class="callout"><strong>安装 Claude Code</strong><p>打开终端，运行以下命令：</p><pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre><p>可选项：出现提示后运行提供的命令</p><pre><code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.bashrc &amp;&amp; source ~/.bashrc</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-02.webp" alt="macos-img-02.webp" loading="lazy" data-full="images/claude-code/macos-img-02.webp"><figcaption>macos-img-02.webp</figcaption></figure>
+          <h4>2.设置环境变量</h4>
+          <p>为了让 Claude Code 连接到词元.fast 服务，需要设置环境变量：</p>
+          <div class="callout"><strong>一键设置 Claude Code 环境变量</strong><p>输入命令：</p><pre><code>curl -fsSL https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/claude-cli-setup.sh | bash</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos_configure.webp" alt="macos-configure" loading="lazy" data-full="images/claude-code/macos_configure.webp"><figcaption>macos-configure</figcaption></figure>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <div class="callout"><strong>验证 Claude Code 安装</strong><p>安装完成后，输入以下命令检查是否安装成功：</p><pre><code>claude --version</code></pre><p>如果显示版本号，恭喜你！Claude Code 已经成功安装了。</p></div>
+          <h4>3.开始使用 Claude Code</h4>
+          <p>现在你可以开始使用 Claude Code 了！</p>
+          <div class="callout"><strong>启动 Claude Code</strong><p>直接启动 Claude Code：</p><pre><code>claude</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd /path/to/your/project
+          
+          # 启动 Claude Code
+          claude</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-04.webp" alt="macos-img-04.webp" loading="lazy" data-full="images/claude-code/macos-img-04.webp"><figcaption>macos-img-04.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-05.webp" alt="macos-img-05.webp" loading="lazy" data-full="images/claude-code/macos-img-05.webp"><figcaption>macos-img-05.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-06.webp" alt="macos-img-06.webp" loading="lazy" data-full="images/claude-code/macos-img-06.webp"><figcaption>macos-img-06.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-07.webp" alt="macos-img-07.webp" loading="lazy" data-full="images/claude-code/macos-img-07.webp"><figcaption>macos-img-07.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-08.webp" alt="macos-img-08.webp" loading="lazy" data-full="images/claude-code/macos-img-08.webp"><figcaption>macos-img-08.webp</figcaption></figure>
+          <div class="callout"><strong>选择模型 (可选)</strong><p>输入命令：</p><pre><code>/model</code></pre><p>按 Enter 进入，选择官方模型，通常使用默认模型即可。</p></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-09.webp" alt="macos-img-09.webp" loading="lazy" data-full="images/claude-code/macos-img-09.webp"><figcaption>macos-img-09.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-10.webp" alt="macos-img-10.webp" loading="lazy" data-full="images/claude-code/macos-img-10.webp"><figcaption>macos-img-10.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos-img-11.webp" alt="macos-img-11.webp" loading="lazy" data-full="images/claude-code/macos-img-11.webp"><figcaption>macos-img-11.webp</figcaption></figure>
+          <blockquote>注意：设置环境变量修改 <code>ANTHROPIC_BASE_URL</code> 后，使用所有模型（包括官方预设模型）均调用自定义接入点，而不使用官方账号额度。</blockquote>
+          <h4>4.macOS 常见问题解决</h4>
+          <div class="callout"><strong>macOS 安全设置阻止运行</strong><p>如果系统阻止运行 Claude Code：</p><ul><li>打开"系统偏好设置" → "安全性与隐私"</li><li>点击"仍要打开"或"允许"</li><li>或者在 Terminal 中运行：<code>sudo spctl --master-disable</code></li></ul></div>
+          <h3>Linux 端图文指引</h3>
+          <h4>1.安装 Claude Code</h4>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-01.webp" alt="linux-img-01.webp" loading="lazy" data-full="images/claude-code/linux-img-01.webp"><figcaption>linux-img-01.webp</figcaption></figure>
+          <div class="callout"><strong>安装 Claude Code</strong><p>打开终端，运行以下命令：</p><pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre><p>如果遇到权限问题，可以使用 sudo：</p><pre><code>sudo curl -fsSL https://claude.ai/install.sh | bash</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-03.webp" alt="linux-img-03.webp" loading="lazy" data-full="images/claude-code/linux-img-03.webp"><figcaption>linux-img-03.webp</figcaption></figure>
+          <div class="callout"><strong>验证 Claude Code 安装</strong><p>安装完成后，输入以下命令检查是否安装成功：</p><pre><code>claude --version</code></pre><p>如果显示版本号，恭喜你！Claude Code 已经成功安装了。</p></div>
+          <h4>2.设置环境变量</h4>
+          <p>为了让 Claude Code 连接词元.fast 服务，需要设置两个环境变量：</p>
+          <div class="callout"><strong>一键修改环境变量</strong><p>输入命令：</p><pre><code>curl -fsSL https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/claude-cli-setup.sh | bash</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/macos_configure.webp" alt="macos-configure" loading="lazy" data-full="images/claude-code/macos_configure.webp"><figcaption>macos-configure</figcaption></figure>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>3.开始使用 Claude Code</h4>
+          <p>现在你可以开始使用 Claude Code 了！</p>
+          <div class="callout"><strong>启动 Claude Code</strong><p>直接启动 Claude Code：</p><pre><code>claude</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd /path/to/your/project
+          
+          # 启动 Claude Code
+          claude</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-03.webp" alt="linux-img-03.webp" loading="lazy" data-full="images/claude-code/linux-img-03.webp"><figcaption>linux-img-03.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-04.webp" alt="linux-img-04.webp" loading="lazy" data-full="images/claude-code/linux-img-04.webp"><figcaption>linux-img-04.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-05.webp" alt="linux-img-05.webp" loading="lazy" data-full="images/claude-code/linux-img-05.webp"><figcaption>linux-img-05.webp</figcaption></figure>
+          <div class="callout"><strong>选择模型</strong><p>输入命令：</p><pre><code>/model</code></pre><p>按 Enter 进入，选择官方模型，通常使用默认模型即可。</p></div>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-06.webp" alt="linux-img-06.webp" loading="lazy" data-full="images/claude-code/linux-img-06.webp"><figcaption>linux-img-06.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-07.webp" alt="linux-img-07.webp" loading="lazy" data-full="images/claude-code/linux-img-07.webp"><figcaption>linux-img-07.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-08.webp" alt="linux-img-08.webp" loading="lazy" data-full="images/claude-code/linux-img-08.webp"><figcaption>linux-img-08.webp</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/claude-code/linux-img-09.webp" alt="linux-img-09.webp" loading="lazy" data-full="images/claude-code/linux-img-09.webp"><figcaption>linux-img-09.webp</figcaption></figure>
+          <blockquote>注意：设置环境变量修改 <code>ANTHROPIC_BASE_URL</code> 后，使用所有模型（包括官方预设模型）均调用自定义接入点，而不使用官方账号额度。</blockquote>
+          <h4>4.Linux 常见问题解决</h4>
+          <div class="callout"><strong>缺少依赖库</strong><p>某些 Linux 发行版需要安装额外依赖：</p><pre><code># Ubuntu/Debian
+          sudo apt install build-essential
+          
+          # CentOS/RHEL
+          sudo dnf groupinstall "Development Tools"</code></pre></div>
+          <div class="callout"><strong>环境变量不生效</strong><p>检查以下几点：</p><ul><li>确认修改了正确的配置文件（<code>.bashrc</code> 或 <code>.zshrc</code>）</li><li>重新启动终端或运行 <code>source ~/.bashrc</code></li><li>验证设置：<code>echo $ANTHROPIC_BASE_URL</code></li></ul></div>
         `
       },
       {
@@ -1126,106 +1230,254 @@ codex
       },
       {
         id: 'factory-droid-cli', category: 'coding', title: 'Factory Droid CLI', subtitle: 'Factory 终端 AI 编程助手', tags: ["Droid","工程代理","CLI"],
-        summary: '补全 Factory Droid CLI 教程：平台能力、Windows/macOS/Linux 安装、配置文件、启动示例与排错。',
+        summary: '完整复刻源站 Droid CLI 教程密度：效果演示、特性、Windows/macOS/Linux 安装配置、启动示例。',
         body: `
-          <h2>Factory Droid CLI</h2>
-          <p class="lead">Factory Droid CLI 是面向软件工程任务的终端 AI 助手，适合把需求拆成计划、修改代码、运行测试并协助完成交付。接入词元.fast 后，可以在兼容 OpenAI 的模型网关下使用。</p>
+          <div class="callout"><strong>项目介绍</strong><p>Droid CLI 是由 Factory AI 开发的命令行工具，旨在作为 AI 软件工程代理运行。它允许用户通过终端与各种大型语言模型交互，构建、调试和重构代码，甚至创建完整的应用程序。</p><ul><li>官方主页：<a href="https://factory.ai/product/cli" target="_blank" rel="noreferrer">https://factory.ai/product/cli</a></li><li>官方文档：<a href="https://docs.factory.ai/cli/getting-started/quickstart" target="_blank" rel="noreferrer">https://docs.factory.ai/cli/getting-started/quickstart</a></li></ul></div>
+          <h2>效果演示</h2>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/droid_example.webp" alt="droid.webp" loading="lazy" data-full="images/factory-droid-cli/droid_example.webp"><figcaption>droid.webp</figcaption></figure>
           <h3>特性</h3>
-          <table><tr><th>能力</th><th>说明</th></tr><tr><td>规划到执行</td><td>把需求拆解为步骤，并在项目目录内持续推进。</td></tr><tr><td>代码库理解</td><td>读取文件、搜索符号、解释模块关系。</td></tr><tr><td>工程自动化</td><td>结合测试、构建、Git 工作流完成常见开发任务。</td></tr><tr><td>跨平台</td><td>Windows、macOS、Linux 都可使用。</td></tr></table>
+          <table><tr><th>类别</th><th>特性</th><th>价值/能力</th><th>示例/备注</th></tr><tr><td>快速上手与 CLI</td><td>30 秒安装；在项目目录中启动 droid 交互会话；支持 macOS/Linux 与 Windows</td><td>快速接入当前工程，无需新工具</td><td>Windows 安装：<code>irm https://app.factory.ai/cli/windows | iex</code>；启动：<code>droid</code></td></tr><tr><td>端到端特性开发</td><td>从规划到实现到测试的全流程自动化；透明的评审流程</td><td>提升交付速度，保持人类把控</td><td>原生 diff 查看与批准流程（见"透明与可控"）</td></tr><tr><td>代码库深度理解</td><td>融合组织在代码库、文档、Issue 追踪中的共享知识；上下文感知，效果随时间提升</td><td>更准确的建议与改动</td><td>持续利用跨仓库与文档的知识</td></tr><tr><td>工程系统集成</td><td>原生集成 Jira、Notion、Slack 等工具；开发工作与团队流程保持同步</td><td>减少工具切换与信息孤岛</td><td>"等"表示还有更多集成</td></tr><tr><td>生产级自动化</td><td>工作流可在本地与 CI/CD 复用；企业级安全与合规内建</td><td>一致性与可审计性</td><td>适配流水线与企业环境</td></tr><tr><td>企业级能力</td><td>私有部署选项、SOC-2 合规、空气隔离（air-gapped）环境</td><td>满足安全与合规要求</td><td>以安全与质量优先</td></tr><tr><td>现有工具增强</td><td>在终端、IDE 与既有开发环境中工作；无需切换编辑器或学习新界面</td><td>保持现有工作习惯、低迁移成本</td><td>与熟悉工具深度集成</td></tr><tr><td>透明与可控</td><td>每个决策可见且可审阅；对代码变更保持完全监督；原生 diff 查看与审批工作流</td><td>降低风险、提升可控性</td><td>审核友好、可追踪</td></tr><tr><td>模型灵活性</td><td>不锁定单一 AI 提供商；按任务选择最佳模型；组织级一致行为与记忆</td><td>在性能与成本间做最优选择</td><td>支持多模型路由</td></tr><tr><td>下一步与资源</td><td>Quickstart、Common Use Cases、IDE Integration、Configuration、AGENTS.md</td><td>便于落地与实践</td><td>见页面 "Next steps/Additional resources"</td></tr></table>
+          <h2>AI 模型配置方法</h2>
           <h3>Windows 端图文指引</h3>
-          <ol><li>打开 PowerShell 或 Windows Terminal。</li><li>按 Factory 官方文档安装 Droid CLI。</li><li>找到 Droid 配置文件，写入词元.fast Base URL、API Key 与模型名称。</li><li>进入项目目录后运行 Droid，先让它读取项目并生成计划。</li></ol>
-          <pre><code>droid --version
-          droid</code></pre>
-          <h3>macOS 端图文指引</h3>
-          <ol><li>打开终端。</li><li>执行官方安装命令或使用文档推荐的包管理方式。</li><li>修改配置文件，将服务地址改为 <code>https://ciyuan.fast/v1</code>，API Key 改为词元.fast 令牌。</li><li>重新打开终端并启动 Droid。</li></ol>
-          <h3>Linux 端图文指引</h3>
-          <p>Linux 与 macOS 方式相近。核心检查点是：CLI 命令可执行、配置文件路径正确、终端环境变量没有覆盖你写入的配置。</p>
-          <h3>推荐配置</h3>
-          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>API Key</td><td>词元.fast 控制台创建的令牌</td></tr><tr><td>Base URL</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>Model</td><td>控制台里可用的模型 ID</td></tr></table>
-          <h3>开始使用 Droid CLI</h3>
-          <pre><code>cd /path/to/your/project
-          droid</code></pre>
-          <p>第一次运行建议给出明确、可验证的小任务，例如“阅读项目结构并告诉我测试命令”，确认工具能访问代码和模型后再交给它修改代码。</p>
-          <h3>常见问题</h3>
-          <ul><li>命令不存在：重新打开终端，或检查安装目录是否在 PATH。</li><li>401/鉴权失败：确认 API Key 没有多余空格，并且仍有效。</li><li>模型不可用：换成词元.fast 控制台明确展示的模型 ID。</li><li>连接失败：检查 Base URL 是否包含 <code>https://</code>，以及是否误填成不带 <code>/v1</code> 的地址。</li></ul>
+          <h4>1.打开终端</h4>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/windows_open_terminal.webp" alt="windows_open_terminal" loading="lazy" data-full="images/factory-droid-cli/windows_open_terminal.webp"><figcaption>windows_open_terminal</figcaption></figure>
+          <h4>2.安装 Factory Droid CLI</h4>
+          <p>官方一键安装命令：</p>
+          <div class="callout"><strong>一键安装命令</strong><pre><code>irm https://app.factory.ai/cli/windows | iex</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/windows_install_droid.webp" alt="windows-install" loading="lazy" data-full="images/factory-droid-cli/windows_install_droid.webp"><figcaption>windows-install</figcaption></figure>
+          <h4>3.修改配置文件</h4>
+          <p>Droid CLI 使用第三方 API 需要修改配置文件。</p>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/factory_cli_setup_windows.webp" alt="windows-configure.webp" loading="lazy" data-full="images/factory-droid-cli/factory_cli_setup_windows.webp"><figcaption>windows-configure.webp</figcaption></figure>
+          <div class="callout"><strong>修改环境变量</strong><pre><code>iex (irm 'https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/factory-cli-setup.ps1')</code></pre></div>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>4.开始使用 Droid CLI</h4>
+          <p>现在你可以开始使用 Droid CLI 了！</p>
+          <div class="callout"><strong>启动 Droid CLI</strong><p>直接启动 Droid CLI：</p><pre><code>droid</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd C:\path\to\your\project
+          
+          # 启动 Droid CLI
+          droid</code></pre><p>按 Enter 启动 Droid CLI。</p></div>
+          <p>Droid CLI 要求用户登录官方账号（免费）后才能使用。</p>
+          <h4>5.Windows 常见问题解决</h4>
+          <div class="callout"><strong>安装时提示 permission denied 错误</strong><p>这通常是权限问题，尝试以下解决方法：</p><ul><li>以管理员身份运行 PowerShell</li><li>或者配置 <code>npm</code> 使用用户目录：<code>npm config set prefix %APPDATA%\npm</code></li></ul></div>
+          <div class="callout"><strong>PowerShell 执行策略错误</strong><p>如果遇到执行策略限制，运行：</p><pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre></div>
+          <h3>macOS/Linux 端图文指引</h3>
+          <h4>1.安装 Droid CLI</h4>
+          <div class="callout"><strong>安装 Droid CLI</strong><p>打开终端，运行以下命令：</p><pre><code>curl -fsSL https://app.factory.ai/cli | sh</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/macos_install_droid.webp" alt="macos-open-terminal" loading="lazy" data-full="images/factory-droid-cli/macos_install_droid.webp"><figcaption>macos-open-terminal</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/macos_install_droid_2.webp" alt="macos-img-02.webp" loading="lazy" data-full="images/factory-droid-cli/macos_install_droid_2.webp"><figcaption>macos-img-02.webp</figcaption></figure>
+          <p>按照安装提示修改环境变量（直接复制安装提示代码）：</p>
+          <p>Linux 视情况选择 <code>~/.bashrc</code> 或 <code>~/.zshrc</code></p>
+          <div class="callout"><strong>Droid CLI 环境变量 (仅作示例)</strong><pre><code>echo 'export PATH=/Users/修改此处/.local/bin:$PATH' &gt;&gt; ~/.zshrc
+          source ~/.zshrc</code></pre></div>
+          <h4>2.修改配置文件</h4>
+          <p>Droid CLI 使用第三方 API 需要修改配置文件。</p>
+          <div class="callout"><strong>一键修改配置文件</strong><pre><code>curl -fsSL https://raw.githubusercontent.com/QuantumNous/new-api-docs/refs/heads/main/helper/factory-cli-setup.sh | bash</code></pre></div>
+          <figure class="shot doc-shot"><img src="images/factory-droid-cli/macos_configure.webp" alt="macos-img-03.webp" loading="lazy" data-full="images/factory-droid-cli/macos_configure.webp"><figcaption>macos-img-03.webp</figcaption></figure>
+          <div class="callout"><strong>设置API地址和KEY秘钥</strong><p>将base_url设置为：https://ciyuan.fast API KEY秘钥设置成你在词元.fast 控制台创建的令牌</p></div>
+          <h4>3.开始使用 Droid CLI</h4>
+          <p>现在你可以开始使用 Droid CLI 了！</p>
+          <div class="callout"><strong>启动 Droid CLI</strong><p>直接启动 Droid CLI：</p><pre><code>droid</code></pre><p>在特定项目中使用：</p><pre><code># 进入你的项目目录
+          cd /path/to/your/project
+          
+          # 启动 Droid CLI
+          droid</code></pre><p>按 Enter 启动 Droid CLI。</p></div>
+          <blockquote>Droid CLI 要求用户登录官方账号（免费）后才能使用。</blockquote>
         `
       },
       {
         id: 'cc-switch', category: 'coding', title: 'CC Switch', subtitle: 'AI CLI 统一管理工具', tags: ["Provider","MCP","Prompts"],
-        summary: '补全 CC Switch 教程：Provider、MCP、Prompts 管理，以及 macOS/Windows/Linux 安装与词元.fast Deep Link 配置。',
+        summary: '完整复刻源站 CC Switch 教程密度：核心特性、Provider/MCP/Prompts 管理、词元.fast 接入和三端安装方式。',
         body: `
-          <h2>CC Switch - AI CLI 统一管理工具</h2>
-          <p class="lead">CC Switch 用来统一管理 Claude Code、Codex、Gemini CLI 等 AI CLI 的 Provider 配置、MCP 服务器与系统提示词。对多套模型网关和多项目环境来说，它的价值在于减少重复改配置。</p>
-          <h3>核心特性</h3>
-          <table><tr><th>模块</th><th>用途</th></tr><tr><td>Provider 管理</td><td>集中维护不同 AI CLI 的 API 地址、Key 和模型。</td></tr><tr><td>MCP 服务器管理</td><td>统一开关、添加和维护 MCP 工具服务器。</td></tr><tr><td>Prompts 管理</td><td>保存常用系统提示词和项目提示词。</td></tr><tr><td>跨平台</td><td>覆盖 macOS、Windows、Linux。</td></tr></table>
-          <h3>词元.fast 接入方法</h3>
-          <p>最省事的方式是通过深链打开 CC Switch 的 Provider 填写窗口，然后填入词元.fast 信息。</p>
-          <pre><code>Provider Name: 词元.fast
-          Base URL: https://ciyuan.fast/v1
-          API Key: 词元.fast 控制台创建的 API Key
-          Model: 控制台可用模型 ID</code></pre>
-          <h3>通过 Deep Link 填充</h3>
-          <p>如果浏览器已关联 CC Switch，可以用 <code>ccswitch://</code> 链接唤起配置窗口。若没有唤起，先安装桌面端并重启浏览器。</p>
-          <h3>macOS 安装</h3>
-          <pre><code>brew install --cask cc-switch</code></pre>
-          <p>如果没有 Homebrew，也可以从 GitHub Releases 下载对应的 macOS 安装包。</p>
-          <h3>Windows 安装</h3>
-          <p>前往 CC Switch Releases 下载 Windows 安装包。安装后如浏览器无法唤起深链，重启浏览器或系统后再试。</p>
-          <h3>Linux 安装</h3>
-          <p>Linux 用户从 Releases 选择对应架构包。安装完成后确认桌面环境已注册 <code>ccswitch://</code> 协议。</p>
-          <h3>使用建议</h3>
-          <ul><li>把 Provider 名称写清楚，例如“词元.fast - 主力模型”。</li><li>同一团队尽量统一模型 ID，避免脚本和文档不一致。</li><li>涉及 Codex 的配置仍以本项目 Codex 专区为准，不在这里覆盖。</li></ul>
+          <div class="callout"><strong>项目介绍</strong><p>🔀 CC Switch 是一款开源、跨平台的 AI CLI 统一管理工具，支持 Claude Code、Codex 和 Gemini CLI 的 Provider 配置一键切换、MCP 服务器统一管理、系统提示词（Prompts）管理以及 Skills 扩展管理， 让你在多个 AI 编程助手之间自由切换，无需手动编辑配置文件。</p></div>
+          <ul><li>GitHub 仓库：<a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">https://github.com/farion1231/cc-switch</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">GitHub Releases</a></li></ul>
+          <h2>核心特性</h2>
+          <h3>🔌 Provider 管理</h3>
+          <ul><li><strong>一键切换</strong> — 在 Claude Code、Codex、Gemini 的 API 配置之间一键切换，无需手动修改环境变量或配置文件</li></ul>
+          <ul><li><strong>多端点支持</strong> — 每个 Provider 可配置多个端点，支持 API Key 管理与延迟测速</li></ul>
+          <ul><li><strong>4 层模型配置</strong> — 支持 Haiku / Sonnet / Opus / Custom 四级模型粒度配置</li></ul>
+          <h3>🛠️ MCP 服务器管理</h3>
+          <ul><li><strong>跨应用统一管理</strong> — 单面板管理 Claude / Codex / Gemini 三端的 MCP 服务器</li></ul>
+          <ul><li><strong>三种传输类型</strong> — 支持 stdio、HTTP、SSE（Server-Sent Events）</li></ul>
+          <ul><li><strong>自动同步</strong> — 统一导入导出 + 双向同步</li></ul>
+          <h3>💬 Prompts 管理</h3>
+          <ul><li><strong>多预设系统提示词</strong> — 无限预设、快速切换</li></ul>
+          <ul><li><strong>跨应用支持</strong> — Claude（<code>CLAUDE.md</code>）、Codex（<code>AGENTS.md</code>）、Gemini（<code>GEMINI.md</code>）</li></ul>
+          <ul><li><strong>Markdown 编辑器</strong> — CodeMirror 6 + 实时预览</li></ul>
+          <h3>🌐 多平台支持</h3>
+          <ul><li><strong>桌面应用</strong> — Windows、macOS、Linux 原生安装包</li></ul>
+          <ul><li><strong>Web 版本</strong> — 适用于无头服务器 / SSH 远程环境的浏览器访问方案</li></ul>
+          <ul><li><strong>CLI 版本</strong> — 命令行交互模式与命令模式双支持</li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <p>CC Switch 支持 <code>ccswitch://</code> Deep Link 协议，可从 词元.fast 令牌管理页一键导入 Provider 配置。</p>
+          <h3>配置步骤</h3>
+          <p>1. <strong>在 词元.fast API 令牌管理页，点击对应令牌的下拉菜单</strong> 在菜单中选择 <strong>CC Switch</strong> 选项，系统会自动唤起 CC Switch 应用并弹出配置弹窗。</p>
+          <p>2. <strong>在弹窗中完成配置</strong></p>
+          <figure class="shot doc-shot"><img src="images/cc-switch/fill_dialog.webp" alt="填入 CC Switch 弹窗" loading="lazy" data-full="images/cc-switch/fill_dialog.webp"><figcaption>填入 CC Switch 弹窗</figcaption></figure>
+          <p>弹窗各字段说明：</p>
+          <ul><li><strong>应用</strong>：顶部切换应用类型 — <strong>Claude</strong> / <strong>Codex</strong> / <strong>Gemini</strong>，根据需要选择目标应用</li></ul>
+          <ul><li><strong>名称</strong>：为该配置填写一个名称（例如 <code>My Claude</code>），方便后续在 CC Switch 中识别和切换</li></ul>
+          <ul><li><strong>主模型</strong>（必填）— 默认使用的主力模型</li></ul>
+          <ul><li><strong>Haiku 模型</strong> — 轻量快速模型</li></ul>
+          <ul><li><strong>Sonnet 模型</strong> — 均衡模型</li></ul>
+          <ul><li><strong>Opus 模型</strong> — 最强模型</li></ul>
+          <p>所有模型均为下拉选择，未选择时显示「请选择模型」。</p>
+          <p>3. <strong>完成配置</strong> 点击 <strong>「打开 CC Switch」</strong> 即可将配置导入 CC Switch 并开始使用；点击 <strong>「取消」</strong> 放弃本次操作。</p>
+          <h2>安装方式</h2>
+          <h3>macOS（推荐 Homebrew）</h3>
+          <pre><code>brew tap farion1231/ccswitch
+          brew install --cask cc-switch</code></pre>
+          <h3>Windows</h3>
+          <p>从 <a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">Releases</a> 下载 <code>.msi</code> 安装包或便携版 <code>.zip</code>。</p>
+          <h3>Linux</h3>
+          <p>从 <a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noreferrer">Releases</a> 下载 <code>.deb</code> 包或 <code>.AppImage</code>。</p>
+          <p>ArchLinux 用户：</p>
+          <pre><code>paru -S cc-switch-bin</code></pre>
+          <h3>Web 版本（无头 / SSH 服务器）</h3>
+          <pre><code>wget https://github.com/farion1231/cc-switch/releases/latest/download/cc-switch-web-linux-x64.tar.gz
+          tar -xzf cc-switch-web-linux-x64.tar.gz
+          cd cc-switch-web/
+          ./cc-switch-web</code></pre>
+          <p>默认端口 <code>17666</code>，通过浏览器访问 <code>http://localhost:17666</code>。</p>
+          <h2>相关链接</h2>
+          <ul><li><a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">GitHub 仓库</a></li></ul>
+          <ul><li><a href="https://github.com/farion1231/cc-switch/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer">更新日志</a></li></ul>
+          <ul><li><a href="https://github.com/cp-yu/cc-switch-web" target="_blank" rel="noreferrer">Web 版本仓库</a></li></ul>
+          <ul><li><a href="https://github.com/thomas-jack/cc-switch-cli" target="_blank" rel="noreferrer">CLI 版本仓库</a></li></ul>
         `
       },
       {
         id: 'cherry-studio', category: 'desktop', title: 'Cherry Studio', subtitle: '桌面 AI 客户端', tags: ["桌面端","多助手","NewAPI"],
-        summary: '补全 Cherry Studio 教程：OpenAI 兼容服务商、模型添加、聊天切换和绘图模型配置。',
+        summary: '完整复刻源站 Cherry Studio 教程密度：参数填写、图文指引、聊天模型和绘图模型配置。',
         body: `
-          <h2>Cherry Studio - 桌面 AI 客户端</h2>
-          <p class="lead">Cherry Studio 是桌面 AI 客户端，内置多种助手与模型服务商。接入词元.fast 时，把它当作 OpenAI 兼容服务商配置即可。</p>
+          <div class="callout"><strong>项目介绍</strong><p>🍒 Cherry Studio 是一款功能强大的桌面 AI 客户端，专为专业用户设计，集成了 30+ 行业智能助手，能够满足各种工作场景的需求，显著提升工作效率。</p></div>
+          <ul><li>官网地址：<a href="https://cherry-ai.com/" target="_blank" rel="noreferrer">https://cherry-ai.com</a></li></ul>
+          <ul><li>下载地址：<a href="https://cherry-ai.com/download" target="_blank" rel="noreferrer">https://cherry-ai.com/download</a></li></ul>
+          <ul><li>官方文档：<a href="https://docs.cherry-ai.com" target="_blank" rel="noreferrer">https://docs.cherry-ai.com</a></li></ul>
+          <h2>词元.fast API 接入方法</h2>
           <h3>参数填写</h3>
-          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>服务商类型</td><td>OpenAI 或 OpenAI Compatible</td></tr><tr><td>API Key</td><td>词元.fast 控制台创建的 API Key</td></tr><tr><td>API 地址</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>模型</td><td>填入控制台可用模型 ID</td></tr></table>
+          <p>提供商类型：词元.fast API 支持的类型 API 密钥：于 词元.fast API 获取 API 地址：https://ciyuan.fast</p>
           <h3>图文指引</h3>
-          <ol><li>打开 Cherry Studio，进入设置里的模型服务。</li><li>新增服务商，选择 OpenAI 兼容类型。</li><li>粘贴词元.fast API Key，Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>添加聊天模型，模型 ID 与控制台保持一致。</li><li>回到聊天页面，切换到刚添加的模型并发送一句测试消息。</li></ol>
-          <h3>在 Cherry Studio 中画图</h3>
-          <p>如果你的词元.fast 账号已开通图像模型，可以在绘图模块继续添加绘图模型。聊天模型和绘图模型分开管理，不要只配置一个入口就以为两个功能都可用。</p>
-          <ol><li>进入绘图或图像模型设置。</li><li>添加可用的图像模型 ID。</li><li>输入简单提示词测试，例如“白底产品照片”。</li></ol>
-          <h3>排错清单</h3>
-          <ul><li>发送失败：先检查 Key 是否复制完整。</li><li>404 或模型不存在：模型 ID 与控制台不一致。</li><li>连接超时：确认 Base URL 不要漏掉 <code>https://</code> 和 <code>/v1</code>。</li></ul>
+          <p>1. 在 词元.fast API 中复制 API key</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/copy_api_key.webp" alt="复制 API 密钥" loading="lazy" data-full="images/cherry-studio/copy_api_key.webp"><figcaption>复制 API 密钥</figcaption></figure>
+          <p>2. 添加提供商</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/add_provider.webp" alt="添加供应商" loading="lazy" data-full="images/cherry-studio/add_provider.webp"><figcaption>添加供应商</figcaption></figure>
+          <p>3. 添加模型</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/add_models.webp" alt="添加模型" loading="lazy" data-full="images/cherry-studio/add_models.webp"><figcaption>添加模型</figcaption></figure>
+          <p>4. 返回聊天页面</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/back_to_chat.webp" alt="切换聊天页面" loading="lazy" data-full="images/cherry-studio/back_to_chat.webp"><figcaption>切换聊天页面</figcaption></figure>
+          <p>5. 切换 词元.fast API 模型</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/switch_model.webp" alt="切换模型" loading="lazy" data-full="images/cherry-studio/switch_model.webp"><figcaption>切换模型</figcaption></figure>
+          <h2>在 Cherry Studio 中画图</h2>
+          <p>1. 首先添加支持画图的模型</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/add_paint_models.webp" alt="画图模型" loading="lazy" data-full="images/cherry-studio/add_paint_models.webp"><figcaption>画图模型</figcaption></figure>
+          <p>2. 画图</p>
+          <figure class="shot doc-shot"><img src="images/cherry-studio/paint.webp" alt="画图" loading="lazy" data-full="images/cherry-studio/paint.webp"><figcaption>画图</figcaption></figure>
         `
       },
       {
         id: 'aionui', category: 'desktop', title: 'AionUi', subtitle: '开源桌面办公 Agent', tags: ["办公 Agent","多代理","桌面"],
-        summary: '补全 AionUi 教程：核心特性、多代理模式、文件/预览/图像能力，以及 NewAPI 参数和配置步骤。',
+        summary: '完整复刻源站 AionUi 教程密度：核心特性、多代理能力和词元.fast NewAPI 接入步骤。',
         body: `
-          <h2>AionUi - 免费开源的桌面办公 Agent</h2>
-          <p class="lead">AionUi 是桌面办公 Agent，支持 Gemini CLI、Claude Code、Codex 等多种 AI 代理协作。接入词元.fast 后，可以把多模型能力集中到本地工作台里。</p>
-          <h3>核心特性</h3>
-          <table><tr><th>能力</th><th>说明</th></tr><tr><td>多会话聊天</td><td>围绕不同任务建立会话，减少上下文混乱。</td></tr><tr><td>多模型支持</td><td>可接入多家模型服务，适合对比和切换。</td></tr><tr><td>多代理模式</td><td>把不同 CLI Agent 组合成办公工作流。</td></tr><tr><td>文件管理</td><td>在本地项目、资料和输出文件之间快速切换。</td></tr><tr><td>预览面板</td><td>对文档、代码或生成结果做即时查看。</td></tr><tr><td>图像生成与编辑</td><td>按已开通模型能力扩展图像工作流。</td></tr></table>
-          <h3>词元.fast API 接入方法</h3>
-          <table><tr><th>配置项</th><th>填写内容</th></tr><tr><td>Provider</td><td>NewAPI / OpenAI Compatible</td></tr><tr><td>API Key</td><td>词元.fast 控制台创建的 API Key</td></tr><tr><td>Base URL</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>Model</td><td>选择控制台已启用的模型 ID</td></tr></table>
+          <div class="callout"><strong>项目介绍</strong><p>🚀 AionUi 是一款免费、本地、开源的Cowork，支持 Gemini CLI、Claude Code、Codex、OpenCode、Qwen Code、Goose CLI、Auggie 等多种 AI 代理。它提供了完整的 GUI 界面和 WebUI 远程访问功能，是 Cowork 的开源替代方案。</p></div>
+          <ul><li>官网地址：<a href="https://www.aionui.com" target="_blank" rel="noreferrer">https://www.aionui.com</a></li></ul>
+          <ul><li>GitHub 仓库：<a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noreferrer">https://github.com/iOfficeAI/AionUi</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/iOfficeAI/AionUi/releases" target="_blank" rel="noreferrer">https://github.com/iOfficeAI/AionUi/releases</a></li></ul>
+          <figure class="shot doc-shot"><img src="images/aionuilogo.webp" alt="AionUi Logo" loading="lazy" data-full="images/aionuilogo.webp"><figcaption>AionUi Logo</figcaption></figure>
+          <h2>核心特性</h2>
+          <h3>💬 多会话聊天</h3>
+          <ul><li><strong>多会话 + 独立上下文</strong> - 可同时打开多个聊天会话，每个会话拥有独立的上下文记忆</li></ul>
+          <ul><li><strong>本地存储</strong> - 所有对话数据保存在本地 SQLite 数据库中，不会丢失</li></ul>
+          <h3>🤖 多模型支持</h3>
+          <ul><li><strong>多平台支持</strong> - 支持 Gemini、OpenAI、Claude、Qwen 等主流模型，灵活切换</li></ul>
+          <ul><li><strong>本地模型支持</strong> - 支持 Ollama、LM Studio 等本地模型部署</li></ul>
+          <h3>🤝 多代理模式</h3>
+          <ul><li><strong>同时运行多个 AI 代理</strong> - 可同时运行多个 AI 代理（如 Gemini CLI、Claude Code、Codex、OpenCode、Qwen Code、Goose CLI、Auggie 等）</li></ul>
+          <ul><li><strong>MCP 统一管理</strong> - 通过 Model Context Protocol (MCP) 统一管理和配置所有代理，简化操作流程</li></ul>
+          <ul><li><strong>Skills 配置</strong> - 支持为不同代理配置专属的 Skills，扩展代理能力</li></ul>
+          <ul><li><strong>助手自定义</strong> - 支持自定义助手配置，打造个性化的 AI 工作流</li></ul>
+          <ul><li><strong>独立配置</strong> - 每个代理可独立配置和使用，互不干扰</li></ul>
+          <ul><li><strong>灵活切换</strong> - 在不同代理之间灵活切换，满足不同场景需求</li></ul>
+          <h3>🗂️ 文件管理</h3>
+          <ul><li><strong>文件树浏览 + 拖拽上传</strong> - 像文件夹一样浏览文件，支持拖拽文件或文件夹一键导入</li></ul>
+          <ul><li><strong>智能整理</strong> - 可让 AI 帮助整理文件夹，自动分类</li></ul>
+          <h3>📄 预览面板</h3>
+          <ul><li><strong>9+ 格式预览</strong> - 支持 PDF、Word、Excel、PPT、代码、Markdown、图片等格式</li></ul>
+          <ul><li><strong>实时跟踪 + 可编辑</strong> - 自动跟踪文件变化，支持实时编辑和调试 Markdown、代码、HTML</li></ul>
+          <h3>🎨 AI 图像生成与编辑</h3>
+          <ul><li><strong>智能图像生成</strong> - 支持 Gemini 2.5 Flash Image Preview、Nano、Banana 等多种图像生成模型</li></ul>
+          <ul><li><strong>图像识别与编辑</strong> - AI 驱动的图像分析和编辑功能</li></ul>
+          <h3>🌐 多渠道访问</h3>
+          <ul><li><strong>WebUI 远程访问</strong> - 可通过浏览器从网络上的任何设备访问，支持移动设备</li></ul>
+          <ul><li><strong>Telegram 集成</strong> - 支持通过 Telegram 机器人进行交互</li></ul>
+          <ul><li><strong>飞书集成</strong> - 支持通过飞书进行访问和交互</li></ul>
+          <ul><li><strong>本地数据安全</strong> - 所有数据存储在本地 SQLite 数据库中，适合服务器部署</li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <h3>参数填写</h3>
+          <p>提供商类型：词元.fast API 支持的类型 API 密钥：于 词元.fast API 获取 API 地址：词元.fast API站点地址（例如：<code>https://ciyuan.fast/v1</code>）</p>
           <h3>配置步骤</h3>
-          <ol><li>打开 AionUi 的模型或 Provider 设置。</li><li>新增 OpenAI 兼容服务商。</li><li>Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>粘贴 API Key，并添加模型名称。</li><li>保存后新建会话，用一句简单问题验证模型回复。</li></ol>
-          <h3>使用建议</h3>
-          <ul><li>办公类任务建议先固定一个主力聊天模型，再按任务添加图像或代码模型。</li><li>如果同时接入 Claude Code、Codex 等 CLI，注意它们各自的配置文件不要互相覆盖。</li><li>团队共享教程时，隐藏 API Key，只共享 Provider 名称和模型 ID。</li></ul>
+          <p>1. <strong>在 词元.fast API 中复制 API key</strong></p>
+          <figure class="shot doc-shot"><img src="images/copy_apikey.webp" alt="复制 API 密钥" loading="lazy" data-full="images/copy_apikey.webp"><figcaption>复制 API 密钥</figcaption></figure>
+          <p>2. <strong>打开 AionUi 设置</strong></p>
+          <ul><li>在 AionUi 中进入设置页面</li></ul>
+          <ul><li>找到 模型配置 Tab</li></ul>
+          <ul><li>点击"添加模型"</li></ul>
+          <figure class="shot doc-shot"><img src="images/add-model-1.webp" alt="打开设置" loading="lazy" data-full="images/add-model-1.webp"><figcaption>打开设置</figcaption></figure>
+          <p>3. <strong>添加新的提供商</strong></p>
+          <ul><li>点击"添加模型"</li></ul>
+          <ul><li>选择 NewAPI</li></ul>
+          <figure class="shot doc-shot"><img src="images/newapi_provider.webp" alt="添加 NewAPI 提供商" loading="lazy" data-full="images/newapi_provider.webp"><figcaption>添加 NewAPI 提供商</figcaption></figure>
+          <p>4. <strong>配置 API 信息</strong></p>
+          <ul><li>API 地址：填写您的 词元.fast API 站点地址（格式：https://ciyuan.fast/v1\`）</li></ul>
+          <ul><li>API 密钥：粘贴从 词元.fast API 控制台复制的 API Key</li></ul>
+          <p>5. <strong>添加模型</strong></p>
+          <ul><li>下拉选择需要添加的模型</li></ul>
+          <ul><li>模型名称应与 词元.fast API 中配置的模型名称一致</li></ul>
+          <ul><li>选择合适的请求协议</li></ul>
+          <p>6. <strong>开始使用</strong></p>
+          <ul><li>返回聊天页面</li></ul>
+          <ul><li>选择已配置的 词元.fast API 模型开始对话</li></ul>
+          <h2>相关链接</h2>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noreferrer">GitHub 仓库</a></li></ul>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi#-detailed-usage-guide" target="_blank" rel="noreferrer">完整使用指南</a></li></ul>
+          <ul><li><a href="https://github.com/iOfficeAI/AionUi#-support--help" target="_blank" rel="noreferrer">FAQ 常见问题</a></li></ul>
         `
       },
       {
         id: 'fluent-read', category: 'reading', title: '流畅阅读', subtitle: 'FluentRead 开源翻译插件', tags: ["浏览器插件","双语阅读","翻译"],
-        summary: '补全 FluentRead 教程：安装入口、沉浸式翻译特性、控制台导入和手动 NewAPI 配置。',
+        summary: '完整复刻源站 FluentRead 教程密度：核心特性、安装方式、控制台导入和手动配置。',
         body: `
-          <h2>流畅阅读 (FluentRead) - 开源翻译插件</h2>
-          <p class="lead">FluentRead 是开源浏览器翻译插件，支持多种翻译引擎和 AI 大模型翻译。接入词元.fast 后，可以用兼容模型做双语网页阅读。</p>
-          <h3>核心特性</h3>
-          <table><tr><th>能力</th><th>说明</th></tr><tr><td>智能翻译引擎</td><td>支持传统翻译服务与 AI 大模型翻译。</td></tr><tr><td>沉浸式阅读</td><td>保留页面结构，同时显示原文和译文。</td></tr><tr><td>隐私与定制</td><td>可选择翻译触发方式、样式和模型配置。</td></tr></table>
-          <h3>安装方式</h3>
-          <ul><li>Chrome 用户从 Chrome Web Store 安装。</li><li>Firefox 用户从 Firefox Add-ons 安装。</li><li>也可以从 GitHub 仓库查看源码和发布信息。</li></ul>
-          <h3>控制台导入配置</h3>
-          <ol><li>先安装 FluentRead 插件。</li><li>打开词元.fast 控制台并进入令牌或应用配置页。</li><li>选择添加到 FluentRead，按提示选择模型。</li><li>确认 API Key、接口地址和模型名称后导入。</li></ol>
-          <h3>手动填写配置</h3>
-          <table><tr><th>配置项</th><th>内容</th></tr><tr><td>翻译服务</td><td>NewAPI</td></tr><tr><td>访问令牌</td><td>词元.fast API Key</td></tr><tr><td>NewAPI 接口</td><td><code>https://ciyuan.fast/v1</code></td></tr><tr><td>模型</td><td>控制台可用模型 ID</td></tr></table>
-          <h3>验证方式</h3>
-          <p>打开一篇英文网页，点击 FluentRead 翻译。如果没有译文，先检查插件是否启用，再检查模型 ID 和 API Key。</p>
+          <div class="callout"><strong>项目介绍</strong><p>🌊 流畅阅读（FluentRead）是一款开源浏览器翻译插件，致力于提供母语般的阅读体验。</p></div>
+          <ul><li>项目地址：<a href="https://github.com/Bistutu/FluentRead" target="_blank" rel="noreferrer">https://github.com/Bistutu/FluentRead</a></li></ul>
+          <h2>🌟 核心特性</h2>
+          <h3>智能翻译引擎</h3>
+          <ul><li><strong>多引擎支持</strong>：支持 20+ 种翻译引擎</li></ul>
+          <ul><li><strong>传统翻译</strong>：微软翻译、谷歌翻译、DeepL翻译等</li></ul>
+          <ul><li><strong>AI 大模型</strong>：OpenAI、DeepSeek、Kimi、Ollama等</li></ul>
+          <ul><li><strong>自定义引擎</strong>：支持自定义翻译服务配置</li></ul>
+          <h3>沉浸式阅读体验</h3>
+          <ul><li><strong>双语对照</strong>：原文与译文并列显示，阅读更轻松</li></ul>
+          <ul><li><strong>划词翻译</strong>：选中任意文本，即时获得翻译结果</li></ul>
+          <ul><li><strong>一键复制</strong>：快速复制译文，提高阅读效率</li></ul>
+          <ul><li><strong>全文翻译</strong>：悬浮球一键翻译整个网页，无需刷新页面</li></ul>
+          <h3>隐私与定制</h3>
+          <ul><li><strong>隐私保护</strong>：所有数据本地存储，代码开源透明</li></ul>
+          <ul><li><strong>高度定制</strong>：丰富的自定义选项，满足不同场景需求</li></ul>
+          <ul><li><strong>完全免费</strong>：开源免费，非商业化项目</li></ul>
+          <h2>📦 安装方式</h2>
+          <table><tr><th>浏览器</th><th>安装方式</th></tr><tr><td><strong>Chrome</strong></td><td><a href="https://chromewebstore.google.com/detail/%E6%B5%81%E7%95%85%E9%98%85%E8%AF%BB/djnlaiohfaaifbibleebjggkghlmcpcj?hl=zh-CN&authuser=0" target="_blank" rel="noreferrer">Chrome 应用商店</a> \</td><td><a href="https://www.crxsoso.com/webstore/detail/djnlaiohfaaifbibleebjggkghlmcpcj" target="_blank" rel="noreferrer">国内镜像</a></td></tr><tr><td><strong>Edge</strong></td><td><a href="https://microsoftedge.microsoft.com/addons/detail/%E6%B5%81%E7%95%85%E9%98%85%E8%AF%BB/kakgmllfpjldjhcnkghpplmlbnmcoflp?hl=zh-CN" target="_blank" rel="noreferrer">Edge 应用商店</a></td></tr><tr><td><strong>Firefox</strong></td><td><a href="https://addons.mozilla.org/zh-CN/firefox/addon/%E6%B5%81%E7%95%85%E9%98%85%E8%AF%BB/" target="_blank" rel="noreferrer">Firefox 附加组件商店</a></td></tr></table>
+          <h2>🚀 配置方法</h2>
+          <h3>从 词元.fast API 控制台导入配置（推荐）</h3>
+          <p>当浏览器安装了流畅阅读插件后，打开 词元.fast API 控制台->令牌管理页面会弹出添加流畅阅读的提示</p>
+          <figure class="shot doc-shot"><img src="images/fluent-read/hint.webp" alt="添加提示" loading="lazy" data-full="images/fluent-read/hint.webp"><figcaption>添加提示</figcaption></figure>
+          <p>选择模型后点击一键填充到FluentRead，会弹出确认窗口，检查对应的信息是否正确</p>
+          <figure class="shot doc-shot"><img src="images/fluent-read/confirm.webp" alt="确认" loading="lazy" data-full="images/fluent-read/confirm.webp"><figcaption>确认</figcaption></figure>
+          <p>确认导入后在流畅阅读中的 NewAPI配置便会启用</p>
+          <figure class="shot doc-shot"><img src="images/fluent-read/fluentread.webp" alt="配置结果" loading="lazy" data-full="images/fluent-read/fluentread.webp"><figcaption>配置结果</figcaption></figure>
+          <h3>在流畅阅读中手动填写配置</h3>
+          <figure class="shot doc-shot"><img src="images/fluent-read/configuration.webp" alt="手动配置" loading="lazy" data-full="images/fluent-read/configuration.webp"><figcaption>手动配置</figcaption></figure>
+          <table><tr><th>配置项</th><th>内容</th></tr><tr><td>翻译服务</td><td>NewAPI</td></tr><tr><td>访问令牌</td><td>词元.fast的 密钥</td></tr><tr><td>NewAPI接口</td><td>https://ciyuan.fast</td></tr><tr><td>模型</td><td>列表中选择，或者自定义模型</td></tr><tr><td>自定义模型</td><td>模型名称</td></tr></table>
         `
       },
       {
@@ -1259,38 +1511,63 @@ codex
       },
       {
         id: 'langbot', category: 'bot', title: 'LangBot', subtitle: '即时通信机器人开发平台', tags: ["飞书","钉钉","知识库"],
-        summary: '补全 LangBot 教程：多 IM 平台、NewAPI 模型接入、流水线调试、知识库和嵌入模型配置。',
+        summary: '完整复刻源站 LangBot 教程密度：NewAPI 接入、流水线调试、微信适配和知识库嵌入模型。',
         body: `
-          <h2>LangBot - 即时通信机器人开发平台</h2>
-          <p class="lead">LangBot 面向飞书、钉钉、Telegram、Discord、微信、QQ 等即时通信平台，支持知识库、Agent 和 MCP。接入词元.fast 时选择 NewAPI 供应商。</p>
-          <h3>接入词元.fast</h3>
-          <ol><li>在词元.fast 控制台创建并复制 API Key。</li><li>进入 LangBot 管理界面，添加模型。</li><li>供应商选择 NewAPI。</li><li>API 地址填写 <code>https://ciyuan.fast/v1</code>。</li><li>模型名称填写控制台可用模型 ID。</li><li>保存后在流水线中选择该模型。</li></ol>
-          <h3>对话调试</h3>
-          <p>模型添加完成后，不要急着接入群聊。先在 LangBot 的对话调试里发送测试消息，确认模型可回复、日志无鉴权错误，再绑定具体平台。</p>
-          <h3>即时通信平台绑定</h3>
-          <p>根据你的业务选择微信、QQ、飞书、钉钉、Telegram、Discord 等适配器。模型配置成功只是第一步，机器人是否回复还取决于平台适配器、流水线和权限是否启用。</p>
+          <div class="callout"><strong>项目介绍</strong><p class="lead">LangBot 是一个开源的即时通信机器人开发平台，支持多种即时通信平台，如飞书、钉钉、微信、QQ、Telegram、Discord、Slack 等。接入全球主流的 AI 模型，支持知识库、Agent、MCP等多种 AI 应用能力，并完美适配 词元.fast API。</p></div>
+          <ul><li>官网地址：<a href="https://langbot.app/" target="_blank" rel="noreferrer">https://langbot.app</a></li></ul>
+          <ul><li>下载地址：<a href="https://github.com/langbot-app/LangBot/releases" target="_blank" rel="noreferrer">https://github.com/langbot-app/LangBot/releases</a></li></ul>
+          <ul><li>官方文档：<a href="https://docs.langbot.app/" target="_blank" rel="noreferrer">https://docs.langbot.app</a></li></ul>
+          <ul><li>开源地址：<a href="https://github.com/langbot-app/LangBot" target="_blank" rel="noreferrer">https://github.com/langbot-app/LangBot</a></li></ul>
+          <h2>接入 词元.fast API</h2>
+          <p>LangBot 支持接入词元.fast API 服务。</p>
+          <h3>使用方式</h3>
+          <p>1.  从 词元.fast API 中获取 API key</p>
+          <figure class="shot doc-shot"><img src="images/langbot/get_api_key.webp" alt="获取 API key" loading="lazy" data-full="images/langbot/get_api_key.webp"><figcaption>获取 API key</figcaption></figure>
+          <p>若使用 词元.fast API 服务，请配置API地址。注意，地址后需要添加<code>/v1</code>，如：https://ciyuan.fast/v1。</p>
+          <p>2.  在 LangBot 中添加模型，选择使用 NewAPI 供应商，填写对应的 API key 和 API 地址</p>
+          <figure class="shot doc-shot"><img src="images/langbot/add_newapi_model.webp" alt="添加 NewAPI 模型" loading="lazy" data-full="images/langbot/add_newapi_model.webp"><figcaption>添加 NewAPI 模型</figcaption></figure>
+          <p>3.  在流水线中选择使用模型</p>
+          <figure class="shot doc-shot"><img src="images/langbot/select_model.webp" alt="选择模型" loading="lazy" data-full="images/langbot/select_model.webp"><figcaption>选择模型</figcaption></figure>
+          <p>4.  在对话调试中对话或与绑定至流水线的机器人对话即可使用</p>
+          <figure class="shot doc-shot"><img src="images/langbot/debug_chat.webp" alt="对话" loading="lazy" data-full="images/langbot/debug_chat.webp"><figcaption>对话</figcaption></figure>
+          <figure class="shot doc-shot"><img src="images/langbot/wechat.webp" alt="微信对话" loading="lazy" data-full="images/langbot/wechat.webp"><figcaption>微信对话</figcaption></figure>
+          <p>部署配置机器人请参考<a href="https://docs.langbot.app/zh/deploy/platforms/readme.html" target="_blank" rel="noreferrer">部署机器人</a>。</p>
           <h3>使用 LangBot 知识库</h3>
-          <ol><li>在模型管理中额外添加嵌入模型，仍选择 NewAPI。</li><li>Base URL 填写 <code>https://ciyuan.fast/v1</code>，Key 使用同一个词元.fast 令牌。</li><li>新建知识库时选择该嵌入模型。</li><li>上传资料后测试召回效果。</li></ol>
-          <h3>常见问题</h3>
-          <ul><li>调试窗口无回复：先看日志里的 HTTP 状态码。</li><li>知识库无召回：检查嵌入模型 ID、向量维度和文档是否已完成索引。</li><li>群聊不触发：检查平台适配器权限和流水线绑定。</li></ul>
+          <p>LangBot 支持使用词元.fast API 的嵌入模型，并将其作为知识库的向量模型。</p>
+          <p>1. 在 LangBot 中添加嵌入模型，选择使用 NewAPI 供应商</p>
+          <figure class="shot doc-shot"><img src="images/langbot/add_embedding_model.webp" alt="添加嵌入模型" loading="lazy" data-full="images/langbot/add_embedding_model.webp"><figcaption>添加嵌入模型</figcaption></figure>
+          <p>2. 在新建知识库时选用嵌入模型</p>
+          <figure class="shot doc-shot"><img src="images/langbot/use_embedding_model.webp" alt="使用嵌入模型" loading="lazy" data-full="images/langbot/use_embedding_model.webp"><figcaption>使用嵌入模型</figcaption></figure>
+          <p>更多使用方式请查看 LangBot 官方文档：<a href="https://docs.langbot.app/" target="_blank" rel="noreferrer">https://docs.langbot.app</a></p>
         `
       },
       {
         id: 'astrbot', category: 'bot', title: 'AstrBot', subtitle: 'Agent 聊天机器人', tags: ["QQ","企业微信","Agent"],
-        summary: '补全 AstrBot 教程：API Key 创建、OpenAI/NewAPI 服务商配置、默认模型应用和排错。',
+        summary: '完整复刻源站 AstrBot 教程密度：API Key、OpenAI 服务商、默认聊天模型和后台验证。',
         body: `
-          <h2>AstrBot - Agent 聊天机器人</h2>
-          <p class="lead">AstrBot 是 Agent 聊天机器人平台，可把大模型能力接入 QQ、飞书、钉钉、企业微信等渠道。接入词元.fast 时，使用 OpenAI 兼容服务商配置。</p>
-          <h3>获取 API Key</h3>
-          <ol><li>打开词元.fast 控制台。</li><li>进入令牌管理或 API Key 页面。</li><li>点击添加令牌，名称建议写 AstrBot。</li><li>创建后立刻复制 API Key，关闭弹窗后通常无法再次完整查看。</li></ol>
-          <h3>配置 NewAPI 服务提供商</h3>
-          <ol><li>打开 AstrBot 管理面板。</li><li>进入模型提供商页面。</li><li>点击新增模型提供商。</li><li>类型选择 OpenAI 或兼容 OpenAI 的提供商。</li><li>API Base URL 填写 <code>https://ciyuan.fast/v1</code>。</li><li>API Key 填入词元.fast 密钥。</li><li>模型名称填写控制台可用模型 ID，然后保存。</li></ol>
-          <h3>应用服务提供商</h3>
-          <p>保存服务商后，还需要在配置文件或模型设置中把默认聊天模型切换到刚创建的提供商。只添加服务商但不设为默认，机器人仍可能继续使用旧模型。</p>
-          <h3>测试机器人</h3>
-          <ol><li>先在 AstrBot 后台发送一条测试消息。</li><li>确认模型正常回复后，再测试 QQ、企业微信等外部渠道。</li><li>如果外部渠道无回复，优先检查平台连接，而不是反复改模型 Key。</li></ol>
-          <h3>排错清单</h3>
-          <ul><li>401：API Key 错误或已失效。</li><li>404：模型 ID 不存在，按控制台显示填写。</li><li>无法保存：URL 缺少协议头或格式不符合 AstrBot 校验。</li><li>机器人无回复：默认模型、平台绑定、流水线/插件开关需要同时正确。</li></ul>
+          <div class="callout"><strong>项目介绍</strong><p class="lead">AstrBot 是一个开源的一站式 Agent 聊天机器人平台，可将大模型能力无缝接入 QQ、飞书、钉钉、企业微信等主流即时通讯软件，为个人、开发者和团队打造可靠、可扩展的对话式智能基础设施。无论是个人 AI 伙伴、智能客服、自动化助手，还是企业知识库，AstrBot 都能在你的即时通讯软件平台的工作流中快速构建生产可用的 AI 应用。</p></div>
+          <ul><li>官方网站：<a href="https://astrbot.app" target="_blank" rel="noreferrer">https://astrbot.app</a></li></ul>
+          <ul><li>官方文档：<a href="https://docs.astrbot.app" target="_blank" rel="noreferrer">https://docs.astrbot.app</a></li></ul>
+          <ul><li>项目主页：<a href="https://github.com/astrbotdevs/astrbot" target="_blank" rel="noreferrer">https://github.com/astrbotdevs/astrbot</a></li></ul>
+          <h2>词元.fast API 接入方法</h2>
+          <p>AstrBot 支持接入 词元.fast API 作为模型提供商，用户可以通过 词元.fast API来访问和使用各种 AI 模型服务。</p>
+          <h3>配置步骤</h3>
+          <h4>获取 词元.fast API API Key 密钥</h4>
+          <p>在词元.fast API 注册并登录后，点击上方导航栏的「控制台」，点击「令牌管理」，然后点击「添加令牌」按钮，创建一个新的 API Key 密钥，选择适当的权限，然后点击「创建」。</p>
+          <figure class="shot doc-shot"><img src="images/astrbot/image.webp" alt="create-api-key" loading="lazy" data-full="images/astrbot/image.webp"><figcaption>create-api-key</figcaption></figure>
+          <p>创建成功后，点击复制密钥按钮，复制生成的 API Key 密钥。</p>
+          <figure class="shot doc-shot"><img src="images/astrbot/image-1.webp" alt="copy-api-key" loading="lazy" data-full="images/astrbot/image-1.webp"><figcaption>copy-api-key</figcaption></figure>
+          <h4>在 AstrBot 中配置 NewAPI 服务提供商</h4>
+          <p>打开 AstrBot 管理面板，进入「模型提供商」页面，然后，点击「新增模型提供商」按钮。</p>
+          <p>词元.fast API 完美地支持了 OpenAI Chat Completion 和 Responses 接口，我们点击 「OpenAI」，进入 OpenAI 提供商的配置页面。</p>
+          <p>在弹出的对话框中，将 API Base URL 设置为 词元.fast API的接口地址，例如 <code>https://ciyuan.fast/v1</code>。</p>
+          <p>然后，将 API Key 填入「API Key」字段中，点击「保存」按钮。</p>
+          <figure class="shot doc-shot"><img src="images/astrbot/image-2.webp" alt="astrbot-provider-config" loading="lazy" data-full="images/astrbot/image-2.webp"><figcaption>astrbot-provider-config</figcaption></figure>
+          <p>然后点击保存，完成 NewAPI 提供商的配置。</p>
+          <h4>应用服务提供商</h4>
+          <p>进入「配置文件」页面，找到模型一节，将「默认聊天模型」修改为刚刚创建的 NewAPI 提供商，点击「保存」按钮。</p>
+          <figure class="shot doc-shot"><img src="images/astrbot/image-3.webp" alt="apply" loading="lazy" data-full="images/astrbot/image-3.webp"><figcaption>apply</figcaption></figure>
+          <p>至此，您已经成功配置了 词元.fast API 作为 AstrBot 的模型提供商。现在，您可以通过 AstrBot 来访问和使用 词元.fast API 提供的各种 AI 模型服务了。</p>
         `
       }
 
@@ -1491,7 +1768,13 @@ codex
       activeProduct = product.id;
       doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}`);
       const usedIndexes = injectInlineSteps(product);
-      doc.insertAdjacentHTML('beforeend', renderScreenshots(product, usedIndexes));
+      if (!product.body.includes('doc-shot')) {
+        if (!product.body.includes('doc-shot')) {
+        if (!product.body.includes('doc-shot')) {
+        doc.insertAdjacentHTML('beforeend', renderScreenshots(product, usedIndexes));
+      }
+      }
+      }
       addCopyButtons();
       renderToc();
     }
