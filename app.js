@@ -955,6 +955,7 @@ function renderAll() {
 let currentLandingPage = 'intro';
 let landingSwitchLocked = false;
 const landingWheelThreshold = 360;
+const landingTransitionMs = 320;
 let wheelProgress = 0;
 let wheelDirection = 0;
 let wheelResetTimer;
@@ -1028,14 +1029,14 @@ function switchLandingPage(page, options = {}) {
     document.body.classList.add(page === 'map' ? 'map-entering' : 'intro-entering');
     syncLandingPage(page);
     document.body.classList.remove('map-preparing');
-    scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
+    scrollToLandingPage(page, 'auto');
   });
   resetWheelProgress();
 
   setTimeout(() => {
     document.body.classList.remove('map-entering', 'intro-entering');
     landingSwitchLocked = false;
-  }, 720);
+  }, landingTransitionMs);
 }
 
 function handleLandingWheel(event) {

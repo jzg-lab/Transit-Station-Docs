@@ -172,7 +172,7 @@
       transform: translateY(0) scale(1);
       transform-origin: center top;
       will-change: opacity, transform;
-      transition: opacity 0.7s var(--page-ease), transform 0.7s var(--page-ease);
+      transition: opacity 0.32s var(--page-ease), transform 0.32s var(--page-ease);
     }
 
     .hero-card, .signal-card, .workspace {
@@ -383,20 +383,20 @@
       pointer-events: auto;
       transform-origin: center top;
       will-change: opacity, transform;
-      transition: opacity 0.74s var(--page-ease), transform 0.74s var(--page-ease);
+      transition: opacity 0.32s var(--page-ease), transform 0.32s var(--page-ease);
     }
 
     body.map-preparing .workspace,
     body.intro-entering .workspace {
       opacity: 0;
-      transform: translate3d(0, 56px, 0) scale(0.98);
+      transform: translate3d(0, 18px, 0) scale(0.995);
       pointer-events: none;
     }
 
     body.landing-map .hero,
     body.map-entering:not(.landing-intro) .hero {
       opacity: 0;
-      transform: translate3d(0, -56px, 0) scale(0.98);
+      transform: translate3d(0, -18px, 0) scale(0.995);
       pointer-events: none;
     }
 
@@ -406,6 +406,11 @@
       opacity: 1;
       transform: translateY(0) scale(1);
       pointer-events: auto;
+    }
+
+    body.map-entering .product-card,
+    body.intro-entering .product-card {
+      animation: none;
     }
 
     .route-steps {

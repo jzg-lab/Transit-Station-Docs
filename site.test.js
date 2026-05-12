@@ -291,6 +291,124 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(css, /scroll-behavior: auto/);
 });
 
+test('landing map switch uses a short instant transition', () => {
+  const html = readFileSync('app.js', 'utf8');
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(html, /const landingTransitionMs = 320/);
+  assert.match(html, /setTimeout\(\(\) => \{[\s\S]*?\}, landingTransitionMs\)/);
+  assert.match(html, /scrollToLandingPage\(page, 'auto'\)/);
+  assert.doesNotMatch(html, /scrollToLandingPage\(page, options\.instant \? 'auto' : 'smooth'\)/);
+  assert.match(css, /\.hero[\s\S]*?transition: opacity 0\.32s var\(--page-ease\), transform 0\.32s var\(--page-ease\)/);
+  assert.match(css, /\.workspace[\s\S]*?transition: opacity 0\.32s var\(--page-ease\), transform 0\.32s var\(--page-ease\)/);
+  assert.match(css, /body\.map-preparing \.workspace,[\s\S]*?transform: translate3d\(0, 18px, 0\) scale\(0\.995\)/);
+  assert.match(css, /body\.landing-map \.hero,[\s\S]*?transform: translate3d\(0, -18px, 0\) scale\(0\.995\)/);
+  assert.match(css, /body\.map-entering \.product-card[\s\S]*?animation: none/);
+});
+
+test('map jump clicks scroll instantly and unlock after the transition', () => {
+  const app = readFileSync('app.js', 'utf8');
+  const listeners = {};
+  const bodyClasses = new Set();
+  const rootStyle = new Map();
+  const windowListeners = {};
+  const timeouts = [];
+  const scrollCalls = [];
+  const categoryTabs = { innerHTML: '' };
+  const productList = { innerHTML: '' };
+  const cards = { innerHTML: '' };
+  const searchInput = { value: '', addEventListener(type, handler) { listeners.search = { type, handler }; } };
+  const heroSearchInput = { value: '', addEventListener(type, handler) { listeners.heroKey = { type, handler }; } };
+  const docsElement = { offsetTop: 780, parentElement: null };
+  const topElement = { offsetTop: 0, parentElement: null };
+  const topbar = {
+    getBoundingClientRect: () => ({ height: 68 }),
+    parentElement: null
+  };
+  const pageJump = {
+    dataset: {},
+    closest: selector => selector === '.hero-finder' ? { tagName: 'DIV' } : null,
+    addEventListener(type, handler) { listeners.pageJump = { type, handler }; }
+  };
+  const body = {
+    classList: {
+      add: (...classes) => classes.forEach(className => bodyClasses.add(className)),
+      remove: (...classes) => classes.forEach(className => bodyClasses.delete(className)),
+      toggle: (className, force) => force ? bodyClasses.add(className) : bodyClasses.delete(className)
+    }
+  };
+  const documentStub = {
+    body,
+    documentElement: {
+      scrollHeight: 1600,
+      style: {
+        setProperty: (name, value) => rootStyle.set(name, value)
+      }
+    },
+    querySelector(selector) {
+      return {
+        '#categoryTabs': categoryTabs,
+        '#productList': productList,
+        '#cards': cards,
+        '#searchInput': searchInput,
+        '#heroSearchInput': heroSearchInput,
+        '#docs': docsElement,
+        '#top': topElement,
+        '.topbar': topbar
+      }[selector] || null;
+    },
+    querySelectorAll(selector) {
+      return selector === '.page-jump[href="#docs"]' ? [pageJump] : [];
+    },
+    addEventListener(type, handler) {
+      listeners[type] = handler;
+    }
+  };
+  const context = {
+    document: documentStub,
+    window: {
+      innerHeight: 900,
+      scrollY: 0,
+      location: { hash: '' },
+      addEventListener(type, handler) {
+        windowListeners[type] = handler;
+      },
+      clearTimeout() {},
+      setTimeout(handler, delay) {
+        timeouts.push({ handler, delay });
+        return timeouts.length;
+      },
+      requestAnimationFrame(handler) {
+        handler();
+      },
+      scrollTo(options) {
+        scrollCalls.push(options);
+      },
+      getComputedStyle: () => ({
+        top: '16px',
+        overflowY: 'visible'
+      })
+    },
+    Element: function Element() {},
+    IntersectionObserver: function IntersectionObserver() {
+      return { observe() {} };
+    },
+    setTimeout(handler, delay) {
+      timeouts.push({ handler, delay });
+      return timeouts.length;
+    }
+  };
+  vm.runInNewContext(app, context);
+
+  listeners.pageJump.handler({ preventDefault() {} });
+
+  assert.equal(scrollCalls.at(-1).behavior, 'auto');
+  assert.equal(scrollCalls.at(-1).top, 662);
+  assert.equal(timeouts.at(-1).delay, 320);
+  assert.equal(bodyClasses.has('map-entering'), true);
+  timeouts.at(-1).handler();
+  assert.equal(bodyClasses.has('map-entering'), false);
+});
+
 test('product tutorials are published as independent pages', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);
