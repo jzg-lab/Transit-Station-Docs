@@ -12,7 +12,7 @@
       --shadow: 0 24px 80px rgba(30, 49, 39, 0.14);
       --radius-lg: 28px;
       --radius-md: 18px;
-      --radius-sm: 12px;
+      --radius-sm: 12px;    
       --topbar-offset: 118px;
       --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -153,64 +153,6 @@
       border-color: rgba(122, 217, 179, 0.52);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
     }
-
-    :root[data-theme="dark"] .topbar,
-    :root[data-theme="dark"] .hero-card,
-    :root[data-theme="dark"] .workspace,
-    :root[data-theme="dark"] .doc,
-    :root[data-theme="dark"] .toc-panel,
-    :root[data-theme="dark"] .nav-panel,
-    :root[data-theme="dark"] .content-panel {
-      background: rgba(15, 26, 39, 0.82);
-      border-color: var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    :root[data-theme="dark"] .pill,
-    :root[data-theme="dark"] .button.ghost,
-    :root[data-theme="dark"] .hero-finder,
-    :root[data-theme="dark"] .hero-chip,
-    :root[data-theme="dark"] .search-box,
-    :root[data-theme="dark"] .category-tab,
-    :root[data-theme="dark"] .product-tab,
-    :root[data-theme="dark"] .product-card,
-    :root[data-theme="dark"] .api-badge,
-    :root[data-theme="dark"] .tag,
-    :root[data-theme="dark"] .route-step,
-    :root[data-theme="dark"] .resource-link,
-    :root[data-theme="dark"] .tutorial-step,
-    :root[data-theme="dark"] .shot,
-    :root[data-theme="dark"] .callout {
-      background: rgba(255, 255, 255, 0.055);
-      border-color: var(--line);
-      color: var(--ink);
-    }
-
-    :root[data-theme="dark"] .pill.primary,
-    :root[data-theme="dark"] .button,
-    :root[data-theme="dark"] .category-tab.active,
-    :root[data-theme="dark"] .product-tab.active {
-      color: #07120e;
-      background: linear-gradient(135deg, #7ad9b3, #ffd676);
-      border-color: rgba(122, 217, 179, 0.42);
-    }
-
-    :root[data-theme="dark"] .signal-card {
-      color: #eef8f2;
-      background:
-        radial-gradient(circle at 80% 90%, rgba(255, 214, 118, 0.16), transparent 28rem),
-        linear-gradient(160deg, rgba(17, 52, 40, 0.96), rgba(7, 18, 26, 0.98));
-      border-color: rgba(122, 217, 179, 0.20);
-    }
-
-    :root[data-theme="dark"] .signal-card .metric,
-    :root[data-theme="dark"] .signal-card .route-step {
-      background: rgba(255, 255, 255, 0.055);
-      border-color: rgba(236, 244, 238, 0.14);
-      color: #eef8f2;
-    }
-
-    :root[data-theme="dark"] .signal-card .metric span { color: rgba(238, 248, 242, 0.72); }
 
     .pill.primary {
       color: #fffaf0;
@@ -1298,101 +1240,6 @@
   }
 }
 
-    :root[data-theme="dark"] .hero-card,
-    :root[data-theme="dark"] .workspace,
-    :root[data-theme="dark"] .nav-panel,
-    :root[data-theme="dark"] .content-panel,
-    :root[data-theme="dark"] .doc,
-    :root[data-theme="dark"] .toc-panel {
-      background: rgba(10, 18, 30, 0.86);
-      border-color: rgba(148, 180, 164, 0.18);
-    }
-
-    :root[data-theme="dark"] .topbar {
-      background: rgba(15, 23, 37, 0.86);
-    }
-
-    :root[data-theme="dark"] .hero-card::after,
-    :root[data-theme="dark"] .content-panel::before,
-    :root[data-theme="dark"] .product-card::after {
-      opacity: 0.22;
-    }
-
-    :root[data-theme="dark"] .hero-finder,
-    :root[data-theme="dark"] .search-box,
-    :root[data-theme="dark"] .hero-chip,
-    :root[data-theme="dark"] .pill,
-    :root[data-theme="dark"] .button.ghost,
-    :root[data-theme="dark"] .category-tab,
-    :root[data-theme="dark"] .product-tab,
-    :root[data-theme="dark"] .product-card,
-    :root[data-theme="dark"] .api-badge,
-    :root[data-theme="dark"] .tag,
-    :root[data-theme="dark"] .resource-link,
-    :root[data-theme="dark"] .tutorial-step,
-    :root[data-theme="dark"] .shot,
-    :root[data-theme="dark"] .callout,
-    :root[data-theme="dark"] .metric,
-    :root[data-theme="dark"] .route-step {
-      background: rgba(255, 255, 255, 0.055);
-      border-color: rgba(148, 180, 164, 0.18);
-      color: var(--ink);
-    }
-
-    :root[data-theme="dark"] .hero p,
-    :root[data-theme="dark"] .doc p,
-    :root[data-theme="dark"] .doc li,
-    :root[data-theme="dark"] .metric span,
-    :root[data-theme="dark"] .toc-list a,
-    :root[data-theme="dark"] .footer-note {
-      color: var(--muted);
-    }
-
-    :root[data-theme="dark"] .hero-finder strong,
-    :root[data-theme="dark"] .panel-title,
-    :root[data-theme="dark"] h1,
-    :root[data-theme="dark"] h2,
-    :root[data-theme="dark"] h3,
-    :root[data-theme="dark"] h4,
-    :root[data-theme="dark"] .product-card h3,
-    :root[data-theme="dark"] .product-tab strong {
-      color: var(--ink);
-    }
-
-    :root[data-theme="dark"] .hero-chip:hover,
-    :root[data-theme="dark"] .product-card:hover,
-    :root[data-theme="dark"] .resource-link:hover {
-      background: rgba(122, 217, 179, 0.10);
-      border-color: rgba(122, 217, 179, 0.34);
-    }
-
-    :root[data-theme="dark"] table,
-    :root[data-theme="dark"] th,
-    :root[data-theme="dark"] td {
-      border-color: rgba(148, 180, 164, 0.18);
-    }
-
-    :root[data-theme="dark"] th {
-      background: rgba(122, 217, 179, 0.10);
-    }
-
-    :root[data-theme="dark"] pre {
-      background: #07101d;
-      color: #dbe9e1;
-      box-shadow: inset 0 0 0 1px rgba(148, 180, 164, 0.16);
-    }
-
-    :root[data-theme="dark"] :not(pre) > code {
-      background: rgba(255, 214, 118, 0.14);
-      color: #ffd676;
-    }
-
-    :root[data-theme="dark"] .copy-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: #dbe9e1;
-      border-color: rgba(148, 180, 164, 0.22);
-    }
-
     body.theme-dark {
       color: var(--ink);
       background:
@@ -1446,3 +1293,81 @@
       border-color: rgba(148, 180, 164, 0.18);
       color: var(--ink);
     }
+    body.theme-dark .signal-card {
+      color: #eef8f2;
+      background:
+        radial-gradient(circle at 80% 90%, rgba(255, 214, 118, 0.16), transparent 28rem),
+        linear-gradient(160deg, rgba(17, 52, 40, 0.96), rgba(7, 18, 26, 0.98));
+      border-color: rgba(122, 217, 179, 0.20);
+    }
+
+    body.theme-dark .signal-card .metric,
+    body.theme-dark .signal-card .route-step {
+      background: rgba(255, 255, 255, 0.055);
+      border-color: rgba(236, 244, 238, 0.14);
+      color: #eef8f2;
+    }
+
+    body.theme-dark .hero p,
+    body.theme-dark .doc p,
+    body.theme-dark .doc li,
+    body.theme-dark .metric span,
+    body.theme-dark .toc-list a,
+    body.theme-dark .footer-note {
+      color: var(--muted);
+    }
+
+    body.theme-dark .hero-finder strong,
+    body.theme-dark .panel-title,
+    body.theme-dark h1,
+    body.theme-dark h2,
+    body.theme-dark h3,
+    body.theme-dark h4,
+    body.theme-dark .product-card h3,
+    body.theme-dark .product-tab strong {
+      color: var(--ink);
+    }
+
+    body.theme-dark .hero-chip:hover,
+    body.theme-dark .product-card:hover,
+    body.theme-dark .resource-link:hover {
+      background: rgba(122, 217, 179, 0.10);
+      border-color: rgba(122, 217, 179, 0.34);
+    }
+
+    body.theme-dark .pill.primary,
+    body.theme-dark .button,
+    body.theme-dark .category-tab.active,
+    body.theme-dark .product-tab.active {
+      color: #07120e;
+      background: linear-gradient(135deg, #7ad9b3, #ffd676);
+      border-color: rgba(122, 217, 179, 0.42);
+    }
+
+    body.theme-dark table,
+    body.theme-dark th,
+    body.theme-dark td {
+      border-color: rgba(148, 180, 164, 0.18);
+    }
+
+    body.theme-dark th {
+      background: rgba(122, 217, 179, 0.10);
+    }
+
+    body.theme-dark pre {
+      background: #07101d;
+      color: #dbe9e1;
+      box-shadow: inset 0 0 0 1px rgba(148, 180, 164, 0.16);
+    }
+
+    body.theme-dark :not(pre) > code {
+      background: rgba(255, 214, 118, 0.14);
+      color: #ffd676;
+    }
+
+    body.theme-dark .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #dbe9e1;
+      border-color: rgba(148, 180, 164, 0.22);
+    }
+

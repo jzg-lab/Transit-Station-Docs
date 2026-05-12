@@ -100,6 +100,7 @@ function pageFor(product) {
     <img alt="">
     <div class="lightbox-caption"></div>
   </div>
+  <script src="../theme.js?v=20260512-theme"></script>
   <script src="../docs.js?v=20260512-theme"></script>
 </body>
 </html>

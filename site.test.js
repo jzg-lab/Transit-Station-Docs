@@ -34,6 +34,7 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
+  assert.match(html, /<script src="theme\.js\?v=20260512-theme"><\/script>/);
   assert.match(html, /<script src="app\.js\?v=20260512-theme"><\/script>/);
   for (const product of expectedProducts) {
     assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -131,20 +132,22 @@ test('landing page includes gentle interaction polish', () => {
 
 test('site supports dark theme and embedded theme control', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('scripts/build-doc-pages.js', 'utf8');
-  const app = readFileSync('app.js', 'utf8');
+  const theme = readFileSync('theme.js', 'utf8');
   const css = readFileSync('styles.css', 'utf8');
   assert.match(html, /data-theme-toggle/);
-  assert.match(app, /function themeQueryValue/);
-  assert.match(app, /window\.URLSearchParams/);
-  assert.match(app, /window\.matchMedia \? window\.matchMedia\('\(prefers-color-scheme: dark\)'\)/);
-  assert.match(app, /function getStoredTheme/);
-  assert.match(app, /localStorage\.getItem\(themeStorageKey\)/);
-  assert.match(app, /function setStoredTheme/);
-  assert.match(app, /document\.documentElement\.dataset\.theme = theme/);
-  assert.match(app, /document\.body\.classList\.add\(`theme-\$\{theme\}`\)/);
-  assert.match(app, /function closestThemeToggle/);
-  assert.match(app, /if \(themeMedia\.addEventListener\)/);
-  assert.match(app, /themeMedia\.addListener/);
+  assert.match(theme, /function themeQueryValue/);
+  assert.match(theme, /window\.URLSearchParams/);
+  assert.match(theme, /window\.matchMedia \? window\.matchMedia\('\(prefers-color-scheme: dark\)'\)/);
+  assert.match(theme, /function getStoredTheme/);
+  assert.match(theme, /localStorage\.getItem\(themeStorageKey\)/);
+  assert.match(theme, /function setStoredTheme/);
+  assert.match(theme, /document\.documentElement\.dataset\.theme = theme/);
+  assert.match(theme, /document\.body\.classList\.add\(`theme-\$\{theme\}`\)/);
+  assert.match(theme, /function closestThemeToggle/);
+  assert.match(theme, /let themeInitialized = false/);
+  assert.match(theme, /if \(themeInitialized\) return/);
+  assert.match(theme, /if \(themeMedia\.addEventListener\)/);
+  assert.match(theme, /themeMedia\.addListener/);
   assert.match(css, /:root\[data-theme="dark"\]/);
   assert.match(css, /body\.theme-dark/);
   assert.match(html, /styles\.css\?v=20260512-theme/);
@@ -153,8 +156,7 @@ test('site supports dark theme and embedded theme control', () => {
 });
 
 test('theme toggle runs in legacy embedded browsers', () => {
-  const source = readFileSync('app.js', 'utf8');
-  const themeScript = source.slice(0, source.indexOf('const commonSetup'));
+  const themeScript = readFileSync('theme.js', 'utf8');
   const classes = new Set();
   let clickHandler;
   const button = {
@@ -203,6 +205,50 @@ test('theme toggle runs in legacy embedded browsers', () => {
   assert.equal(classes.has('theme-dark'), false);
   assert.equal(button.textContent, '夜间模式');
   assert.equal(button.attributes['aria-pressed'], 'false');
+});
+
+test('theme init is idempotent and avoids duplicate click listeners', () => {
+  const themeScript = readFileSync('theme.js', 'utf8');
+  const clickHandlers = [];
+  const sandbox = {
+    document: {
+      documentElement: { dataset: {} },
+      body: {
+        classList: {
+          add() {},
+          remove() {}
+        }
+      },
+      querySelectorAll() { return []; },
+      addEventListener(type, handler) {
+        if (type === 'click') clickHandlers.push(handler);
+      }
+    },
+    window: {
+      location: { search: '' },
+      URLSearchParams,
+      matchMedia: () => ({ matches: false, addEventListener() {} })
+    },
+    localStorage: {
+      getItem() { return null; },
+      setItem() {}
+    }
+  };
+  vm.createContext(sandbox);
+  vm.runInContext(themeScript, sandbox);
+  sandbox.initTheme();
+  assert.equal(clickHandlers.length, 1);
+});
+
+test('product resources do not keep overwritten duplicate keys', () => {
+  const app = readFileSync('app.js', 'utf8');
+  const productResourcesBlock = app.match(/const productResources = \{[\s\S]*?\n\};/);
+  assert.ok(productResourcesBlock, 'productResources block should exist');
+  const block = productResourcesBlock[0];
+  for (const key of ['factory-droid-cli', 'cc-switch', 'aionui']) {
+    const matches = block.match(new RegExp(`'${key}':`, 'g')) || [];
+    assert.equal(matches.length, 1, `${key} should appear only once in productResources`);
+  }
 });
 
 test('landing page supports wheel-driven full-page switching', () => {
@@ -301,18 +347,26 @@ test('client scripts avoid unsafe toc html injection and non-element wheel targe
 });
 
 test('codex openclaw and async image docs follow the latest source material', () => {
-  const html = readFileSync('docs/codex-cli.html', 'utf8') + readFileSync('docs/openclaw.html', 'utf8') + readFileSync('docs/async-image-api.html', 'utf8');
-  assert.match(html, /gpt-5\.5/);
-  assert.match(html, /auth\.json/);
-  assert.match(html, /config\.toml/);
-  assert.match(html, /CLI 和客户端都是这个流程/);
-  assert.match(html, /\.\.\/images\/codex-zh\/codex-client\.png/);
-  assert.match(html, /\.\.\/images\/codex-zh\/codex-dir\.png/);
-  assert.match(html, /安装依赖/);
-  assert.match(html, /OpenClaw 安装向导里填写 URL 时不要加 \/v1/);
-  assert.match(html, /https:\/\/ciyuan\.fast，不是 https:\/\/ciyuan\.fast\/v1/);
-  assert.match(html, /\.\.\/images\/openclaw-guide\/image/);
-  assert.match(html, /异步生图接口/);
-  assert.match(html, /https:\/\/img\.ciyuan\.fast/);
-  assert.match(html, /可以直接丢给 AI 助手/);
+  const codexHtml = readFileSync('docs/codex-cli.html', 'utf8');
+  const openclawHtml = readFileSync('docs/openclaw.html', 'utf8');
+  const asyncImageHtml = readFileSync('docs/async-image-api.html', 'utf8');
+
+  assert.match(codexHtml, /gpt-5\.5/);
+  assert.match(codexHtml, /auth\.json/);
+  assert.match(codexHtml, /config\.toml/);
+  assert.match(codexHtml, /CLI 和客户端都是这个流程/);
+  assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-client\.png/);
+  assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-dir\.png/);
+  assert.match(codexHtml, /安装依赖/);
+  assert.doesNotMatch(codexHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
+
+  assert.match(openclawHtml, /OpenClaw 安装向导里填写 URL 时不要加 \/v1/);
+  assert.match(openclawHtml, /https:\/\/ciyuan\.fast，不是 https:\/\/ciyuan\.fast\/v1/);
+  assert.match(openclawHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
+  assert.match(openclawHtml, /\.\.\/images\/openclaw-guide\/image2\.png/);
+
+  assert.match(asyncImageHtml, /异步生图接口/);
+  assert.match(asyncImageHtml, /https:\/\/img\.ciyuan\.fast/);
+  assert.match(asyncImageHtml, /可以直接丢给 AI 助手/);
+  assert.doesNotMatch(asyncImageHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
 });

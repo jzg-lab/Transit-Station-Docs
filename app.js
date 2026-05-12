@@ -7,85 +7,6 @@ const categories = [
   { id: 'hub', label: '部署', intro: '托管与 API' }
 ];
 
-const themeStorageKey = 'ciyuan-docs-theme';
-const themeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : { matches: false };
-
-function themeQueryValue() {
-  try {
-    if (window.URLSearchParams) return new URLSearchParams(window.location.search).get('theme');
-    const match = window.location.search.match(/[?&]theme=(dark|light)(?:&|$)/);
-    return match ? match[1] : null;
-  } catch (error) {
-    return null;
-  }
-}
-
-const themeQuery = themeQueryValue();
-
-function getStoredTheme() {
-  try {
-    return localStorage.getItem(themeStorageKey);
-  } catch (error) {
-    return null;
-  }
-}
-
-function setStoredTheme(theme) {
-  try {
-    localStorage.setItem(themeStorageKey, theme);
-  } catch (error) {
-  }
-}
-
-function preferredTheme() {
-  if (themeQuery === 'dark' || themeQuery === 'light') return themeQuery;
-  const storedTheme = getStoredTheme();
-  if (storedTheme === 'dark' || storedTheme === 'light') return storedTheme;
-  return themeMedia.matches ? 'dark' : 'light';
-}
-
-function applyTheme(theme, persist = false) {
-  document.documentElement.dataset.theme = theme;
-  document.body.classList.remove('theme-light', 'theme-dark');
-  document.body.classList.add(`theme-${theme}`);
-  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
-    button.textContent = theme === 'dark' ? '浅色模式' : '夜间模式';
-    button.setAttribute('aria-pressed', String(theme === 'dark'));
-  });
-  if (persist) setStoredTheme(theme);
-}
-
-function closestThemeToggle(target) {
-  let node = target;
-  while (node && node !== document) {
-    if (node.matches && node.matches('[data-theme-toggle]')) return node;
-    node = node.parentElement;
-  }
-  return null;
-}
-
-function handleThemeMediaChange(event) {
-  if (themeQuery || getStoredTheme()) return;
-  applyTheme(event.matches ? 'dark' : 'light');
-}
-
-function initTheme() {
-  applyTheme(preferredTheme());
-  document.addEventListener('click', event => {
-    const button = closestThemeToggle(event.target);
-    if (!button) return;
-    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(nextTheme, true);
-  });
-  if (themeMedia.addEventListener) {
-    themeMedia.addEventListener('change', handleThemeMediaChange);
-  } else if (themeMedia.addListener) {
-    themeMedia.addListener(handleThemeMediaChange);
-  }
-}
-
-initTheme();
-
 const commonSetup = `
   <div class="callout"><strong>词元.fast 通用配置</strong>在词元.fast 控制台创建 API Key。OpenAI 兼容应用通常填写 <code>https://ciyuan.fast/v1</code>；少数工具如果单独要求 Base URL、不自动拼接 <code>/v1</code>，则填写 <code>https://ciyuan.fast</code>。</div>
   <pre><code>API Key: 在 https://ciyuan.fast 控制台创建
@@ -111,12 +32,6 @@ const productResources = {
     { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' },
     { label: 'Windows 依赖', title: 'Git for Windows', href: 'https://git-scm.com/download/win' }
   ],
-  'factory-droid-cli': [
-    { heading: /Windows|macOS|Linux|常见问题/, indexes: [0] }
-  ],
-  'cc-switch': [
-    { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
-  ],
   'codex-cli': [
     { label: '官网', title: 'ChatGPT Codex', href: 'https://chatgpt.com/codex' },
     { label: 'GitHub', title: 'openai/codex', href: 'https://github.com/openai/codex' },
@@ -131,9 +46,6 @@ const productResources = {
     { label: 'GitHub', title: 'farion1231/cc-switch', href: 'https://github.com/farion1231/cc-switch' },
     { label: '下载', title: 'CC Switch Releases', href: 'https://github.com/farion1231/cc-switch/releases' },
     { label: '协议', title: 'ccswitch:// Deep Link', href: 'https://github.com/farion1231/cc-switch' }
-  ],
-  'aionui': [
-    { heading: /词元\.fast 接入方法|配置步骤/, indexes: [0] }
   ],
   'cherry-studio': [
     { label: '官网', title: 'cherry-ai.com', href: 'https://cherry-ai.com' },
