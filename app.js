@@ -751,33 +751,38 @@ function categoryCount(categoryId) {
   return categoryId === 'all' ? products.length : products.filter(product => product.category === categoryId).length;
 }
 
+function setStableHtml(element, html) {
+  if (element.innerHTML === html) return;
+  element.innerHTML = html;
+}
+
 function renderCategories() {
-  categoryTabs.innerHTML = categories.map(category => `
+  setStableHtml(categoryTabs, categories.map(category => `
     <button class="category-tab ${category.id === activeCategory ? 'active' : ''}" data-category="${category.id}">
       <span>${category.label}</span><small>${categoryCount(category.id)}</small>
     </button>
-  `).join('');
+  `).join(''));
 }
 
 function renderProductList() {
   const visible = filteredProducts();
-  productList.innerHTML = visible.map(product => `
+  setStableHtml(productList, visible.map(product => `
     <a class="product-tab ${product.id === activeProduct ? 'active' : ''}" href="docs/${product.id}.html" data-product="${product.id}">
       <span><strong>${product.title}</strong><small>${product.subtitle}</small></span><em>→</em>
     </a>
-  `).join('') || '<p class="empty-state">没有匹配的应用，换个关键词试试。</p>';
+  `).join('') || '<p class="empty-state">没有匹配的应用，换个关键词试试。</p>');
 }
 
 function renderCards() {
   const visible = filteredProducts();
-  cards.innerHTML = visible.map((product, index) => `
+  setStableHtml(cards, visible.map((product, index) => `
     <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}" style="--stagger: ${Math.min(index * 42, 260)}ms">
       <h3>${product.title}</h3>
       <p>${product.summary}</p>
       <div class="card-meta"><span>${categoryLabel(product.category)}</span><span>预计 5-15 分钟</span></div>
       <div class="tag-row">${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
     </a>
-  `).join('') || '<p class="empty-state">没有找到匹配教程。建议清空搜索，或从左侧分类重新选择。</p>';
+  `).join('') || '<p class="empty-state">没有找到匹配教程。建议清空搜索，或从左侧分类重新选择。</p>');
 }
 
 function renderResources(product) {

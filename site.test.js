@@ -426,6 +426,94 @@ test('map jump clicks scroll smoothly without rebuilding stable cards', () => {
   assert.equal(bodyClasses.has('map-entering'), false);
 });
 
+test('rendering skips unchanged landing lists and cards', () => {
+  const app = readFileSync('app.js', 'utf8');
+  const trackedHtmlElement = () => ({
+    writes: 0,
+    value: '',
+    get innerHTML() {
+      return this.value;
+    },
+    set innerHTML(value) {
+      this.writes += 1;
+      this.value = value;
+    }
+  });
+  const categoryTabs = trackedHtmlElement();
+  const productList = trackedHtmlElement();
+  const cards = trackedHtmlElement();
+  const searchInput = { value: '', addEventListener() {} };
+  const heroSearchInput = { value: '', addEventListener() {} };
+  const docsElement = { offsetTop: 780, parentElement: null };
+  const topElement = { offsetTop: 0, parentElement: null };
+  const topbar = {
+    getBoundingClientRect: () => ({ height: 68 }),
+    parentElement: null
+  };
+  const documentStub = {
+    body: {
+      classList: {
+        add() {},
+        remove() {},
+        toggle() {}
+      }
+    },
+    documentElement: {
+      scrollHeight: 1600,
+      style: { setProperty() {} }
+    },
+    querySelector(selector) {
+      return {
+        '#categoryTabs': categoryTabs,
+        '#productList': productList,
+        '#cards': cards,
+        '#searchInput': searchInput,
+        '#heroSearchInput': heroSearchInput,
+        '#docs': docsElement,
+        '#top': topElement,
+        '.topbar': topbar
+      }[selector] || null;
+    },
+    querySelectorAll(selector) {
+      return selector === '.page-jump[href="#docs"]' ? [{ addEventListener() {} }] : [];
+    },
+    addEventListener() {}
+  };
+  const context = {
+    document: documentStub,
+    window: {
+      innerHeight: 900,
+      scrollY: 0,
+      location: { hash: '' },
+      addEventListener() {},
+      clearTimeout() {},
+      setTimeout() {},
+      requestAnimationFrame(handler) { handler(); },
+      scrollTo() {},
+      getComputedStyle: () => ({ top: '16px', overflowY: 'visible' })
+    },
+    Element: function Element() {},
+    IntersectionObserver: function IntersectionObserver() {
+      return { observe() {} };
+    },
+    setTimeout() {}
+  };
+  vm.runInNewContext(app, context);
+
+  const firstWrites = {
+    categoryTabs: categoryTabs.writes,
+    productList: productList.writes,
+    cards: cards.writes
+  };
+  context.renderAll();
+
+  assert.deepEqual({
+    categoryTabs: categoryTabs.writes,
+    productList: productList.writes,
+    cards: cards.writes
+  }, firstWrites);
+});
+
 test('product tutorials are published as independent pages', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
   assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);
