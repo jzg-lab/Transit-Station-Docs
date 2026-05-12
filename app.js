@@ -1056,7 +1056,12 @@ function switchLandingPage(page, options = {}) {
 
 function handleLandingWheel(event) {
   const wheelStep = normalizedWheelStep(event);
-  if (wheelStep < 16 || event.ctrlKey) return;
+  if (event.ctrlKey) return;
+  if (landingSwitchLocked) {
+    event.preventDefault();
+    return;
+  }
+  if (wheelStep < 16) return;
   const direction = event.deltaY > 0 ? 1 : -1;
   if (currentLandingPage === 'map' && canScrollWithin(event.target, direction)) return;
   if (!landingPageBoundary(direction)) {

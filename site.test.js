@@ -428,6 +428,17 @@ test('map jump clicks scroll smoothly without rebuilding stable cards', () => {
   assert.equal(scrollCalls.at(-1).behavior, 'smooth');
   assert.equal(scrollCalls.at(-1).top, 662);
   assert.equal(timeouts.at(-1).delay, 460);
+  let lockedWheelPrevented = false;
+  windowListeners.wheel({
+    ctrlKey: false,
+    deltaMode: 0,
+    deltaY: 80,
+    target: body,
+    preventDefault() {
+      lockedWheelPrevented = true;
+    }
+  });
+  assert.equal(lockedWheelPrevented, true);
   assert.equal(productList.writes, productListWrites);
   assert.equal(cards.writes, cardWrites);
   assert.equal(bodyClasses.has('map-entering'), true);
