@@ -39,6 +39,19 @@
         </aside>
       </section>
 
+      <section class="docs-intro" aria-label="接入路径说明">
+        <div>
+          <p class="eyebrow">Choose your route</p>
+          <h2>不用先读长文，先选你现在要接入的应用。</h2>
+          <p>下面的地图更像一个分流台：按场景缩小范围，搜索目标工具，再进入单独教程页完成配置。</p>
+        </div>
+        <div class="route-steps" aria-label="接入流程">
+          <span class="route-step"><strong>01</strong>选场景</span>
+          <span class="route-step"><strong>02</strong>找应用</span>
+          <span class="route-step"><strong>03</strong>进教程</span>
+        </div>
+      </section>
+
       <section id="docs" class="workspace" aria-label="AI 应用部署文档">
         <div class="guide-layout">
           <aside class="nav-panel">
@@ -51,8 +64,9 @@
           <section class="content-panel" aria-label="应用入口">
             <div class="collection-head">
               <div>
-                <h2>应用接入地图</h2>
-                <p>先按使用场景筛选或搜索，再打开对应文档。首页只保留入口，教程进入独立阅读区。</p>
+                <p class="panel-title">应用接入地图</p>
+                <h2>你要把哪个工具接入词元.fast？</h2>
+                <p>如果目标明确，直接搜索；如果还没决定，从左侧场景开始筛选。</p>
               </div>
               <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
             </div>
@@ -843,8 +857,8 @@ codex
 
     function renderCards() {
       const visible = filteredProducts();
-      cards.innerHTML = visible.map(product => `
-        <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}">
+      cards.innerHTML = visible.map((product, index) => `
+        <a class="product-card" href="docs/${product.id}.html" data-category="${product.category}" data-product="${product.id}" style="--stagger: ${Math.min(index * 42, 260)}ms">
           <h3>${product.title}</h3>
           <p>${product.summary}</p>
           <div class="card-meta"><span>${categoryLabel(product.category)}</span><span>预计 5-15 分钟</span></div>

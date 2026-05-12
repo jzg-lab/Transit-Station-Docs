@@ -54,9 +54,22 @@ test('page exposes category navigation and grouped cards', () => {
 test('layout separates entry discovery from focused reading', () => {
   const html = readFileSync('index.html', 'utf8');
   assert.match(html, /class="guide-layout"/);
+  assert.match(html, /class="docs-intro"/);
+  assert.match(html, /class="route-steps"/);
   assert.match(html, /id="searchInput"/);
   assert.doesNotMatch(html, /id="readerPanel"/);
   assert.doesNotMatch(html, /id="doc"/);
+});
+
+test('landing page includes gentle interaction polish', () => {
+  const css = readFileSync('styles.css', 'utf8');
+  assert.match(css, /@keyframes riseIn/);
+  assert.match(css, /--stagger/);
+  assert.match(css, /prefers-reduced-motion/);
+  assert.match(css, /\.docs-intro/);
+  assert.match(css, /\.route-step/);
+  assert.match(css, /\.product-card::after/);
+  assert.match(css, /\.content-panel::before/);
 });
 
 test('product tutorials are published as independent pages', () => {

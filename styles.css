@@ -252,6 +252,65 @@
     .workspace {
       display: grid;
       gap: 20px;
+      scroll-margin-top: 110px;
+      animation: riseIn 0.72s ease both;
+      animation-delay: 0.14s;
+    }
+
+    .docs-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      margin: -4px 0 22px;
+      padding: 24px 28px;
+      border: 1px solid rgba(40, 75, 58, 0.13);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(255, 250, 240, 0.44), rgba(255, 255, 255, 0.24));
+      box-shadow: 0 18px 50px rgba(40, 75, 58, 0.08);
+      animation: riseIn 0.68s ease both;
+      animation-delay: 0.06s;
+    }
+
+    .docs-intro h2 {
+      max-width: 760px;
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4.6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    .docs-intro p:last-child {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .route-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .route-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.72);
+      color: var(--moss);
+      font: 900 13px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+      box-shadow: 0 10px 26px rgba(40, 75, 58, 0.08);
+    }
+
+    .route-step strong {
+      color: var(--clay);
+      font-family: Georgia, serif;
     }
 
     .guide-layout {
@@ -274,11 +333,22 @@
     }
 
     .nav-panel, .content-panel, .toc-panel {
+      position: relative;
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
+      overflow: hidden;
     }
 
     .nav-panel, .toc-panel { position: sticky; top: 104px; }
+
+    .content-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 7px;
+      background: linear-gradient(90deg, var(--moss), var(--gold), var(--clay));
+      opacity: 0.86;
+    }
 
     .panel-title {
       margin: 0 0 14px;
@@ -348,6 +418,8 @@
 
     .content-panel { min-width: 0; }
 
+    .content-panel > * { position: relative; z-index: 1; }
+
     .collection-head {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -388,18 +460,40 @@
     }
 
     .product-card {
+      position: relative;
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 22px;
       padding: 18px;
       background: rgba(255, 255, 255, 0.44);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      animation: riseIn 0.56s ease both;
+      animation-delay: var(--stagger, 0ms);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .product-card::after {
+      content: "打开教程 →";
+      position: absolute;
+      right: 16px;
+      bottom: 14px;
+      color: var(--clay);
+      font: 900 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
     }
 
     .product-card:hover {
       transform: translateY(-4px);
       background: rgba(255, 250, 240, 0.92);
+      border-color: rgba(166, 83, 63, 0.26);
       box-shadow: 0 16px 34px rgba(40, 75, 58, 0.13);
+    }
+
+    .product-card:hover::after {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .product-card h3 {
@@ -896,4 +990,34 @@
 
 @media (max-width: 1120px) {
   .doc-layout { grid-template-columns: 1fr; }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1120px) {
+  .docs-intro { grid-template-columns: 1fr; }
+  .route-steps { justify-content: flex-start; }
+}
+
+@media (max-width: 720px) {
+  .docs-intro { padding: 20px; }
+  .route-steps { display: grid; grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
