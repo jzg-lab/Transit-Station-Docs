@@ -12,6 +12,8 @@
       --radius-lg: 28px;
       --radius-md: 18px;
       --radius-sm: 12px;
+      --topbar-offset: 118px;
+      --page-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * { box-sizing: border-box; }
@@ -126,7 +128,9 @@
       opacity: 1;
       transform: translateY(0) scale(1);
       filter: blur(0);
-      transition: opacity 0.62s ease, transform 0.62s ease, filter 0.62s ease;
+      transform-origin: center top;
+      will-change: opacity, transform, filter;
+      transition: opacity 0.86s var(--page-ease), transform 0.86s var(--page-ease), filter 0.86s var(--page-ease);
     }
 
     .hero-card, .signal-card, .workspace {
@@ -330,33 +334,35 @@
     .workspace {
       display: grid;
       gap: 20px;
-      min-height: calc(100vh - 92px);
-      scroll-margin-top: 22px;
+      min-height: calc(100vh - var(--topbar-offset) - 22px);
+      scroll-margin-top: var(--topbar-offset);
       opacity: 0;
-      transform: translateY(42px) scale(0.965);
-      filter: blur(10px);
+      transform: translate3d(0, 72px, 0) scale(0.965);
+      filter: blur(14px);
       pointer-events: none;
-      transition: opacity 0.68s ease, transform 0.68s ease, filter 0.68s ease;
+      transform-origin: center top;
+      will-change: opacity, transform, filter;
+      transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
     }
 
     body.landing-map .hero,
-    body.map-entering .hero {
+    body.map-entering:not(.landing-intro) .hero {
       opacity: 0;
-      transform: translateY(-42px) scale(0.965);
-      filter: blur(10px);
+      transform: translate3d(0, -72px, 0) scale(0.965);
+      filter: blur(14px);
       pointer-events: none;
     }
 
     body.landing-intro .workspace {
       opacity: 0;
-      transform: translateY(42px) scale(0.965);
-      filter: blur(10px);
+      transform: translate3d(0, 72px, 0) scale(0.965);
+      filter: blur(14px);
       pointer-events: none;
     }
 
     body.landing-map .workspace,
     body.map-visible .workspace,
-    body.map-entering .workspace {
+    body.map-entering:not(.landing-intro) .workspace {
       opacity: 1;
       transform: translateY(0) scale(1);
       filter: blur(0);

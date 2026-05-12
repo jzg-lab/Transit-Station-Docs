@@ -93,7 +93,7 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(css, /\.route-step/);
   assert.match(css, /\.product-card::after/);
   assert.match(css, /\.content-panel::before/);
-  assert.match(css, /body\.map-entering \.hero/);
+  assert.match(css, /body\.map-entering:not\(\.landing-intro\) \.hero/);
   assert.match(css, /body\.map-visible \.workspace/);
   assert.match(css, /\.hero-finder/);
   assert.match(css, /\.hero-chip/);
@@ -108,13 +108,23 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /data-page="intro"/);
   assert.match(html, /data-page="map"/);
   assert.match(html, /let currentLandingPage = 'intro'/);
+  assert.match(html, /const landingWheelThreshold = 360/);
+  assert.match(html, /wheelProgress \+= Math\.abs\(event\.deltaY\)/);
+  assert.match(html, /if \(wheelProgress < landingWheelThreshold\) return/);
+  assert.match(html, /function scrollToLandingPage/);
+  assert.match(html, /topbar\.getBoundingClientRect\(\)\.height/);
+  assert.match(html, /window\.getComputedStyle\(topbar\)\.top/);
+  assert.match(html, /target\.offsetTop - topbarOffset/);
+  assert.match(html, /window\.location\.hash === '#docs'/);
   assert.match(html, /function switchLandingPage/);
   assert.match(html, /handleLandingWheel/);
   assert.match(html, /event\.deltaY > 0/);
+  assert.match(html, /function canScrollWithin/);
   assert.match(html, /window\.addEventListener\('wheel', handleLandingWheel, \{ passive: false \}\)/);
   assert.match(css, /body\.landing-map \.hero/);
   assert.match(css, /body\.landing-map \.workspace/);
   assert.match(css, /body\.landing-intro \.workspace/);
+  assert.match(css, /--topbar-offset/);
   assert.match(css, /scroll-behavior: auto/);
 });
 

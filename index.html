@@ -1057,6 +1057,48 @@ codex
 
     let currentLandingPage = 'intro';
     let landingSwitchLocked = false;
+    const landingWheelThreshold = 360;
+    let wheelProgress = 0;
+    let wheelDirection = 0;
+    let wheelResetTimer;
+
+    function updateTopbarOffset() {
+      const topbar = document.querySelector('.topbar');
+      const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
+      const stickyTop = topbar ? parseFloat(window.getComputedStyle(topbar).top) || 0 : 0;
+      const topbarOffset = topbarHeight + stickyTop + 34;
+      document.documentElement.style.setProperty('--topbar-offset', `${topbarOffset}px`);
+      return topbarOffset;
+    }
+
+    function scrollToLandingPage(page, behavior = 'smooth') {
+      const target = document.querySelector(page === 'map' ? '#docs' : '#top');
+      if (!target) return;
+      const topbarOffset = page === 'map' ? updateTopbarOffset() : 0;
+      const targetTop = target.offsetTop - topbarOffset;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior });
+    }
+
+    function resetWheelProgress() {
+      wheelProgress = 0;
+      wheelDirection = 0;
+      window.clearTimeout(wheelResetTimer);
+    }
+
+    function canScrollWithin(element, direction) {
+      let node = element;
+      while (node && node !== document.body) {
+        const style = window.getComputedStyle(node);
+        const scrollable = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight;
+        if (scrollable) {
+          const canScrollDown = direction > 0 && node.scrollTop + node.clientHeight < node.scrollHeight - 2;
+          const canScrollUp = direction < 0 && node.scrollTop > 2;
+          if (canScrollDown || canScrollUp) return true;
+        }
+        node = node.parentElement;
+      }
+      return false;
+    }
 
     function syncLandingPage(page) {
       currentLandingPage = page;
@@ -1073,7 +1115,8 @@ codex
       landingSwitchLocked = true;
       document.body.classList.add('map-entering');
       syncLandingPage(page);
-      document.querySelector(page === 'map' ? '#docs' : '#top').scrollIntoView({ behavior: 'auto', block: 'start' });
+      scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
+      resetWheelProgress();
 
       setTimeout(() => {
         document.body.classList.remove('map-entering');
@@ -1083,9 +1126,22 @@ codex
 
     function handleLandingWheel(event) {
       if (Math.abs(event.deltaY) < 16 || event.ctrlKey) return;
-      const nextPage = event.deltaY > 0 ? 'map' : 'intro';
-      if (nextPage === currentLandingPage) return;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      if (currentLandingPage === 'map' && canScrollWithin(event.target, direction)) return;
+      const nextPage = direction > 0 ? 'map' : 'intro';
+      if (nextPage === currentLandingPage) {
+        resetWheelProgress();
+        return;
+      }
       event.preventDefault();
+      if (wheelDirection !== direction) {
+        wheelProgress = 0;
+        wheelDirection = direction;
+      }
+      wheelProgress += Math.abs(event.deltaY);
+      window.clearTimeout(wheelResetTimer);
+      wheelResetTimer = window.setTimeout(resetWheelProgress, 520);
+      if (wheelProgress < landingWheelThreshold) return;
       switchLandingPage(nextPage);
     }
 
@@ -1118,6 +1174,7 @@ codex
     });
 
     window.addEventListener('wheel', handleLandingWheel, { passive: false });
+    window.addEventListener('resize', updateTopbarOffset);
 
     if ('IntersectionObserver' in window) {
       const mapObserver = new IntersectionObserver(entries => {
@@ -1137,7 +1194,13 @@ codex
     });
 
     renderAll();
-    syncLandingPage('intro');
+    updateTopbarOffset();
+    if (window.location.hash === '#docs') {
+      syncLandingPage('map');
+      scrollToLandingPage('map', 'auto');
+    } else {
+      syncLandingPage('intro');
+    }
   </script>
 </body>
 </html>
