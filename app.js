@@ -1023,12 +1023,13 @@ function switchLandingPage(page, options = {}) {
   landingSwitchLocked = true;
   if (page === 'map') {
     document.body.classList.add('map-preparing');
-    document.body.offsetHeight;
   }
-  document.body.classList.add(page === 'map' ? 'map-entering' : 'intro-entering');
-  syncLandingPage(page);
-  document.body.classList.remove('map-preparing');
-  scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
+  window.requestAnimationFrame(() => {
+    document.body.classList.add(page === 'map' ? 'map-entering' : 'intro-entering');
+    syncLandingPage(page);
+    document.body.classList.remove('map-preparing');
+    scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
+  });
   resetWheelProgress();
 
   setTimeout(() => {

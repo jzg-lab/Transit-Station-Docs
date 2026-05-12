@@ -170,10 +170,9 @@
       margin-bottom: 34px;
       opacity: 1;
       transform: translateY(0) scale(1);
-      filter: blur(0);
       transform-origin: center top;
-      will-change: opacity, transform, filter;
-      transition: opacity 0.86s var(--page-ease), transform 0.86s var(--page-ease), filter 0.86s var(--page-ease);
+      will-change: opacity, transform;
+      transition: opacity 0.7s var(--page-ease), transform 0.7s var(--page-ease);
     }
 
     .hero-card, .signal-card, .workspace {
@@ -381,26 +380,23 @@
       scroll-margin-top: var(--topbar-offset);
       opacity: 1;
       transform: translateY(0) scale(1);
-      filter: blur(0);
       pointer-events: auto;
       transform-origin: center top;
-      will-change: opacity, transform, filter;
-      transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
+      will-change: opacity, transform;
+      transition: opacity 0.74s var(--page-ease), transform 0.74s var(--page-ease);
     }
 
     body.map-preparing .workspace,
     body.intro-entering .workspace {
       opacity: 0;
-      transform: translate3d(0, 88px, 0) scale(0.96);
-      filter: blur(16px);
+      transform: translate3d(0, 56px, 0) scale(0.98);
       pointer-events: none;
     }
 
     body.landing-map .hero,
     body.map-entering:not(.landing-intro) .hero {
       opacity: 0;
-      transform: translate3d(0, -72px, 0) scale(0.965);
-      filter: blur(14px);
+      transform: translate3d(0, -56px, 0) scale(0.98);
       pointer-events: none;
     }
 
@@ -409,7 +405,6 @@
     body.js-landing-ready.map-entering:not(.landing-intro) .workspace {
       opacity: 1;
       transform: translateY(0) scale(1);
-      filter: blur(0);
       pointer-events: auto;
     }
 

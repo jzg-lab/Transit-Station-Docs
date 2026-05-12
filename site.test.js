@@ -278,7 +278,8 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /function switchLandingPage/);
   assert.match(html, /document\.body\.classList\.add\('js-landing-ready'\)/);
   assert.match(html, /document\.body\.classList\.add\('map-preparing'\)/);
-  assert.match(html, /document\.body\.offsetHeight/);
+  assert.match(html, /window\.requestAnimationFrame/);
+  assert.doesNotMatch(html, /document\.body\.offsetHeight/);
   assert.match(html, /handleLandingWheel/);
   assert.match(html, /event\.deltaY > 0/);
   assert.match(html, /function canScrollWithin/);
