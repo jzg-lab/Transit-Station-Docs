@@ -488,12 +488,80 @@
       width: 100%;
       height: auto;
       background: rgba(40, 75, 58, 0.08);
+      cursor: zoom-in;
     }
 
     .shot figcaption {
       padding: 11px 14px;
       color: var(--muted);
       font: 750 13px/1.45 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    .beginner-steps {
+      margin: 22px 0 30px;
+      padding: 20px;
+      border: 1px solid rgba(214, 164, 65, 0.34);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(214, 164, 65, 0.15), rgba(255, 255, 255, 0.42));
+    }
+
+    .beginner-steps h4 {
+      margin-top: 0;
+    }
+
+    .beginner-steps ol {
+      margin-bottom: 0;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      background: rgba(12, 19, 15, 0.82);
+      backdrop-filter: blur(10px);
+    }
+
+    .image-lightbox.open { display: flex; }
+
+    .image-lightbox img {
+      max-width: min(1200px, 96vw);
+      max-height: 86vh;
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+      background: #fff;
+    }
+
+    .lightbox-caption {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      max-width: min(900px, calc(100vw - 40px));
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.92);
+      color: var(--ink);
+      font: 800 13px/1.4 ui-sans-serif, "Noto Sans SC", sans-serif;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 250, 240, 0.26);
+      border-radius: 50%;
+      background: rgba(255, 250, 240, 0.12);
+      color: #fffaf0;
+      cursor: pointer;
+      font-size: 26px;
+      line-height: 1;
     }
 
     .doc h3 {
@@ -691,6 +759,12 @@
     <p class="footer-note">本页面面向词元.fast 用户，用于快速完成 AI 应用部署和模型网关配置。实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
   </div>
 
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
   <script>
     const categories = [
       { id: 'all', label: '全部应用', intro: '完整部署清单' },
@@ -707,6 +781,23 @@
 OpenAI Compatible Base URL: https://ciyuan.fast/v1
 模型名称: 选择控制台中已启用的模型 ID</code></pre>
     `;
+
+    const apiKeyGuide = {
+      title: '密钥创建通用步骤',
+      body: `
+        <div class="beginner-steps">
+          <h4>新手步骤：先准备词元.fast API Key</h4>
+          <ol>
+            <li>打开 <a href="https://ciyuan.fast" target="_blank" rel="noreferrer">https://ciyuan.fast</a> 并登录账号。</li>
+            <li>进入控制台后找到“令牌管理”或“API Key”页面。</li>
+            <li>点击“添加令牌”或“创建密钥”，名称可以写当前工具名，例如 Claude Code、Cherry Studio。</li>
+            <li>创建成功后立刻复制密钥。密钥通常只完整显示一次，不要发给别人，也不要提交到 GitHub。</li>
+            <li>回到当前教程，把密钥粘贴到工具里的 API Key、访问令牌或 Token 输入框。</li>
+          </ol>
+        </div>
+      `,
+      shot: { src: 'images/ciyuan-api-key.png', alt: '词元.fast 创建和复制 API Key' }
+    };
 
     const productResources = {
       'openclaw': [
@@ -1027,15 +1118,16 @@ model = "选择控制台中的模型 ID"</code></pre>
     }
 
     function renderScreenshots(product) {
-      const screenshots = productScreenshots[product.id] || [];
+      const screenshots = [apiKeyGuide.shot, ...(productScreenshots[product.id] || [])];
       if (!screenshots.length) return '';
       return `
         <h3>图文步骤</h3>
+        ${apiKeyGuide.body}
         <div class="screenshot-grid">
-          ${screenshots.map(shot => `
+          ${screenshots.map((shot, index) => `
             <figure class="shot">
-              <img src="${shot.src}" alt="${shot.alt}" loading="lazy">
-              <figcaption>${shot.alt}</figcaption>
+              <img src="${shot.src}" alt="${shot.alt}" loading="lazy" data-full="${shot.src}">
+              <figcaption>第 ${index + 1} 步：${shot.alt}。看不清时点击图片放大查看。</figcaption>
             </figure>
           `).join('')}
         </div>
@@ -1048,6 +1140,26 @@ model = "选择控制台中的模型 ID"</code></pre>
       doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}${renderScreenshots(product)}`);
       addCopyButtons();
       renderToc();
+    }
+
+    function openLightbox(src, alt) {
+      const lightbox = document.querySelector('#imageLightbox');
+      const image = lightbox.querySelector('img');
+      const caption = lightbox.querySelector('.lightbox-caption');
+      image.src = src;
+      image.alt = alt;
+      caption.textContent = alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.querySelector('#imageLightbox');
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.querySelector('img').removeAttribute('src');
+      document.body.style.overflow = '';
     }
 
     function renderToc() {
@@ -1105,11 +1217,16 @@ model = "选择控制台中的模型 ID"</code></pre>
     document.addEventListener('click', event => {
       const categoryButton = event.target.closest('[data-category].category-tab');
       const productButton = event.target.closest('[data-product]');
+      const zoomImage = event.target.closest('.shot img');
+      const lightboxClose = event.target.closest('.lightbox-close');
+      if (zoomImage) openLightbox(zoomImage.dataset.full, zoomImage.alt);
+      if (lightboxClose || event.target.id === 'imageLightbox') closeLightbox();
       if (categoryButton) setCategory(categoryButton.dataset.category);
       if (productButton && !categoryButton) setProduct(productButton.dataset.product);
     });
 
     document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeLightbox();
       if (event.key !== 'Enter') return;
       const card = event.target.closest('.product-card');
       if (card) setProduct(card.dataset.product);

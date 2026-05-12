@@ -56,3 +56,13 @@ test('tutorials include local screenshots and project resource links', () => {
     assert.match(html, new RegExp(image.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 });
+
+test('tutorials are beginner friendly and support image zoom', () => {
+  const html = readFileSync('index.html', 'utf8');
+  assert.match(html, /images\/ciyuan-api-key\.png/);
+  assert.match(html, /密钥创建通用步骤/);
+  assert.match(html, /新手步骤/);
+  assert.match(html, /class="image-lightbox"/);
+  assert.match(html, /function openLightbox/);
+  assert.match(html, /data-full="\$\{shot\.src\}"/);
+});
