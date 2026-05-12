@@ -47,7 +47,7 @@ function applyTheme(theme, persist = false) {
 function closestThemeToggle(target) {
   let node = target;
   while (node && node !== document) {
-    if (node.matches?.('[data-theme-toggle]')) return node;
+    if (node.matches && node.matches('[data-theme-toggle]')) return node;
     node = node.parentElement;
   }
   return null;
@@ -103,7 +103,8 @@ function addCopyButtons(root = document) {
     button.type = 'button';
     button.textContent = '复制';
     button.addEventListener('click', async () => {
-      const text = pre.querySelector('code')?.innerText || '';
+      const code = pre.querySelector('code');
+      const text = code ? code.innerText : '';
       try {
         await navigator.clipboard.writeText(text);
         button.textContent = '已复制';

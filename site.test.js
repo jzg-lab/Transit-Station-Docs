@@ -239,7 +239,8 @@ test('client scripts avoid unsafe toc html injection and non-element wheel targe
   assert.match(docsScript, /document\.createElement\('a'\)/);
   assert.match(docsScript, /link\.textContent = heading\.textContent/);
   assert.doesNotMatch(docsScript, /toc\.innerHTML = headings\.map/);
-  assert.match(indexHtml, /element instanceof Element \? element : element\?\.parentElement/);
+  assert.match(indexHtml, /element instanceof Element \? element : element && element\.parentElement/);
+  assert.doesNotMatch(readFileSync('app.js', 'utf8') + readFileSync('docs.js', 'utf8'), /\?\./);
 });
 
 test('codex openclaw and async image docs follow the latest source material', () => {

@@ -56,7 +56,7 @@ function applyTheme(theme, persist = false) {
 function closestThemeToggle(target) {
   let node = target;
   while (node && node !== document) {
-    if (node.matches?.('[data-theme-toggle]')) return node;
+    if (node.matches && node.matches('[data-theme-toggle]')) return node;
     node = node.parentElement;
   }
   return null;
@@ -830,7 +830,8 @@ function filteredProducts() {
 }
 
 function categoryLabel(categoryId) {
-  return categories.find(category => category.id === categoryId)?.label || '全部应用';
+  const category = categories.find(category => category.id === categoryId);
+  return category ? category.label : '全部应用';
 }
 
 function categoryCount(categoryId) {
@@ -1069,7 +1070,7 @@ function resetWheelProgress() {
 }
 
 function canScrollWithin(element, direction) {
-  let node = element instanceof Element ? element : element?.parentElement;
+  let node = element instanceof Element ? element : element && element.parentElement;
   while (node && node !== document.body) {
     const style = window.getComputedStyle(node);
     const scrollable = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight;
