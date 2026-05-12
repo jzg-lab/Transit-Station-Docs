@@ -362,7 +362,7 @@ test('codex openclaw and async image docs follow the latest source material', ()
 
   assert.match(openclawHtml, /OpenClaw 安装向导里填写 URL 时不要加 \/v1/);
   assert.match(openclawHtml, /https:\/\/ciyuan\.fast，不是 https:\/\/ciyuan\.fast\/v1/);
-  assert.match(openclawHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
+  assert.doesNotMatch(openclawHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
   assert.match(openclawHtml, /\.\.\/images\/openclaw-guide\/image2\.png/);
 
   assert.match(asyncImageHtml, /异步生图接口/);
