@@ -122,6 +122,8 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(css, /\.product-card::after/);
   assert.match(css, /\.content-panel::before/);
   assert.match(css, /body\.map-entering:not\(\.landing-intro\) \.hero/);
+  assert.match(css, /body\.map-preparing \.workspace/);
+  assert.match(css, /body\.intro-entering \.workspace/);
   assert.match(css, /body\.js-landing-ready\.map-visible \.workspace/);
   assert.doesNotMatch(css, /body\.landing-intro \.workspace\s*\{[\s\S]*?opacity: 0/);
   assert.match(css, /\.hero-finder/);
@@ -275,6 +277,8 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /window\.location\.hash === '#docs'/);
   assert.match(html, /function switchLandingPage/);
   assert.match(html, /document\.body\.classList\.add\('js-landing-ready'\)/);
+  assert.match(html, /document\.body\.classList\.add\('map-preparing'\)/);
+  assert.match(html, /document\.body\.offsetHeight/);
   assert.match(html, /handleLandingWheel/);
   assert.match(html, /event\.deltaY > 0/);
   assert.match(html, /function canScrollWithin/);

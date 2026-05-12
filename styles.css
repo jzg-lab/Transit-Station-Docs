@@ -388,6 +388,14 @@
       transition: opacity 0.92s var(--page-ease), transform 0.92s var(--page-ease), filter 0.92s var(--page-ease);
     }
 
+    body.map-preparing .workspace,
+    body.intro-entering .workspace {
+      opacity: 0;
+      transform: translate3d(0, 88px, 0) scale(0.96);
+      filter: blur(16px);
+      pointer-events: none;
+    }
+
     body.landing-map .hero,
     body.map-entering:not(.landing-intro) .hero {
       opacity: 0;

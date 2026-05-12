@@ -1021,13 +1021,18 @@ function switchLandingPage(page, options = {}) {
   if (typeof options.search === 'string') setSearchTerm(options.search);
 
   landingSwitchLocked = true;
-  document.body.classList.add('map-entering');
+  if (page === 'map') {
+    document.body.classList.add('map-preparing');
+    document.body.offsetHeight;
+  }
+  document.body.classList.add(page === 'map' ? 'map-entering' : 'intro-entering');
   syncLandingPage(page);
+  document.body.classList.remove('map-preparing');
   scrollToLandingPage(page, options.instant ? 'auto' : 'smooth');
   resetWheelProgress();
 
   setTimeout(() => {
-    document.body.classList.remove('map-entering');
+    document.body.classList.remove('map-entering', 'intro-entering');
     landingSwitchLocked = false;
   }, 720);
 }
