@@ -27,8 +27,24 @@
           <p class="eyebrow">词元.fast 文档</p>
           <h1 id="hero-title">AI 工具接入，一页找到答案。</h1>
           <p>选择应用，复制配置，快速接入词元.fast。</p>
+          <div class="hero-finder" aria-label="快速查找教程">
+            <div>
+              <p class="panel-title">你要接入哪个工具？</p>
+              <strong>搜索应用，或直接进入教程地图。</strong>
+            </div>
+            <div class="hero-search-row">
+              <input class="search-box hero-search" id="heroSearchInput" type="search" placeholder="搜索 Codex / Claude / Cherry Studio" aria-label="首页搜索应用文档">
+              <a class="button page-jump" href="#docs">查看地图</a>
+            </div>
+            <div class="hero-category-links" aria-label="常用分类快捷入口">
+              <a class="hero-chip page-jump" href="#docs" data-hero-category="coding">编程</a>
+              <a class="hero-chip page-jump" href="#docs" data-hero-category="desktop">桌面</a>
+              <a class="hero-chip page-jump" href="#docs" data-hero-category="bot">机器人</a>
+              <a class="hero-chip page-jump" href="#docs" data-hero-category="reading">阅读</a>
+              <a class="hero-chip page-jump" href="#docs" data-hero-category="hub">部署</a>
+            </div>
+          </div>
           <div class="hero-actions">
-            <a class="button page-jump" href="#docs">浏览部署教程</a>
             <a class="button ghost" href="https://ciyuan.fast" target="_blank" rel="noreferrer">访问 https://ciyuan.fast</a>
           </div>
         </div>
@@ -61,8 +77,8 @@
             <div class="collection-head">
               <div>
                 <p class="panel-title">应用接入地图</p>
-                <h2>你要把哪个工具接入词元.fast？</h2>
-                <p>如果目标明确，直接搜索；如果还没决定，从左侧场景开始筛选。</p>
+                <h2>应用接入地图</h2>
+                <p>按场景筛选，打开对应教程页。</p>
               </div>
               <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
             </div>
@@ -818,6 +834,7 @@ codex
     const productList = document.querySelector('#productList');
     const cards = document.querySelector('#cards');
     const searchInput = document.querySelector('#searchInput');
+    const heroSearchInput = document.querySelector('#heroSearchInput');
 
     function filteredProducts() {
       const byCategory = activeCategory === 'all' ? products : products.filter(product => product.category === activeCategory);
@@ -1026,6 +1043,8 @@ codex
 
     function setSearchTerm(value) {
       searchTerm = value.trim();
+      searchInput.value = searchTerm;
+      heroSearchInput.value = searchTerm;
       renderProductList();
       renderCards();
     }
@@ -1045,7 +1064,9 @@ codex
       setSearchTerm(event.target.value);
     });
 
-    function showMapTransition() {
+    function showMapTransition(options = {}) {
+      if (options.category) setCategory(options.category);
+      if (typeof options.search === 'string') setSearchTerm(options.search);
       document.body.classList.add('map-entering');
       setTimeout(() => {
         document.body.classList.add('map-visible');
@@ -1056,9 +1077,18 @@ codex
     document.querySelectorAll('.page-jump[href="#docs"]').forEach(link => {
       link.addEventListener('click', event => {
         event.preventDefault();
-        showMapTransition();
+        showMapTransition({
+          category: link.dataset.heroCategory,
+          search: link.closest('.hero-finder') ? heroSearchInput.value : undefined
+        });
         setTimeout(() => document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
       });
+    });
+
+    heroSearchInput.addEventListener('keydown', event => {
+      if (event.key !== 'Enter') return;
+      showMapTransition({ search: heroSearchInput.value });
+      setTimeout(() => document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     });
 
     if ('IntersectionObserver' in window) {

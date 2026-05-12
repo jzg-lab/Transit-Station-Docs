@@ -21,7 +21,13 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.match(html, />词元\.fast文档<\/span>/);
   assert.match(html, /AI 工具接入，一页找到答案。/);
   assert.match(html, /选择应用，复制配置，快速接入词元\.fast。/);
+  assert.match(html, /class="hero-finder"/);
+  assert.match(html, /id="heroSearchInput"/);
+  assert.match(html, /你要接入哪个工具？/);
+  assert.match(html, /应用接入地图/);
+  assert.match(html, /按场景筛选，打开对应教程页。/);
   assert.doesNotMatch(html, /把好用的 AI 工具，接到同一个词元\.fast 中转站。/);
+  assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
   for (const product of expectedProducts) {
@@ -89,7 +95,10 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(css, /\.content-panel::before/);
   assert.match(css, /body\.map-entering \.hero/);
   assert.match(css, /body\.map-visible \.workspace/);
+  assert.match(css, /\.hero-finder/);
+  assert.match(css, /\.hero-chip/);
   assert.match(html, /function showMapTransition/);
+  assert.match(html, /heroSearchInput\.addEventListener/);
   assert.match(html, /IntersectionObserver/);
 });
 
