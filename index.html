@@ -259,17 +259,34 @@
 
     .workspace {
       display: grid;
-      grid-template-columns: 300px minmax(0, 1fr) 260px;
-      min-height: 760px;
+      gap: 20px;
     }
 
-    .nav-panel, .toc-panel {
+    .guide-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .reader-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .nav-panel, .toc-panel, .content-panel {
       padding: 22px;
       background: rgba(255, 255, 255, 0.36);
     }
 
-    .nav-panel { border-right: 1px solid var(--line); }
-    .toc-panel { border-left: 1px solid var(--line); }
+    .nav-panel, .content-panel, .toc-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+    }
+
+    .nav-panel, .toc-panel { position: sticky; top: 104px; }
 
     .panel-title {
       margin: 0 0 14px;
@@ -313,6 +330,23 @@
       gap: 10px;
     }
 
+    .search-box {
+      width: 100%;
+      margin: 0 0 18px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 250, 240, 0.74);
+      color: var(--ink);
+      font: 800 14px/1.3 ui-sans-serif, "Noto Sans SC", sans-serif;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: rgba(40, 75, 58, 0.44);
+      box-shadow: 0 0 0 4px rgba(63, 107, 82, 0.12);
+    }
+
     .product-tab small {
       display: block;
       margin-top: 4px;
@@ -320,10 +354,7 @@
       font-weight: 600;
     }
 
-    .content-panel {
-      min-width: 0;
-      padding: clamp(24px, 4vw, 48px);
-    }
+    .content-panel { min-width: 0; }
 
     .collection-head {
       display: grid;
@@ -361,7 +392,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin-bottom: 32px;
+      margin-bottom: 0;
     }
 
     .product-card {
@@ -389,6 +420,72 @@
       color: var(--muted);
       line-height: 1.7;
       font-size: 14px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 22px;
+      border: 1px dashed rgba(40, 75, 58, 0.28);
+      border-radius: 18px;
+      color: var(--muted);
+      background: rgba(255, 250, 240, 0.42);
+      font: 800 14px/1.7 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    .card-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+      color: var(--muted);
+      font: 800 12px/1.4 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    .card-meta span {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(40, 75, 58, 0.07);
+    }
+
+    .reader-panel[hidden] { display: none; }
+
+    .reader-panel {
+      scroll-margin-top: 110px;
+    }
+
+    .reader-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin: 2px 0 16px;
+    }
+
+    .reader-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .reader-summary span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.68);
+      border: 1px solid var(--line);
+      color: var(--moss);
+      font: 800 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
+    .back-link {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.42);
+      color: var(--moss);
+      cursor: pointer;
+      font: 900 13px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
     }
 
     .tag-row {
@@ -750,9 +847,9 @@
     }
 
     @media (max-width: 1120px) {
-      .hero, .workspace { grid-template-columns: 1fr; }
+      .hero, .guide-layout, .reader-shell { grid-template-columns: 1fr; }
       .toc-panel { display: none; }
-      .nav-panel { border-right: none; border-bottom: 1px solid var(--line); }
+      .nav-panel { position: static; }
       .product-list, .category-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -761,11 +858,12 @@
       .topbar { align-items: flex-start; border-radius: 24px; position: static; flex-direction: column; }
       .top-links { justify-content: flex-start; }
       .hero-card { padding: 28px; }
-      .cards, .product-list, .category-tabs, .collection-head { grid-template-columns: 1fr; }
+      .cards, .product-list, .category-tabs, .collection-head, .card-meta { grid-template-columns: 1fr; }
       .resource-grid, .screenshot-grid { grid-template-columns: 1fr; }
       .tutorial-step, .tutorial-step[data-compact="true"] { grid-template-columns: 1fr; }
       .api-badge { white-space: normal; }
-      .content-panel { padding: 16px; }
+      .content-panel, .nav-panel { padding: 16px; }
+      .reader-top { align-items: flex-start; flex-direction: column; }
       .doc { padding: 22px; }
     }
   </style>
@@ -803,29 +901,40 @@
       </section>
 
       <section id="docs" class="workspace" aria-label="AI 应用部署文档">
-        <aside class="nav-panel">
-          <p class="panel-title">分类</p>
-          <div class="category-tabs" id="categoryTabs"></div>
-          <p class="panel-title">应用</p>
-          <div class="product-list" id="productList"></div>
-        </aside>
+        <div class="guide-layout">
+          <aside class="nav-panel">
+            <p class="panel-title">分类</p>
+            <div class="category-tabs" id="categoryTabs"></div>
+            <p class="panel-title">应用</p>
+            <div class="product-list" id="productList"></div>
+          </aside>
 
-        <section class="content-panel">
-          <div class="collection-head">
-            <div>
-              <h2>应用接入地图</h2>
-              <p>先按使用场景筛选，再进入对应文档。所有教程已统一替换为词元.fast，并保留可复制的关键配置片段。</p>
+          <section class="content-panel" aria-label="应用入口">
+            <div class="collection-head">
+              <div>
+                <h2>应用接入地图</h2>
+                <p>先按使用场景筛选或搜索，再打开对应文档。首页只保留入口，教程进入独立阅读区。</p>
+              </div>
+              <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
             </div>
-            <div class="api-badge">Base URL: https://ciyuan.fast/v1</div>
-          </div>
-          <div class="cards" id="cards"></div>
-          <article class="doc" id="doc"></article>
-        </section>
+            <input class="search-box" id="searchInput" type="search" placeholder="搜索应用、场景或标签，例如 Codex、机器人、翻译" aria-label="搜索应用文档">
+            <div class="cards" id="cards"></div>
+          </section>
+        </div>
 
-        <aside class="toc-panel">
-          <p class="panel-title">当前目录</p>
-          <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
-        </aside>
+        <section class="reader-panel" id="readerPanel" hidden aria-label="当前教程阅读区">
+          <div class="reader-top">
+            <p class="reader-summary" id="readerSummary"></p>
+            <button class="back-link" type="button" id="backToMap">返回应用地图</button>
+          </div>
+          <div class="reader-shell">
+            <article class="doc" id="doc"></article>
+            <aside class="toc-panel">
+              <p class="panel-title">当前目录</p>
+              <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+            </aside>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -1575,15 +1684,31 @@ codex
 
     let activeCategory = 'all';
     let activeProduct = products[0].id;
+    let searchTerm = '';
+    let readerOpen = false;
 
     const categoryTabs = document.querySelector('#categoryTabs');
     const productList = document.querySelector('#productList');
     const cards = document.querySelector('#cards');
+    const searchInput = document.querySelector('#searchInput');
+    const readerPanel = document.querySelector('#readerPanel');
+    const readerSummary = document.querySelector('#readerSummary');
+    const backToMap = document.querySelector('#backToMap');
     const doc = document.querySelector('#doc');
     const toc = document.querySelector('#toc');
 
     function filteredProducts() {
-      return activeCategory === 'all' ? products : products.filter(product => product.category === activeCategory);
+      const byCategory = activeCategory === 'all' ? products : products.filter(product => product.category === activeCategory);
+      if (!searchTerm) return byCategory;
+      const query = searchTerm.toLowerCase();
+      return byCategory.filter(product => [product.title, product.subtitle, product.summary, product.category, ...product.tags]
+        .join(' ')
+        .toLowerCase()
+        .includes(query));
+    }
+
+    function categoryLabel(categoryId) {
+      return categories.find(category => category.id === categoryId)?.label || '全部应用';
     }
 
     function renderCategories() {
@@ -1595,21 +1720,24 @@ codex
     }
 
     function renderProductList() {
-      productList.innerHTML = filteredProducts().map(product => `
+      const visible = filteredProducts();
+      productList.innerHTML = visible.map(product => `
         <button class="product-tab ${product.id === activeProduct ? 'active' : ''}" data-product="${product.id}">
           ${product.title}<small>${product.subtitle}</small>
         </button>
-      `).join('');
+      `).join('') || '<p class="empty-state">没有匹配的应用，换个关键词试试。</p>';
     }
 
     function renderCards() {
-      cards.innerHTML = filteredProducts().map(product => `
+      const visible = filteredProducts();
+      cards.innerHTML = visible.map(product => `
         <article class="product-card" data-category="${product.category}" data-product="${product.id}" tabindex="0">
           <h3>${product.title}</h3>
           <p>${product.summary}</p>
+          <div class="card-meta"><span>${categoryLabel(product.category)}</span><span>预计 5-15 分钟</span></div>
           <div class="tag-row">${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
         </article>
-      `).join('');
+      `).join('') || '<p class="empty-state">没有找到匹配教程。建议清空搜索，或从左侧分类重新选择。</p>';
     }
 
     function renderResources(product) {
@@ -1769,14 +1897,24 @@ codex
       doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}`);
       const usedIndexes = injectInlineSteps(product);
       if (!product.body.includes('doc-shot')) {
-        if (!product.body.includes('doc-shot')) {
-        if (!product.body.includes('doc-shot')) {
         doc.insertAdjacentHTML('beforeend', renderScreenshots(product, usedIndexes));
-      }
-      }
       }
       addCopyButtons();
       renderToc();
+      renderReaderSummary(product);
+    }
+
+    function renderReaderSummary(product) {
+      readerSummary.innerHTML = [
+        product.title,
+        categoryLabel(product.category),
+        product.subtitle,
+        ...product.tags.slice(0, 2)
+      ].map(item => `<span>${item}</span>`).join('');
+    }
+
+    function updateReaderState() {
+      readerPanel.hidden = !readerOpen;
     }
 
     function openLightbox(src, alt) {
@@ -1832,16 +1970,27 @@ codex
     function setCategory(categoryId) {
       activeCategory = categoryId;
       const visible = filteredProducts();
-      if (!visible.some(product => product.id === activeProduct)) activeProduct = visible[0].id;
+      if (visible.length && !visible.some(product => product.id === activeProduct)) activeProduct = visible[0].id;
+      readerOpen = false;
       renderAll();
     }
 
-    function setProduct(productId) {
+    function setProduct(productId, options = {}) {
       activeProduct = productId;
+      readerOpen = options.open !== false;
       renderProductList();
       renderCards();
       renderDoc();
-      doc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updateReaderState();
+      if (readerOpen) readerPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function setSearchTerm(value) {
+      searchTerm = value.trim();
+      readerOpen = false;
+      renderProductList();
+      renderCards();
+      updateReaderState();
     }
 
     function renderAll() {
@@ -1849,6 +1998,7 @@ codex
       renderProductList();
       renderCards();
       renderDoc();
+      updateReaderState();
     }
 
     document.addEventListener('click', event => {
@@ -1860,6 +2010,16 @@ codex
       if (lightboxClose || event.target.id === 'imageLightbox') closeLightbox();
       if (categoryButton) setCategory(categoryButton.dataset.category);
       if (productButton && !categoryButton) setProduct(productButton.dataset.product);
+    });
+
+    searchInput.addEventListener('input', event => {
+      setSearchTerm(event.target.value);
+    });
+
+    backToMap.addEventListener('click', () => {
+      readerOpen = false;
+      updateReaderState();
+      document.querySelector('#docs').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     document.addEventListener('keydown', event => {

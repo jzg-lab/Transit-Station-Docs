@@ -38,6 +38,18 @@ test('page exposes category navigation and grouped cards', () => {
   assert.match(html, /category: 'coding'/);
 });
 
+test('layout separates entry discovery from focused reading', () => {
+  const html = readFileSync('index.html', 'utf8');
+  assert.match(html, /class="guide-layout"/);
+  assert.match(html, /id="readerPanel"/);
+  assert.match(html, /class="reader-shell"/);
+  assert.match(html, /id="searchInput"/);
+  assert.match(html, /function setProduct\(productId, options = \{\}\)/);
+  assert.match(html, /function updateReaderState/);
+  assert.match(html, /function renderReaderSummary/);
+  assert.match(html, /hidden = !readerOpen/);
+});
+
 test('tutorials include local screenshots and project resource links', () => {
   const html = readFileSync('index.html', 'utf8');
   assert.match(html, /class="resource-grid"/);
