@@ -109,6 +109,10 @@ test('landing page supports wheel-driven full-page switching', () => {
   assert.match(html, /data-page="map"/);
   assert.match(html, /let currentLandingPage = 'intro'/);
   assert.match(html, /const landingWheelThreshold = 360/);
+  assert.match(html, /function isPageBoundary/);
+  assert.match(html, /window\.scrollY <= 2/);
+  assert.match(html, /window\.innerHeight \+ window\.scrollY >= document\.documentElement\.scrollHeight - 2/);
+  assert.match(html, /if \(!isPageBoundary\(direction\)\) \{[\s\S]*?resetWheelProgress\(\);[\s\S]*?return;[\s\S]*?\}/);
   assert.match(html, /wheelProgress \+= Math\.abs\(event\.deltaY\)/);
   assert.match(html, /if \(wheelProgress < landingWheelThreshold\) return/);
   assert.match(html, /function scrollToLandingPage/);
