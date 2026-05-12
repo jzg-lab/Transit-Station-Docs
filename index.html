@@ -427,6 +427,75 @@
       line-height: 1.9;
     }
 
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0 30px;
+    }
+
+    .resource-link {
+      display: block;
+      min-height: 96px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.48);
+      color: var(--ink);
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .resource-link:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 250, 240, 0.96);
+      box-shadow: 0 14px 28px rgba(40, 75, 58, 0.11);
+    }
+
+    .resource-link span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--clay);
+      font: 900 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .resource-link strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 28px;
+    }
+
+    .shot {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.54);
+      box-shadow: 0 12px 30px rgba(40, 75, 58, 0.10);
+    }
+
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: rgba(40, 75, 58, 0.08);
+    }
+
+    .shot figcaption {
+      padding: 11px 14px;
+      color: var(--muted);
+      font: 750 13px/1.45 ui-sans-serif, "Noto Sans SC", sans-serif;
+    }
+
     .doc h3 {
       margin: 34px 0 14px;
       padding-top: 22px;
@@ -553,6 +622,7 @@
       .top-links { justify-content: flex-start; }
       .hero-card { padding: 28px; }
       .cards, .product-list, .category-tabs, .collection-head { grid-template-columns: 1fr; }
+      .resource-grid, .screenshot-grid { grid-template-columns: 1fr; }
       .api-badge { white-space: normal; }
       .content-panel { padding: 16px; }
       .doc { padding: 22px; }
@@ -637,6 +707,113 @@
 OpenAI Compatible Base URL: https://ciyuan.fast/v1
 模型名称: 选择控制台中已启用的模型 ID</code></pre>
     `;
+
+    const productResources = {
+      'openclaw': [
+        { label: '官网', title: 'openclaw.ai', href: 'https://openclaw.ai' },
+        { label: '文档', title: 'docs.openclaw.ai', href: 'https://docs.openclaw.ai' },
+        { label: 'GitHub', title: 'openclaw/openclaw', href: 'https://github.com/openclaw/openclaw' }
+      ],
+      'claude-code': [
+        { label: '官网', title: 'Anthropic Claude Code', href: 'https://www.anthropic.com/claude-code' },
+        { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' },
+        { label: 'Windows 依赖', title: 'Git for Windows', href: 'https://git-scm.com/download/win' }
+      ],
+      'codex-cli': [
+        { label: '官网', title: 'ChatGPT Codex', href: 'https://chatgpt.com/codex' },
+        { label: 'GitHub', title: 'openai/codex', href: 'https://github.com/openai/codex' },
+        { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' }
+      ],
+      'factory-droid-cli': [
+        { label: '官网', title: 'Factory AI', href: 'https://factory.ai' },
+        { label: '文档', title: 'Factory Docs', href: 'https://docs.factory.ai' },
+        { label: '安装', title: 'npm install -g droid', href: 'https://www.npmjs.com/package/droid' }
+      ],
+      'cc-switch': [
+        { label: 'GitHub', title: 'farion1231/cc-switch', href: 'https://github.com/farion1231/cc-switch' },
+        { label: '下载', title: 'CC Switch Releases', href: 'https://github.com/farion1231/cc-switch/releases' },
+        { label: '协议', title: 'ccswitch:// Deep Link', href: 'https://github.com/farion1231/cc-switch' }
+      ],
+      'cherry-studio': [
+        { label: '官网', title: 'cherry-ai.com', href: 'https://cherry-ai.com' },
+        { label: '下载', title: 'Cherry Studio Download', href: 'https://cherry-ai.com/download' },
+        { label: '文档', title: 'docs.cherry-ai.com', href: 'https://docs.cherry-ai.com' }
+      ],
+      'aionui': [
+        { label: '官网', title: 'aionui.com', href: 'https://www.aionui.com' },
+        { label: 'GitHub', title: 'iOfficeAI/AionUi', href: 'https://github.com/iOfficeAI/AionUi' },
+        { label: '下载', title: 'AionUi Releases', href: 'https://github.com/iOfficeAI/AionUi/releases' }
+      ],
+      'fluent-read': [
+        { label: 'GitHub', title: 'Bistutu/FluentRead', href: 'https://github.com/Bistutu/FluentRead' },
+        { label: '官网', title: 'FluentRead 项目主页', href: 'https://fluent.thinkstu.com' },
+        { label: '下载', title: '浏览器扩展安装', href: 'https://github.com/Bistutu/FluentRead/releases' }
+      ],
+      'langbot': [
+        { label: '官网', title: 'langbot.app', href: 'https://langbot.app' },
+        { label: '下载', title: 'LangBot Releases', href: 'https://github.com/langbot-app/LangBot/releases' },
+        { label: 'GitHub', title: 'langbot-app/LangBot', href: 'https://github.com/langbot-app/LangBot' }
+      ],
+      'astrbot': [
+        { label: '官网', title: 'astrbot.app', href: 'https://astrbot.app' },
+        { label: '文档', title: 'docs.astrbot.app', href: 'https://docs.astrbot.app' },
+        { label: 'GitHub', title: 'astrbotdevs/astrbot', href: 'https://github.com/astrbotdevs/astrbot' }
+      ]
+    };
+
+    const productScreenshots = {
+      'claude-code': [
+        { src: 'images/claude-code/introduce-01.webp', alt: 'Claude Code 代码库理解演示' },
+        { src: 'images/claude-code/introduce-02.webp', alt: 'Claude Code 多文件编辑演示' },
+        { src: 'images/claude-code/windows_configure.webp', alt: 'Windows 环境变量配置' },
+        { src: 'images/claude-code/macos_configure.webp', alt: 'macOS 环境变量配置' }
+      ],
+      'codex-cli': [
+        { src: 'images/codex-cli/introduce-01.webp', alt: 'Codex CLI 使用演示' },
+        { src: 'images/codex-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
+        { src: 'images/codex-cli/windows_configure.webp', alt: 'Windows 配置 Codex CLI' },
+        { src: 'images/codex-cli/macos_configure.webp', alt: 'macOS 配置 Codex CLI' }
+      ],
+      'factory-droid-cli': [
+        { src: 'images/factory-droid-cli/droid_example.webp', alt: 'Factory Droid CLI 示例' },
+        { src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
+        { src: 'images/factory-droid-cli/windows_install_droid.webp', alt: 'Windows 安装 Droid' },
+        { src: 'images/factory-droid-cli/factory_cli_setup_windows.webp', alt: 'Factory CLI Windows 配置' }
+      ],
+      'cc-switch': [
+        { src: 'images/cc-switch/fill_dialog.webp', alt: 'CC Switch 一键填入 Provider 弹窗' }
+      ],
+      'cherry-studio': [
+        { src: 'images/cherry-studio/copy_api_key.webp', alt: '复制词元.fast API Key' },
+        { src: 'images/cherry-studio/add_provider.webp', alt: '添加 Cherry Studio 供应商' },
+        { src: 'images/cherry-studio/add_models.webp', alt: '添加模型' },
+        { src: 'images/cherry-studio/switch_model.webp', alt: '切换模型' }
+      ],
+      'aionui': [
+        { src: 'images/aionuilogo.webp', alt: 'AionUi 标识' },
+        { src: 'images/copy_apikey.webp', alt: '复制词元.fast API Key' },
+        { src: 'images/add-model-1.webp', alt: '打开模型设置' },
+        { src: 'images/newapi_provider.webp', alt: '添加 NewAPI 提供商' }
+      ],
+      'fluent-read': [
+        { src: 'images/fluent-read/hint.webp', alt: '流畅阅读添加提示' },
+        { src: 'images/fluent-read/confirm.webp', alt: '确认导入配置' },
+        { src: 'images/fluent-read/fluentread.webp', alt: '配置结果' },
+        { src: 'images/fluent-read/configuration.webp', alt: '手动配置 FluentRead' }
+      ],
+      'langbot': [
+        { src: 'images/langbot/get_api_key.webp', alt: '获取 API Key' },
+        { src: 'images/langbot/add_newapi_model.webp', alt: '添加 NewAPI 模型' },
+        { src: 'images/langbot/select_model.webp', alt: '选择模型' },
+        { src: 'images/langbot/debug_chat.webp', alt: '对话调试' }
+      ],
+      'astrbot': [
+        { src: 'images/astrbot/image.webp', alt: '创建 API Key' },
+        { src: 'images/astrbot/image-1.webp', alt: '复制 API Key' },
+        { src: 'images/astrbot/image-2.webp', alt: '配置 AstrBot OpenAI 提供商' },
+        { src: 'images/astrbot/image-3.webp', alt: '应用模型提供商' }
+      ]
+    };
 
     const products = [
       {
@@ -834,10 +1011,41 @@ model = "选择控制台中的模型 ID"</code></pre>
       `).join('');
     }
 
+    function renderResources(product) {
+      const resources = productResources[product.id] || [];
+      if (!resources.length) return '';
+      return `
+        <div class="resource-grid" aria-label="${product.title} 项目地址">
+          ${resources.map(resource => `
+            <a class="resource-link" href="${resource.href}" target="_blank" rel="noreferrer">
+              <span>${resource.label}</span>
+              <strong>${resource.title}</strong>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function renderScreenshots(product) {
+      const screenshots = productScreenshots[product.id] || [];
+      if (!screenshots.length) return '';
+      return `
+        <h3>图文步骤</h3>
+        <div class="screenshot-grid">
+          ${screenshots.map(shot => `
+            <figure class="shot">
+              <img src="${shot.src}" alt="${shot.alt}" loading="lazy">
+              <figcaption>${shot.alt}</figcaption>
+            </figure>
+          `).join('')}
+        </div>
+      `;
+    }
+
     function renderDoc() {
       const product = products.find(item => item.id === activeProduct) || filteredProducts()[0] || products[0];
       activeProduct = product.id;
-      doc.innerHTML = product.body;
+      doc.innerHTML = product.body.replace('</p>', `</p>${renderResources(product)}${renderScreenshots(product)}`);
       addCopyButtons();
       renderToc();
     }

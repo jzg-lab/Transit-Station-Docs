@@ -37,3 +37,22 @@ test('page exposes category navigation and grouped cards', () => {
   assert.match(html, /class="product-card"/);
   assert.match(html, /category: 'coding'/);
 });
+
+test('tutorials include local screenshots and project resource links', () => {
+  const html = readFileSync('index.html', 'utf8');
+  assert.match(html, /class="resource-grid"/);
+  assert.match(html, /官网/);
+  assert.match(html, /GitHub/);
+  assert.match(html, /下载/);
+  assert.match(html, /function renderScreenshots/);
+  assert.match(html, /<img src="\$\{shot\.src\}"/);
+  for (const image of [
+    'images/claude-code/introduce-01.webp',
+    'images/codex-cli/introduce-01.webp',
+    'images/cherry-studio/add_provider.webp',
+    'images/langbot/add_newapi_model.webp',
+    'images/astrbot/image-2.webp'
+  ]) {
+    assert.match(html, new RegExp(image.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+});
