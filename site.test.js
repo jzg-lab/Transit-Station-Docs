@@ -93,18 +93,6 @@ test('landing page includes gentle interaction polish', () => {
   assert.match(html, /IntersectionObserver/);
 });
 
-test('hero side panel prioritizes actionable connection details', () => {
-  const html = readFileSync('index.html', 'utf8');
-  const css = readFileSync('styles.css', 'utf8');
-  assert.match(html, /class="quick-config"/);
-  assert.match(html, /推荐 Base URL/);
-  assert.match(html, /https:\/\/ciyuan\.fast\/v1/);
-  assert.match(html, /class="metric-grid"/);
-  assert.match(css, /\.quick-config/);
-  assert.match(css, /\.metric-grid/);
-  assert.match(css, /\.hero-route[\s\S]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
-});
-
 test('product tutorials are published as independent pages', () => {
   const html = readFileSync('index.html', 'utf8');
   assert.match(html, /<a class="product-card" href="docs\/\$\{product\.id\}\.html"/);

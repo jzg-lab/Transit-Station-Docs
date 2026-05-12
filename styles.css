@@ -222,72 +222,22 @@
     }
 
     .signal-card {
-      padding: clamp(22px, 3vw, 34px);
+      padding: 26px;
       display: grid;
-      grid-template-rows: 1fr auto auto;
-      gap: 18px;
+      gap: 14px;
       background:
-        radial-gradient(circle at 18% 12%, rgba(255, 229, 164, 0.16), transparent 28%),
-        radial-gradient(circle at 100% 100%, rgba(166, 83, 63, 0.18), transparent 34%),
         linear-gradient(160deg, rgba(40, 75, 58, 0.92), rgba(20, 36, 28, 0.94)),
         var(--moss);
       color: #fffaf0;
     }
 
-    .quick-config {
-      min-height: 310px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: clamp(22px, 4vw, 38px);
-      border: 1px solid rgba(255, 250, 240, 0.18);
-      border-radius: 28px;
-      background:
-        linear-gradient(145deg, rgba(255, 250, 240, 0.12), rgba(255, 250, 240, 0.04)),
-        rgba(255, 250, 240, 0.05);
-      box-shadow: inset 0 1px 0 rgba(255, 250, 240, 0.14);
-    }
-
-    .quick-config span {
-      color: rgba(255, 250, 240, 0.68);
-      font: 900 12px/1 ui-sans-serif, "Noto Sans SC", sans-serif;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .quick-config strong {
-      display: block;
-      margin: 16px 0 12px;
-      color: #ffe5a4;
-      font: 900 clamp(24px, 3vw, 38px)/1.08 "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-      word-break: break-all;
-    }
-
-    .quick-config p {
-      max-width: 520px;
-      margin: 0;
-      color: rgba(255, 250, 240, 0.78);
-      font: 700 15px/1.8 ui-sans-serif, "Noto Sans SC", sans-serif;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
     .hero-route {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
       justify-content: stretch;
-      margin-top: 0;
+      margin-top: 2px;
     }
 
     .signal-card .route-step {
       justify-content: center;
-      min-height: 48px;
-      padding: 0 12px;
       background: rgba(255, 250, 240, 0.10);
       border-color: rgba(255, 250, 240, 0.18);
       color: #fffaf0;
@@ -297,9 +247,9 @@
     .signal-card .route-step strong { color: #ffe5a4; }
 
     .metric {
-      padding: 18px;
+      padding: 20px;
       border: 1px solid rgba(255, 250, 240, 0.18);
-      border-radius: 20px;
+      border-radius: 22px;
       background: rgba(255, 250, 240, 0.08);
     }
 
