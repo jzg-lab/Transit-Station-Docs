@@ -4,7 +4,7 @@ const categories = [
   { id: 'desktop', label: '桌面', intro: '本地工作台' },
   { id: 'bot', label: '机器人', intro: 'IM 与 Agent' },
   { id: 'reading', label: '阅读', intro: '翻译阅读' },
-  { id: 'hub', label: '部署', intro: '托管与 API' }
+  { id: 'hub', label: '接口', intro: 'API 与网关' }
 ];
 
 const commonSetup = `
@@ -183,7 +183,7 @@ const productScreenshots = {
 
 const products = [
   {
-    id: 'openclaw', category: 'hub', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
+    id: 'openclaw', category: 'bot', title: 'OpenClaw', subtitle: '自托管 AI 智能助手平台', tags: ['自托管', '多渠道', 'Gateway'],
     summary: 'OpenClaw 图文部署详细指南：按上传 Word 文档从安装、模型配置、技能选择、安全审计到附录完整整理。',
     body: `
       <h2>OpenClaw部署详细指南（图文版）</h2>

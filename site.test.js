@@ -84,11 +84,13 @@ test('api key entry points go directly to the keys page', () => {
 
 test('page exposes category navigation and grouped cards', () => {
   const html = readFileSync('index.html', 'utf8') + readFileSync('app.js', 'utf8');
-  for (const category of ['编程', '桌面', '机器人', '阅读', '部署']) {
+  for (const category of ['编程', '桌面', '机器人', '阅读', '接口']) {
     assert.match(html, new RegExp(category));
   }
   assert.match(html, /product-card/);
   assert.match(html, /category: 'coding'/);
+  assert.match(html, /id: 'openclaw', category: 'bot'/);
+  assert.match(html, /id: 'async-image-api', category: 'hub'/);
 });
 
 test('layout separates entry discovery from focused reading', () => {
