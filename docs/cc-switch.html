@@ -37,9 +37,9 @@
           <strong>CC Switch Releases</strong>
         </a>
       
-        <a class="resource-link" href="https://github.com/farion1231/cc-switch" target="_blank" rel="noreferrer">
-          <span>协议</span>
-          <strong>ccswitch:// Deep Link</strong>
+        <a class="resource-link" href="https://github.com/Golden-Promise/vscode-cc-switch" target="_blank" rel="noreferrer">
+          <span>教程来源</span>
+          <strong>Golden-Promise/vscode-cc-switch</strong>
         </a>
       
     </div>
@@ -63,21 +63,62 @@
       <ul><li><strong>桌面应用</strong> — Windows、macOS、Linux 原生安装包</li></ul>
       <ul><li><strong>Web 版本</strong> — 适用于无头服务器 / SSH 远程环境的浏览器访问方案</li></ul>
       <ul><li><strong>CLI 版本</strong> — 命令行交互模式与命令模式双支持</li></ul>
-      <h2>词元.fast API 接入方法</h2>
-      <p>CC Switch 支持 <code>ccswitch://</code> Deep Link 协议，可从 词元.fast 令牌管理页一键导入 Provider 配置。</p>
-      <h3>配置步骤</h3>
-      <p>1. <strong>在 词元.fast API 令牌管理页，点击对应令牌的下拉菜单</strong> 在菜单中选择 <strong>CC Switch</strong> 选项，系统会自动唤起 CC Switch 应用并弹出配置弹窗。</p>
-      <p>2. <strong>在弹窗中完成配置</strong></p>
-      <figure class="shot doc-shot"><img src="../images/cc-switch/fill_dialog.webp" alt="填入 CC Switch 弹窗" loading="lazy" data-full="../images/cc-switch/fill_dialog.webp"><figcaption>填入 CC Switch 弹窗</figcaption></figure>
-      <p>弹窗各字段说明：</p>
-      <ul><li><strong>应用</strong>：顶部切换应用类型 — <strong>Claude</strong> / <strong>Codex</strong> / <strong>Gemini</strong>，根据需要选择目标应用</li></ul>
-      <ul><li><strong>名称</strong>：为该配置填写一个名称（例如 <code>My Claude</code>），方便后续在 CC Switch 中识别和切换</li></ul>
-      <ul><li><strong>主模型</strong>（必填）— 默认使用的主力模型</li></ul>
-      <ul><li><strong>Haiku 模型</strong> — 轻量快速模型</li></ul>
-      <ul><li><strong>Sonnet 模型</strong> — 均衡模型</li></ul>
-      <ul><li><strong>Opus 模型</strong> — 最强模型</li></ul>
-      <p>所有模型均为下拉选择，未选择时显示「请选择模型」。</p>
-      <p>3. <strong>完成配置</strong> 点击 <strong>「打开 CC Switch」</strong> 即可将配置导入 CC Switch 并开始使用；点击 <strong>「取消」</strong> 放弃本次操作。</p>
+      <h2>通过 cc-Switch 调用词元.fast 模型</h2>
+      <h3>原理解析</h3>
+      <p>cc-Switch 会帮你维护 Claude Code 所需的 Provider 配置，核心是动态写入 <code>ANTHROPIC_BASE_URL</code> 和 <code>ANTHROPIC_API_KEY</code>。Claude Code 原本发往官方接口的请求，会被切换到你配置的词元.fast 接口。</p>
+      <ul><li><strong>不用手动编辑复杂配置</strong>：把常用 API 方案保存为 Provider，需要时一键切换。</li></ul>
+      <ul><li><strong>适合多模型工作流</strong>：同一个 cc-Switch 中可保存不同模型、不同端点，便于在 Claude Code 场景里快速试用。</li></ul>
+      <h3>前置准备</h3>
+      <p>开始配置前，先准备三项信息：<strong>API Key</strong>、<strong>Base URL</strong>、<strong>模型名称</strong>。</p>
+      <h4>1. 创建并复制词元.fast API Key</h4>
+      <p>打开 <a href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">词元.fast API 密钥页面</a>，创建一个专用于 Claude Code / cc-Switch 的密钥。创建成功后立刻复制，后面会粘贴到 cc-Switch 的 API Key 字段。</p>
+      <figure class="shot doc-shot"><img src="../images/ciyuan-api-key.png" alt="词元.fast API 密钥创建与复制" loading="lazy" data-full="../images/ciyuan-api-key.png"><figcaption>词元.fast API 密钥创建与复制</figcaption></figure>
+      <h4>2. 获取模型名称</h4>
+      <p>进入词元.fast 控制台的模型列表，选择你要给 Claude Code 使用的模型，复制模型 ID。模型名称必须和控制台显示一致。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-10.png" alt="CC Switch 获取模型名称" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-10.png"><figcaption>获取模型名称</figcaption></figure>
+      <h4>3. 确认 Base URL</h4>
+      <p>cc-Switch 的 Claude Provider 这里填写词元.fast 接口地址：</p>
+      <pre><code>Base URL: https://ciyuan.fast
+API Key: 你的词元.fast API Key
+模型名称: 词元.fast 控制台中可用的模型 ID</code></pre>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-11.png" alt="CC Switch 确认 Base URL" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-11.png"><figcaption>确认 Base URL</figcaption></figure>
+      <h3>本地环境配置指南</h3>
+      <h4>1. 添加供应商</h4>
+      <p>回到 cc-Switch 客户端，点击添加新的服务供应商。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-12.png" alt="CC Switch 添加供应商" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-12.png"><figcaption>添加供应商</figcaption></figure>
+      <h4>2. 填写配置信息</h4>
+      <p>按照图中入口进入配置页面，向下滚动，把刚才准备好的词元.fast 凭证填入对应位置。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-13.png" alt="CC Switch 进入 Provider 配置" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-13.png"><figcaption>进入配置页面</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-14.png" alt="CC Switch 填写接口信息" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-14.png"><figcaption>填写接口信息</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-15.png" alt="CC Switch 填写模型信息" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-15.png"><figcaption>填写模型信息</figcaption></figure>
+      <p>其他高级配置按需修改。最后核对 Provider 名称、Base URL、API Key 和模型名称，确认无误后点击添加。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-16.png" alt="CC Switch 核对并添加 Provider" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-16.png"><figcaption>核对并添加</figcaption></figure>
+      <h4>3. 启动 Claude Code</h4>
+      <p>重新打开 VS Code 中的 Claude Code 扩展。如果无需登录官方账号、直接进入对话窗口，说明本地配置已生效。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-17.png" alt="CC Switch 启动 Claude Code" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-17.png"><figcaption>启动 Claude Code</figcaption></figure>
+      <h3>远程环境（Remote - SSH）配置指南</h3>
+      <h4>1. 开启本地代理服务</h4>
+      <p>如果你通过 VS Code Remote - SSH 在远程服务器里使用 Claude Code，需要先在本机 cc-Switch 中开启本地代理，并记住生成的服务地址与端口。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-18.png" alt="CC Switch 开启本地代理 1" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-18.png"><figcaption>开启本地代理</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-19.png" alt="CC Switch 开启本地代理 2" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-19.png"><figcaption>记录代理地址</figcaption></figure>
+      <h4>2. 验证代理状态</h4>
+      <p>点击图中入口打开终端，在 Windows 终端执行下面命令。如果打开的配置文件中包含代理信息，说明代理开启成功，复制红框里的内容备用。</p>
+      <pre><code>notepad "%USERPROFILE%\.claude\settings.json"</code></pre>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-20.png" alt="CC Switch 打开终端" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-20.png"><figcaption>打开终端</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-21.png" alt="CC Switch 复制代理配置" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-21.png"><figcaption>复制代理配置</figcaption></figure>
+      <h4>3. 配置 Remote - SSH 端口转发</h4>
+      <p>确认 VS Code 已安装 Remote - SSH 插件。编辑 SSH 连接配置文件，为目标服务器添加 <code>RemoteForward</code>，把远程端口转发到本机 cc-Switch 代理端口。</p>
+      <pre><code>RemoteForward 127.0.0.1:代理端口 127.0.0.1:本机代理端口</code></pre>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-22.png" alt="CC Switch 编辑 SSH 配置 1" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-22.png"><figcaption>编辑 SSH 配置</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-23.png" alt="CC Switch 编辑 SSH 配置 2" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-23.png"><figcaption>添加 RemoteForward</figcaption></figure>
+      <h4>4. 配置远程 Claude Code 扩展</h4>
+      <p>在远程服务器上安装 Claude Code 扩展，然后进入扩展环境配置，把前面复制的代理地址和密钥填入对应字段。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-24.png" alt="CC Switch 安装远程 Claude Code 扩展" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-24.png"><figcaption>安装远程扩展</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-25.png" alt="CC Switch 配置远程扩展" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-25.png"><figcaption>配置远程扩展</figcaption></figure>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-26.png" alt="CC Switch 写入远程代理地址" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-26.png"><figcaption>写入代理地址</figcaption></figure>
+      <h4>5. 完成配置并运行</h4>
+      <p>点击远程环境里的 Claude Code 图标。如果直接进入对话界面，说明远程配置成功。</p>
+      <figure class="shot doc-shot"><img src="../images/cc-switch/claude-code-tutorial-111.png" alt="CC Switch 远程运行完成" loading="lazy" data-full="../images/cc-switch/claude-code-tutorial-111.png"><figcaption>远程运行完成</figcaption></figure>
       <h2>安装方式</h2>
       <h3>macOS（推荐 Homebrew）</h3>
       <pre><code>brew tap farion1231/ccswitch

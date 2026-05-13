@@ -736,3 +736,21 @@ test('cursor doc starts from relay api setup and uses ciyuan platform assets', (
   assert.ok(cursorHtml.indexOf('四、添加 Cursor 专属模型') < cursorHtml.indexOf('五、选择模型并开始使用'));
   assert.ok(cursorHtml.indexOf('五、选择模型并开始使用') < cursorHtml.indexOf('六、验证是否为 Claude Sonnet 3.5'));
 });
+
+test('cc switch doc follows provider setup with local and remote screenshots', () => {
+  const ccSwitchHtml = readFileSync('docs/cc-switch.html', 'utf8');
+
+  assert.match(ccSwitchHtml, /通过 cc-Switch 调用词元\.fast 模型/);
+  assert.match(ccSwitchHtml, /ANTHROPIC_BASE_URL/);
+  assert.match(ccSwitchHtml, /ANTHROPIC_API_KEY/);
+  assert.match(ccSwitchHtml, /https:\/\/ciyuan\.fast/);
+  assert.match(ccSwitchHtml, /模型名称/);
+  assert.match(ccSwitchHtml, /本地环境配置指南/);
+  assert.match(ccSwitchHtml, /远程环境（Remote - SSH）配置指南/);
+  assert.match(ccSwitchHtml, /RemoteForward/);
+  assert.match(ccSwitchHtml, /\.\.\/images\/ciyuan-api-key\.png/);
+  assert.match(ccSwitchHtml, /\.\.\/images\/cc-switch\/claude-code-tutorial-17\.png/);
+  assert.match(ccSwitchHtml, /\.\.\/images\/cc-switch\/claude-code-tutorial-26\.png/);
+  assert.match(ccSwitchHtml, /\.\.\/images\/cc-switch\/claude-code-tutorial-111\.png/);
+  assert.doesNotMatch(ccSwitchHtml, /ccswitch:\/\/|Deep Link|一键导入 Provider/);
+});
