@@ -21,11 +21,11 @@
       <article class="doc" id="doc">
         <p class="eyebrow">编程</p>
         <h1>Cursor 接入教程</h1>
-        <p class="lead">Cursor 中转 API 配置教程：从 OpenAI API Key 设置开始，填写词元.fast Base URL、复制平台令牌、Verify 后添加可用模型。</p>
+        <p class="lead">Cursor 中转 API 配置教程：按原文中转 API 顺序配置 Base URL、API Key、Verify、添加 cursor 专属模型并验证 Claude Sonnet 3.5。</p>
         <div class="tag-row"><span class="tag">OpenAI API</span><span class="tag">Base URL</span><span class="tag">模型配置</span></div>
         
       <h2>Cursor 中转 API 配置</h2>
-      <p class="lead">本页只保留参考教程中“中转 API”之后的配置流程。Cursor 的下载、入门介绍和快捷键不放在这里；接入时直接进入 Cursor 的模型设置，按 OpenAI 兼容接口填写词元.fast 信息。</p>
+      <p class="lead">由于 Cursor IDE 原生只支持配置 ChatGPT 的 API Base URL，无法直接使用 Anthropic Claude 的 API。我们需要在 Cursor 的 OpenAI API Key 配置里接入词元.fast 中转接口，用到两个值：Base URL 和 API Key。</p>
     <div class="resource-grid" aria-label="Cursor 项目地址">
       
         <a class="resource-link" href="https://www.cursor.com" target="_blank" rel="noreferrer">
@@ -38,43 +38,38 @@
           <strong>词元.fast API 密钥</strong>
         </a>
       
-        <a class="resource-link" href="https://blog.csdn.net/xianyu120/article/details/145012188" target="_blank" rel="noreferrer">
-          <span>参考</span>
-          <strong>Cursor 中转 API 配置</strong>
+        <a class="resource-link" href="https://docs.cursor.com" target="_blank" rel="noreferrer">
+          <span>文档</span>
+          <strong>Cursor Docs</strong>
         </a>
       
     </div>
   
-      <h3>一、准备词元.fast API Key</h3>
-      <p>打开 <a href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">词元.fast API 密钥页面</a>，点击左侧 <strong>API 密钥</strong>，再点击右上角 <strong>创建密钥</strong>。创建成功后复制你的专属 Key，后续粘贴到 Cursor 的 API Key 输入框。</p>
-      <p>平台里的 Key 通常以 <code>sk-</code> 开头。复制时注意不要带空格，也不要把截图里的示例 Key 当成真实 Key 使用。</p>
-      <h3>二、填写 Cursor OpenAI API 配置</h3>
-      <ol><li>打开 Cursor 设置，进入模型或 API 配置区域。</li><li>找到 <strong>OpenAI API Key</strong> 或同名的自定义 OpenAI 配置。</li><li>在 Base URL / API Base URL 中填写 <code>https://ciyuan.fast/v1</code>。</li><li>在 API Key 中粘贴刚刚从词元.fast 创建并复制的令牌。</li><li>点击 <strong>Verify</strong> 验证，成功后打开对应开关。</li></ol>
+      <h3>一、填写中转 API 地址</h3>
+      <p>打开 Cursor 设置，进入模型配置区域，找到 <strong>OpenAI API Key</strong> 配置界面。Base URL 填写词元.fast 的 OpenAI 兼容地址：</p>
       <pre><code>Base URL: https://ciyuan.fast/v1
-API Key: 粘贴你在词元.fast 创建的 sk-... 密钥</code></pre>
-      <h3>三、添加并选择模型</h3>
-      <p>验证通过后，在 Cursor 的模型列表里添加词元.fast 控制台可用的模型 ID。参考教程里使用的是 Cursor 专属模型名；这里不要照抄旧中转站的域名或模型名，优先使用你在词元.fast 控制台已开通的模型。</p>
-      <p>如果你正在做代码编辑任务，可以先选择一个代码能力强、延迟稳定的模型。添加后回到聊天或 Composer 面板，发送一句简单请求验证是否能正常回复。</p>
-      <h3>四、常见问题</h3>
-      <ul><li><strong>Verify 失败</strong>：先确认 Base URL 是否为 <code>https://ciyuan.fast/v1</code>，再检查 Key 是否完整。</li><li><strong>模型不可用</strong>：模型 ID 必须和词元.fast 控制台可用名称一致。</li><li><strong>仍然走 Cursor 默认额度</strong>：确认 OpenAI API 配置开关已经打开，并在模型选择处选中了你添加的模型。</li></ul>
+API Key: sk-xxxxxxxx</code></pre>
+      <figure class="shot doc-shot"><img src="../images/cursor/openai-api-config.png" alt="Cursor 设置界面 - 配置 API 密钥和基础 URL" loading="lazy" data-full="../images/cursor/openai-api-config.png"><figcaption>Cursor 设置界面 - 配置 API 密钥和基础 URL</figcaption></figure>
+      <h3>二、创建并复制词元.fast API Key</h3>
+      <p>打开 <a href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">词元.fast API 密钥页面</a>，点击左侧 <strong>API 密钥</strong>，再点击右上角 <strong>创建密钥</strong>。创建成功后复制你的专属 Key，粘贴到 Cursor 的 API Key 输入框。</p>
+      <p>平台里的 Key 通常以 <code>sk-</code> 开头。复制时不要带空格，也不要把截图里的示例 Key 当成真实 Key 使用。</p>
+      <figure class="shot doc-shot"><img src="../images/ciyuan-api-key.png" alt="词元.fast API 密钥创建与复制" loading="lazy" data-full="../images/ciyuan-api-key.png"><figcaption>词元.fast API 密钥创建与复制</figcaption></figure>
+      <h3>三、Verify 验证并打开开关</h3>
+      <p>Base URL 和 API Key 都填写完成后，点击 <strong>Verify</strong>。验证成功后，打开 OpenAI API Key 对应开关，让 Cursor 后续请求走词元.fast 接口。</p>
+      <p>如果 Verify 失败，优先检查 <code>https://ciyuan.fast/v1</code> 是否带了 <code>/v1</code>，再检查 API Key 是否复制完整。</p>
+      <h3>四、添加 Cursor 专属模型</h3>
+      <p>验证成功后，在模型列表里添加 Cursor 专属模型：</p>
+      <pre><code>cursor-3-5-sonnet-20240620</code></pre>
+      <p>如果词元.fast 控制台给你的可用模型名不同，以控制台实际开通的模型 ID 为准；但教程顺序上先按这个 Cursor 专属模型完成验证。</p>
+      <figure class="shot doc-shot"><img src="../images/cursor/model-add.png" alt="Cursor 专属模型添加" loading="lazy" data-full="../images/cursor/model-add.png"><figcaption>Cursor 专属模型添加</figcaption></figure>
+      <h3>五、选择模型并开始使用</h3>
+      <p>添加完成后，回到 Cursor 模型选择界面，选中刚添加的 <code>cursor-3-5-sonnet-20240620</code>。之后在聊天或 Composer 面板里发起一次简单请求，确认模型能正常回复。</p>
+      <figure class="shot doc-shot"><img src="../images/cursor/model-select.png" alt="Cursor 模型选择界面" loading="lazy" data-full="../images/cursor/model-select.png"><figcaption>Cursor 模型选择界面</figcaption></figure>
+      <h3>六、验证是否为 Claude Sonnet 3.5</h3>
+      <p>最后询问模型身份或能力，确认返回结果对应 Claude Sonnet 3.5。能正常返回说明配置已经成功，后续即可在 Cursor 中使用该模型辅助代码编写。</p>
+      <figure class="shot doc-shot"><img src="../images/cursor/claude-sonnet-verify.png" alt="Claude Sonnet 3.5 验证结果" loading="lazy" data-full="../images/cursor/claude-sonnet-verify.png"><figcaption>Claude Sonnet 3.5 验证结果</figcaption></figure>
+      <p>验证成功。</p>
     
-    <h3>补充图文步骤</h3>
-    <div class="screenshot-grid">
-      
-    <section class="tutorial-step" data-inline="false" data-compact="false">
-      <div class="step-copy">
-        <span class="step-kicker">补充步骤 1</span>
-        <h4>密钥创建通用步骤</h4>
-        <p>先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。</p>
-      </div>
-      <figure class="shot">
-        <img src="../images/ciyuan-api-key.png" alt="词元.fast 创建和复制 API Key" loading="lazy" data-full="../images/ciyuan-api-key.png">
-        <figcaption>词元.fast 创建和复制 API Key</figcaption>
-      </figure>
-    </section>
-  
-    </div>
-  
       </article>
       <aside class="toc-panel">
         <p class="panel-title">当前目录</p>
