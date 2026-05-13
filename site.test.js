@@ -7,11 +7,13 @@ const expectedProducts = [
   'OpenClaw',
   'Claude Code',
   'OpenAI Codex CLI',
+  'Cursor',
   'Factory Droid CLI',
   'CC Switch',
   'Cherry Studio',
   'AionUi',
   '流畅阅读',
+  '异步生图接口',
   'LangBot',
   'AstrBot'
 ];
@@ -30,6 +32,8 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.match(html, /你要接入哪个工具？/);
   assert.match(html, /应用接入地图/);
   assert.match(html, /按场景筛选，打开对应教程页。/);
+  assert.match(html, /<div class="metric"><strong>12<\/strong><span>常用 AI 应用接入教程<\/span><\/div>/);
+  assert.match(html, /<div class="metric"><strong>6<\/strong><span>按使用场景快速筛选<\/span><\/div>/);
   assert.doesNotMatch(html, /把好用的 AI 工具，接到同一个词元\.fast 中转站。/);
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
