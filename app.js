@@ -388,7 +388,7 @@ model_provider = "ciyuan-fast"
 name = "词元.fast"
 base_url = "https://ciyuan.fast/v1"
 wire_api = "responses"
-env_key = "OPENAI_API_KEY"</code></pre><p>如果你使用的 Codex 版本要求 Chat Completions，可把 <code>wire_api</code> 按版本提示调整；但先按教程使用 Responses 流程验证。</p>
+</code></pre><p>如果你使用的 Codex 版本要求 Chat Completions，可把 <code>wire_api</code> 按版本提示调整；但先按教程使用 Responses 流程验证。</p>
       <h3>开始使用</h3>
       <pre><code>cd /path/to/your/project
 codex
