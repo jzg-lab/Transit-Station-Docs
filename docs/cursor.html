@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cursor 接入教程｜词元.fast</title>
+  <meta name="description" content="Cursor 词元.fast 接入教程，包含 API Key、Base URL、模型配置和图文步骤。">
+  <link rel="stylesheet" href="../styles.css?v=20260512-theme">
+</head>
+<body class="doc-page">
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html#docs" aria-label="返回词元.fast 文档首页"><span class="brand-mark">词</span><span>词元.fast文档</span></a>
+      <nav class="top-links" aria-label="教程导航">
+        <button class="pill theme-toggle" type="button" data-theme-toggle aria-label="切换深浅色主题">夜间模式</button>
+        <a class="pill" href="../index.html#docs">返回应用地图</a>
+        <a class="pill primary" href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">获取 API Key</a>
+      </nav>
+    </header>
+    <main class="doc-layout">
+      <article class="doc" id="doc">
+        <p class="eyebrow">编程</p>
+        <h1>Cursor 接入教程</h1>
+        <p class="lead">Cursor 中转 API 配置教程：从 OpenAI API Key 设置开始，填写词元.fast Base URL、复制平台令牌、Verify 后添加可用模型。</p>
+        <div class="tag-row"><span class="tag">OpenAI API</span><span class="tag">Base URL</span><span class="tag">模型配置</span></div>
+        
+      <h2>Cursor 中转 API 配置</h2>
+      <p class="lead">本页只保留参考教程中“中转 API”之后的配置流程。Cursor 的下载、入门介绍和快捷键不放在这里；接入时直接进入 Cursor 的模型设置，按 OpenAI 兼容接口填写词元.fast 信息。</p>
+    <div class="resource-grid" aria-label="Cursor 项目地址">
+      
+        <a class="resource-link" href="https://www.cursor.com" target="_blank" rel="noreferrer">
+          <span>官网</span>
+          <strong>cursor.com</strong>
+        </a>
+      
+        <a class="resource-link" href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">
+          <span>控制台</span>
+          <strong>词元.fast API 密钥</strong>
+        </a>
+      
+        <a class="resource-link" href="https://blog.csdn.net/xianyu120/article/details/145012188" target="_blank" rel="noreferrer">
+          <span>参考</span>
+          <strong>Cursor 中转 API 配置</strong>
+        </a>
+      
+    </div>
+  
+      <h3>一、准备词元.fast API Key</h3>
+      <p>打开 <a href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">词元.fast API 密钥页面</a>，点击左侧 <strong>API 密钥</strong>，再点击右上角 <strong>创建密钥</strong>。创建成功后复制你的专属 Key，后续粘贴到 Cursor 的 API Key 输入框。</p>
+      <p>平台里的 Key 通常以 <code>sk-</code> 开头。复制时注意不要带空格，也不要把截图里的示例 Key 当成真实 Key 使用。</p>
+      <h3>二、填写 Cursor OpenAI API 配置</h3>
+      <ol><li>打开 Cursor 设置，进入模型或 API 配置区域。</li><li>找到 <strong>OpenAI API Key</strong> 或同名的自定义 OpenAI 配置。</li><li>在 Base URL / API Base URL 中填写 <code>https://ciyuan.fast/v1</code>。</li><li>在 API Key 中粘贴刚刚从词元.fast 创建并复制的令牌。</li><li>点击 <strong>Verify</strong> 验证，成功后打开对应开关。</li></ol>
+      <pre><code>Base URL: https://ciyuan.fast/v1
+API Key: 粘贴你在词元.fast 创建的 sk-... 密钥</code></pre>
+      <h3>三、添加并选择模型</h3>
+      <p>验证通过后，在 Cursor 的模型列表里添加词元.fast 控制台可用的模型 ID。参考教程里使用的是 Cursor 专属模型名；这里不要照抄旧中转站的域名或模型名，优先使用你在词元.fast 控制台已开通的模型。</p>
+      <p>如果你正在做代码编辑任务，可以先选择一个代码能力强、延迟稳定的模型。添加后回到聊天或 Composer 面板，发送一句简单请求验证是否能正常回复。</p>
+      <h3>四、常见问题</h3>
+      <ul><li><strong>Verify 失败</strong>：先确认 Base URL 是否为 <code>https://ciyuan.fast/v1</code>，再检查 Key 是否完整。</li><li><strong>模型不可用</strong>：模型 ID 必须和词元.fast 控制台可用名称一致。</li><li><strong>仍然走 Cursor 默认额度</strong>：确认 OpenAI API 配置开关已经打开，并在模型选择处选中了你添加的模型。</li></ul>
+    
+    <h3>补充图文步骤</h3>
+    <div class="screenshot-grid">
+      
+    <section class="tutorial-step" data-inline="false" data-compact="false">
+      <div class="step-copy">
+        <span class="step-kicker">补充步骤 1</span>
+        <h4>密钥创建通用步骤</h4>
+        <p>先打开词元.fast 并登录，进入控制台的令牌管理/API Key 页面。点击添加令牌或创建密钥，名称可以写当前工具名。创建成功后立刻复制密钥，后面所有工具里的 API Key、Token、访问令牌都粘贴这一串内容。</p>
+      </div>
+      <figure class="shot">
+        <img src="../images/ciyuan-api-key.png" alt="词元.fast 创建和复制 API Key" loading="lazy" data-full="../images/ciyuan-api-key.png">
+        <figcaption>词元.fast 创建和复制 API Key</figcaption>
+      </figure>
+    </section>
+  
+    </div>
+  
+      </article>
+      <aside class="toc-panel">
+        <p class="panel-title">当前目录</p>
+        <nav class="toc-list" id="toc" aria-label="当前文档目录"></nav>
+      </aside>
+    </main>
+    <p class="footer-note"><a href="../index.html#docs">返回应用地图</a> · 实际模型名称、额度和权限请以词元.fast 控制台为准。</p>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="查看大图">
+    <button class="lightbox-close" type="button" aria-label="关闭大图">×</button>
+    <img alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+  <script src="../theme.js?v=20260512-theme"></script>
+  <script src="../docs.js?v=20260512-theme"></script>
+</body>
+</html>

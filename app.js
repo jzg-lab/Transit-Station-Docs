@@ -37,6 +37,11 @@ const productResources = {
     { label: 'GitHub', title: 'openai/codex', href: 'https://github.com/openai/codex' },
     { label: '安装依赖', title: 'Node.js 下载', href: 'https://nodejs.org' }
   ],
+  'cursor': [
+    { label: '官网', title: 'cursor.com', href: 'https://www.cursor.com' },
+    { label: '控制台', title: '词元.fast API 密钥', href: 'https://ciyuan.fast/keys' },
+    { label: '参考', title: 'Cursor 中转 API 配置', href: 'https://blog.csdn.net/xianyu120/article/details/145012188' }
+  ],
   'factory-droid-cli': [
     { label: '官网', title: 'Factory AI', href: 'https://factory.ai' },
     { label: '文档', title: 'Factory Docs', href: 'https://docs.factory.ai' },
@@ -375,6 +380,26 @@ codex
 /model</code></pre><p>启动后先问一句简单问题，再让它读取当前目录文件。确认模型、权限、沙箱策略都正常后，再交给它做真实修改。</p>
       <h3>常见问题</h3>
       <ul><li><strong>401</strong>：检查 <code>auth.json</code> 里的 API Key 是否复制完整。</li><li><strong>模型不存在</strong>：确认 <code>gpt-5.5</code> 在词元.fast 控制台可用；不可用时换成你实际开通的模型 ID。</li><li><strong>客户端和 CLI 表现不一致</strong>：优先检查它们是否读取同一个用户目录下的 <code>.codex</code>。</li><li><strong>旧教程脚本残留</strong>：不要再使用旧品牌脚本地址和 endpoint；统一用 <code>https://ciyuan.fast/v1</code>。</li></ul>
+    `
+  },
+  {
+    id: 'cursor', category: 'coding', title: 'Cursor', subtitle: 'AI 代码编辑器', tags: ['OpenAI API', 'Base URL', '模型配置'],
+    summary: 'Cursor 中转 API 配置教程：从 OpenAI API Key 设置开始，填写词元.fast Base URL、复制平台令牌、Verify 后添加可用模型。',
+    body: `
+      <h2>Cursor 中转 API 配置</h2>
+      <p class="lead">本页只保留参考教程中“中转 API”之后的配置流程。Cursor 的下载、入门介绍和快捷键不放在这里；接入时直接进入 Cursor 的模型设置，按 OpenAI 兼容接口填写词元.fast 信息。</p>
+      <h3>一、准备词元.fast API Key</h3>
+      <p>打开 <a href="https://ciyuan.fast/keys" target="_blank" rel="noreferrer">词元.fast API 密钥页面</a>，点击左侧 <strong>API 密钥</strong>，再点击右上角 <strong>创建密钥</strong>。创建成功后复制你的专属 Key，后续粘贴到 Cursor 的 API Key 输入框。</p>
+      <p>平台里的 Key 通常以 <code>sk-</code> 开头。复制时注意不要带空格，也不要把截图里的示例 Key 当成真实 Key 使用。</p>
+      <h3>二、填写 Cursor OpenAI API 配置</h3>
+      <ol><li>打开 Cursor 设置，进入模型或 API 配置区域。</li><li>找到 <strong>OpenAI API Key</strong> 或同名的自定义 OpenAI 配置。</li><li>在 Base URL / API Base URL 中填写 <code>https://ciyuan.fast/v1</code>。</li><li>在 API Key 中粘贴刚刚从词元.fast 创建并复制的令牌。</li><li>点击 <strong>Verify</strong> 验证，成功后打开对应开关。</li></ol>
+      <pre><code>Base URL: https://ciyuan.fast/v1
+API Key: 粘贴你在词元.fast 创建的 sk-... 密钥</code></pre>
+      <h3>三、添加并选择模型</h3>
+      <p>验证通过后，在 Cursor 的模型列表里添加词元.fast 控制台可用的模型 ID。参考教程里使用的是 Cursor 专属模型名；这里不要照抄旧中转站的域名或模型名，优先使用你在词元.fast 控制台已开通的模型。</p>
+      <p>如果你正在做代码编辑任务，可以先选择一个代码能力强、延迟稳定的模型。添加后回到聊天或 Composer 面板，发送一句简单请求验证是否能正常回复。</p>
+      <h3>四、常见问题</h3>
+      <ul><li><strong>Verify 失败</strong>：先确认 Base URL 是否为 <code>https://ciyuan.fast/v1</code>，再检查 Key 是否完整。</li><li><strong>模型不可用</strong>：模型 ID 必须和词元.fast 控制台可用名称一致。</li><li><strong>仍然走 Cursor 默认额度</strong>：确认 OpenAI API 配置开关已经打开，并在模型选择处选中了你添加的模型。</li></ul>
     `
   },
   {

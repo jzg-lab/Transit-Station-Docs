@@ -707,3 +707,15 @@ test('codex openclaw and async image docs follow the latest source material', ()
   assert.match(asyncImageHtml, /可以直接丢给 AI 助手/);
   assert.doesNotMatch(asyncImageHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
 });
+
+test('cursor doc starts from relay api setup and uses ciyuan platform assets', () => {
+  const app = readFileSync('app.js', 'utf8');
+  const cursorHtml = readFileSync('docs/cursor.html', 'utf8');
+
+  assert.match(app, /id: 'cursor', category: 'coding'/);
+  assert.match(cursorHtml, /Cursor 中转 API 配置/);
+  assert.match(cursorHtml, /https:\/\/ciyuan\.fast\/v1/);
+  assert.match(cursorHtml, /\.\.\/images\/ciyuan-api-key\.png/);
+  assert.doesNotMatch(cursorHtml, /apipro\.maynor1024\.live/);
+  assert.doesNotMatch(cursorHtml, /cursor是什么|cursor的下载|常用快捷键/);
+});
