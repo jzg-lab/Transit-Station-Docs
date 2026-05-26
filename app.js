@@ -131,10 +131,10 @@ const productScreenshots = {
     { title: 'Linux 安装', detail: 'Linux 同样先准备 Node.js，再安装 CLI。', src: 'images/claude-code/linux-img-01.webp', alt: 'Linux 安装 Claude Code 1' }
   ],
   'codex-cli': [
-    { title: '打开 Codex 中文教程对应界面', detail: '以中文教程为准：CLI 和客户端都是这个流程。', src: 'images/codex-zh/codex-client.png', alt: 'Codex 中文教程客户端界面' },
-    { title: '找到 .codex 配置目录', detail: 'Windows 通常是 C:\Users\你的用户名\.codex，macOS/Linux 通常是 ~/.codex。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex 中文教程 .codex 目录' },
-    { title: '在 auth.json 写入 API Key', detail: '按中文教程流程，在 auth.json 写入词元.fast API Key。', src: 'images/codex-cli/windows_configure.webp', alt: 'Codex auth.json 配置' },
-    { title: '在 config.toml 写入模型配置', detail: 'provider 指向词元.fast，model 写 gpt-5.5 或控制台可用模型。', src: 'images/codex-cli/macos_configure.webp', alt: 'Codex config.toml 配置' }
+    { title: 'Windows 先显示隐藏文件和后缀', detail: '在文件资源管理器里打开“查看”，勾选“文件扩展名”和“隐藏的项目”。否则你可能看不到 .codex 文件夹，也容易把 auth.json 保存成 auth.json.txt。', src: 'images/codex-zh/codex-dir.png', alt: 'Windows 显示文件扩展名和隐藏项目', caption: '先打开“文件扩展名”和“隐藏的项目”' },
+    { title: 'VS Code 客户端只是可选入口', detail: '如果你想用图形界面，就在 VS Code 扩展市场安装 OpenAI 官方 Codex 扩展。它不是配置 API 的地方；真正的 Key 和模型仍然写在用户目录的 .codex 文件夹里。', src: 'images/codex-zh/codex-client.png', alt: 'VS Code 安装 OpenAI Codex 扩展', caption: 'VS Code 搜索并安装 OpenAI Codex 扩展' },
+    { title: '在 auth.json 写入 API Key', detail: '在 .codex 文件夹中新建或打开 auth.json，只放一项 OPENAI_API_KEY，值粘贴词元.fast 控制台生成的 API Key。这个文件负责“你是谁、用哪个 Key 付费”。', src: 'images/codex-cli/windows_configure.webp', alt: 'Codex auth.json 配置', caption: 'auth.json 只负责 API Key' },
+    { title: '在 config.toml 写入模型配置', detail: '再打开 config.toml，填写 model、model_provider、base_url 和 wire_api。这个文件负责“请求发到哪里、默认用哪个模型”。CLI 和 VS Code 客户端都会读取这里。', src: 'images/codex-cli/macos_configure.webp', alt: 'Codex config.toml 配置', caption: 'config.toml 负责模型和接口地址' }
   ],
   'factory-droid-cli': [
     { title: 'Windows 打开终端', detail: '在 PowerShell 或 Windows Terminal 中开始安装。', src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
@@ -363,23 +363,24 @@ openclaw gateway restart</code></pre>
   },
   {
     id: 'codex-cli', category: 'coding', title: 'OpenAI Codex', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['Codex', 'auth.json', 'config.toml'],
-    summary: 'Codex CLI 和客户端共用 .codex、auth.json、config.toml，模型使用 gpt-5.5。',
+    summary: 'Codex CLI 和 VS Code 客户端入口不同，但共用 .codex、auth.json、config.toml。',
     body: `
       <h2>OpenAI Codex CLI / Codex 客户端</h2>
-      <p class="lead">Codex CLI 和 VS Code Codex 客户端都是这个流程，核心是用户目录下的 <code>.codex</code> 文件夹，共用 <code>auth.json</code> 和 <code>config.toml</code>。默认模型按来源写 <code>gpt-5.5</code>。</p>
+      <p class="lead">先把两个概念分开：Codex CLI 是终端入口，VS Code Codex 客户端是图形入口；它们不是同一个界面，但都会读取用户目录下同一套 <code>.codex</code> 配置。</p>
       <h3>项目介绍</h3>
-      <p>Codex CLI 是 OpenAI 的终端编码代理，可在本地项目中读代码、改文件、生成补丁并运行命令；Codex 客户端通过 VS Code 扩展提供图形化入口。两者接入词元.fast 时，统一检查 <code>.codex</code> 目录。</p>
+      <p>Codex CLI 是 OpenAI 的终端编码代理，可在本地项目中读代码、改文件、生成补丁并运行命令。VS Code Codex 客户端通过扩展提供图形化入口。接入词元.fast 时，不要在两边分别乱填配置；抓住一个核心：用户目录里的 <code>.codex</code> 文件夹。</p>
+      <div class="callout callout-tip"><strong>新手先记住这张关系表</strong><ul><li><strong>CLI</strong>：在终端输入 <code>codex</code> 启动。</li><li><strong>VS Code 客户端</strong>：在 VS Code 里安装 OpenAI Codex 扩展后打开面板。</li><li><strong>共同配置</strong>：两者都读取 <code>auth.json</code> 和 <code>config.toml</code>。</li></ul></div>
       <h3>安装 Codex CLI</h3>
       <pre><code>npm install -g @openai/codex
 codex --version</code></pre><p>Windows 建议在 WSL2 中安装和运行；macOS / Linux 直接在终端执行。若没有 Node.js，请先安装 Node.js LTS。</p>
       <h3>VS Code Codex 客户端</h3>
-      <ol><li>打开 VS Code 扩展市场，搜索 Codex / OpenAI Codex。</li><li>安装后打开 Codex 面板。</li><li>客户端读取的仍是用户目录下 <code>.codex</code> 配置；CLI 和客户端都是这个流程。</li></ol>
+      <ol><li>打开 VS Code 扩展市场，搜索 <strong>OpenAI Codex</strong>。</li><li>认准发布者为 OpenAI 的扩展并安装。</li><li>安装后打开 Codex 面板；如果它找不到 Key 或模型，回到下面的 <code>.codex</code> 配置文件检查。</li></ol>
       <h3>找到 .codex 配置目录</h3>
-      <p>Windows 通常是 <code>C:\Users\你的用户名\.codex</code>；macOS / Linux 通常是 <code>~/.codex</code>。如果目录不存在，先运行一次 <code>codex</code> 或手动创建。</p>
+      <p>Windows 通常是 <code>C:\\Users\\你的用户名\\.codex</code>；macOS / Linux 通常是 <code>~/.codex</code>。如果目录不存在，先运行一次 <code>codex</code> 或手动创建。Windows 用户建议先在文件资源管理器里勾选“隐藏的项目”和“文件扩展名”，避免找不到文件夹或保存错后缀。</p>
       <h3>auth.json：写入 API Key</h3>
       <pre><code>{
   "OPENAI_API_KEY": "你的词元.fast API Key"
-}</code></pre><p>把词元.fast 控制台创建的密钥写入 <code>auth.json</code>。密钥只放这一处，避免多个文件互相覆盖导致排错困难。</p>
+}</code></pre><p>把词元.fast 控制台创建的密钥写入 <code>auth.json</code>。小白排错时先看这个文件：文件名必须是 <code>auth.json</code>，不是 <code>auth.json.txt</code>；Key 前后不要多复制空格。</p>
       <h3>config.toml：写入模型和 Provider</h3>
       <pre><code>model = "gpt-5.5"
 model_provider = "ciyuan-fast"
@@ -391,7 +392,7 @@ wire_api = "responses"
 
 [history]
 persistence = "save-all"
-</code></pre><p>如果你使用的 Codex 版本要求 Chat Completions，可把 <code>wire_api</code> 按版本提示调整；但先按教程使用 Responses 流程验证。</p>
+</code></pre><p><code>config.toml</code> 负责模型和接口地址。默认模型可先写 <code>gpt-5.5</code>；如果控制台给你的可用模型名不同，就以控制台实际模型 ID 为准。先按 <code>wire_api = "responses"</code> 验证，只有在 Codex 版本明确提示不支持时再调整。</p>
       <h3>开始使用</h3>
       <pre><code>cd /path/to/your/project
 codex
@@ -902,6 +903,7 @@ function renderStepCard(step, index, options = {}) {
   const kicker = options.kicker || `新手步骤 ${index + 1}`;
   const inline = options.inline ? 'true' : 'false';
   const compact = options.compact ? 'true' : 'false';
+  const caption = step.caption || step.alt;
   return `
     <section class="tutorial-step" data-inline="${inline}" data-compact="${compact}">
       <div class="step-copy">
@@ -911,7 +913,7 @@ function renderStepCard(step, index, options = {}) {
       </div>
       <figure class="shot">
         <img src="${step.src}" alt="${step.alt}" loading="lazy" data-full="${step.src}">
-        <figcaption>${step.alt}</figcaption>
+        <figcaption>${caption}</figcaption>
       </figure>
     </section>
   `;

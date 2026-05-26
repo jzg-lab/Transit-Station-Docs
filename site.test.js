@@ -695,7 +695,12 @@ test('codex openclaw and async image docs follow the latest source material', ()
   assert.match(codexHtml, /gpt-5\.5/);
   assert.match(codexHtml, /auth\.json/);
   assert.match(codexHtml, /config\.toml/);
-  assert.match(codexHtml, /CLI 和客户端都是这个流程/);
+  assert.match(codexHtml, /Codex CLI 是终端入口/);
+  assert.match(codexHtml, /VS Code Codex 客户端是图形入口/);
+  assert.match(codexHtml, /文件扩展名/);
+  assert.match(codexHtml, /auth\.json\.txt/);
+  assert.match(codexHtml, /auth\.json 只负责 API Key/);
+  assert.match(codexHtml, /config\.toml 负责模型和接口地址/);
   assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-client\.png/);
   assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-dir\.png/);
   assert.match(codexHtml, /安装依赖/);
