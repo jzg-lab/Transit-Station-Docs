@@ -653,8 +653,10 @@ test('tutorials include local screenshots and project resource links', () => {
   assert.match(html, /renderScreenshots/);
   assert.match(html, /<img src="\.\.\/images\/codex-zh\/codex-client\.png"/);
   for (const image of [
+    '../images/codex-zh/windows-show-hidden-files.svg',
     '../images/codex-zh/codex-client.png',
     '../images/codex-zh/codex-dir.png',
+    '../images/codex-zh/vscode-codex-extension.svg',
     '../images/cherry-studio/add_provider.webp',
     '../images/langbot/add_newapi_model.webp',
     '../images/astrbot/image-2.webp'
@@ -670,8 +672,8 @@ test('codex landing card keeps product name clean and beginner wording direct', 
   assert.doesNotMatch(app, /指定知乎教程整理/);
   assert.doesNotMatch(app, /Codex CLI 和 VS Code 客户端入口不同，但共用/);
   assert.match(app, /终端和 VS Code 两个入口共用 \.codex、auth\.json、config\.toml/);
-  assert.match(app, /\{ heading: \/VS Code\/, indexes: \[2\] \}/);
-  assert.match(app, /\{ heading: \/\\.codex\|配置目录\/, indexes: \[1\] \}/);
+  assert.match(app, /\{ heading: \/VS Code\/, indexes: \[3\] \}/);
+  assert.match(app, /\{ heading: \/\\.codex\|配置目录\/, indexes: \[1, 2\] \}/);
 });
 
 test('tutorials are beginner friendly and support image zoom', () => {
@@ -710,10 +712,16 @@ test('codex openclaw and async image docs follow the latest source material', ()
   assert.match(codexHtml, /VS Code Codex 客户端是图形入口/);
   assert.match(codexHtml, /文件扩展名/);
   assert.match(codexHtml, /auth\.json\.txt/);
-  assert.match(codexHtml, /auth\.json 只负责 API Key/);
-  assert.match(codexHtml, /config\.toml 负责模型和接口地址/);
+  assert.match(codexHtml, /Windows 先显示隐藏文件和后缀/);
+  assert.match(codexHtml, /确认 \.codex 配置目录/);
+  assert.match(codexHtml, /VS Code 客户端可选安装/);
+  assert.match(codexHtml, /启动 Codex CLI 验证/);
+  assert.match(codexHtml, /\.\.\/images\/codex-zh\/windows-show-hidden-files\.svg/);
   assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-client\.png/);
   assert.match(codexHtml, /\.\.\/images\/codex-zh\/codex-dir\.png/);
+  assert.match(codexHtml, /\.\.\/images\/codex-zh\/vscode-codex-extension\.svg/);
+  assert.doesNotMatch(codexHtml, /\.\.\/images\/codex-cli\/windows_configure\.webp/);
+  assert.doesNotMatch(codexHtml, /\.\.\/images\/codex-cli\/macos_configure\.webp/);
   assert.match(codexHtml, /安装依赖/);
   assert.doesNotMatch(codexHtml, /\.\.\/images\/openclaw-guide\/image1\.png/);
 

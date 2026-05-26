@@ -131,10 +131,10 @@ const productScreenshots = {
     { title: 'Linux 安装', detail: 'Linux 同样先准备 Node.js，再安装 CLI。', src: 'images/claude-code/linux-img-01.webp', alt: 'Linux 安装 Claude Code 1' }
   ],
   'codex-cli': [
-    { title: 'Windows 先显示隐藏文件和后缀', detail: '在文件资源管理器里打开“查看”，勾选“文件扩展名”和“隐藏的项目”。否则你可能看不到 .codex 文件夹，也容易把 auth.json 保存成 auth.json.txt。', src: 'images/codex-zh/codex-dir.png', alt: 'Windows 显示文件扩展名和隐藏项目', caption: '先打开“文件扩展名”和“隐藏的项目”' },
-    { title: 'VS Code 客户端只是可选入口', detail: '如果你想用图形界面，就在 VS Code 扩展市场安装 OpenAI 官方 Codex 扩展。它不是配置 API 的地方；真正的 Key 和模型仍然写在用户目录的 .codex 文件夹里。', src: 'images/codex-zh/codex-client.png', alt: 'VS Code 安装 OpenAI Codex 扩展', caption: 'VS Code 搜索并安装 OpenAI Codex 扩展' },
-    { title: '在 auth.json 写入 API Key', detail: '在 .codex 文件夹中新建或打开 auth.json，只放一项 OPENAI_API_KEY，值粘贴词元.fast 控制台生成的 API Key。这个文件负责“你是谁、用哪个 Key 付费”。', src: 'images/codex-cli/windows_configure.webp', alt: 'Codex auth.json 配置', caption: 'auth.json 只负责 API Key' },
-    { title: '在 config.toml 写入模型配置', detail: '再打开 config.toml，填写 model、model_provider、base_url 和 wire_api。这个文件负责“请求发到哪里、默认用哪个模型”。CLI 和 VS Code 客户端都会读取这里。', src: 'images/codex-cli/macos_configure.webp', alt: 'Codex config.toml 配置', caption: 'config.toml 负责模型和接口地址' }
+    { title: 'Windows 先显示隐藏文件和后缀', detail: '在文件资源管理器里打开“查看”，勾选“文件扩展名”和“隐藏的项目”。这样才能看到 .codex 文件夹，也能避免把 auth.json 保存成 auth.json.txt。', src: 'images/codex-zh/windows-show-hidden-files.svg', alt: 'Windows 显示文件扩展名和隐藏项目', caption: '勾选“文件扩展名”和“隐藏的项目”' },
+    { title: '确认 .codex 配置目录', detail: '截图展示的是 Windows 用户目录下的 .codex 文件夹。这里能看到 auth.json 和 config.toml，说明 Codex 会从这个目录读取 Key、模型和接口配置。', src: 'images/codex-zh/codex-dir.png', alt: 'Codex .codex 配置目录', caption: '.codex 目录里应有 auth.json 和 config.toml' },
+    { title: 'VS Code 客户端可选安装', detail: '如果你想在 VS Code 里用图形面板，就在扩展市场搜索 Codex，认准 OpenAI 发布的 Codex 扩展。只用 CLI 的用户可以跳过这一步。', src: 'images/codex-zh/vscode-codex-extension.svg', alt: 'VS Code 安装 OpenAI Codex 扩展', caption: '认准 OpenAI 发布的 Codex 扩展' },
+    { title: '启动 Codex CLI 验证', detail: '配置完成后，在项目目录运行 codex。看到 “You are using OpenAI Codex” 和输入框，就表示 CLI 已经启动；接下来可以先发一句简单问题测试。', src: 'images/codex-zh/codex-client.png', alt: 'Codex CLI 启动成功界面', caption: '终端中出现 Codex 交互界面即表示启动成功' }
   ],
   'factory-droid-cli': [
     { title: 'Windows 打开终端', detail: '在 PowerShell 或 Windows Terminal 中开始安装。', src: 'images/factory-droid-cli/windows_open_terminal.webp', alt: 'Windows 打开终端' },
@@ -948,10 +948,10 @@ const sectionStepMap = {
     { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
   ],
   'codex-cli': [
-    { heading: /VS Code/, indexes: [2] },
-    { heading: /\.codex|配置目录/, indexes: [1] },
-    { heading: /auth\.json/, indexes: [0, 3] },
-    { heading: /config\.toml/, indexes: [4] }
+    { heading: /VS Code/, indexes: [3] },
+    { heading: /\.codex|配置目录/, indexes: [1, 2] },
+    { heading: /auth\.json/, indexes: [0] },
+    { heading: /开始使用/, indexes: [4] }
   ],
   'aionui': [
     { heading: /词元\.fast 接入方法|配置步骤/, indexes: [0] }
