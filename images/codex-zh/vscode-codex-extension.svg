@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" role="img" aria-labelledby="title desc">
+  <title id="title">VS Code 扩展市场安装 OpenAI Codex</title>
+  <desc id="desc">在 VS Code 扩展市场搜索 codex，选择 OpenAI 发布的 Codex 扩展。</desc>
+  <rect width="860" height="470" fill="#1e1e1e"/>
+  <rect x="0" y="0" width="50" height="470" fill="#252526"/>
+  <circle cx="25" cy="36" r="12" fill="#4b8cf5"/>
+  <circle cx="25" cy="84" r="12" fill="#8a8a8a"/>
+  <circle cx="25" cy="132" r="12" fill="#8a8a8a"/>
+  <circle cx="25" cy="180" r="12" fill="#8a8a8a"/>
+  <rect x="50" y="0" width="310" height="470" fill="#2a2a2a"/>
+  <text x="72" y="36" font-family="Arial, sans-serif" font-size="17" fill="#f2f2f2">扩展: 商店</text>
+  <rect x="72" y="58" width="250" height="28" rx="4" fill="#1b1b1b" stroke="#3f3f3f"/>
+  <text x="86" y="77" font-family="Arial, sans-serif" font-size="14" fill="#dddddd">codex</text>
+  <rect x="74" y="105" width="248" height="72" rx="5" fill="#007acc"/>
+  <rect x="84" y="118" width="42" height="42" rx="8" fill="#111"/>
+  <path d="M105 123 L123 134 L123 151 L105 162 L87 151 L87 134 Z" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <text x="138" y="126" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">Codex - OpenAI's coding agent</text>
+  <text x="138" y="148" font-family="Arial, sans-serif" font-size="12" fill="#e7f2ff">Codex is a coding agent that works with you everywhere</text>
+  <text x="138" y="167" font-family="Arial, sans-serif" font-size="12" fill="#d7ebff">OpenAI</text>
+  <rect x="66" y="97" width="270" height="88" fill="none" stroke="#f03b2f" stroke-width="5"/>
+  <path d="M155 278 L176 182" stroke="#f03b2f" stroke-width="7" fill="none" marker-end="url(#arrow)"/>
+  <rect x="74" y="196" width="248" height="62" rx="5" fill="#222"/>
+  <text x="138" y="218" font-family="Arial, sans-serif" font-size="15" fill="#ffffff">Codex</text>
+  <text x="138" y="238" font-family="Arial, sans-serif" font-size="12" fill="#bdbdbd">Codex gives new meaning to codebase</text>
+  <text x="138" y="254" font-family="Arial, sans-serif" font-size="12" fill="#bdbdbd">Codex</text>
+  <rect x="74" y="278" width="248" height="62" rx="5" fill="#222"/>
+  <text x="138" y="300" font-family="Arial, sans-serif" font-size="15" fill="#ffffff">Codex</text>
+  <text x="138" y="320" font-family="Arial, sans-serif" font-size="12" fill="#bdbdbd">A simple dark theme for VSCode</text>
+  <text x="138" y="336" font-family="Arial, sans-serif" font-size="12" fill="#bdbdbd">WorriedArrow</text>
+  <rect x="360" y="0" width="500" height="470" fill="#1f1f1f"/>
+  <rect x="392" y="42" width="118" height="118" rx="14" fill="#050505"/>
+  <path d="M451 62 L490 86 L490 126 L451 150 L412 126 L412 86 Z" fill="none" stroke="#ffffff" stroke-width="7"/>
+  <text x="530" y="74" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#f0f0f0">Codex - OpenAI's</text>
+  <text x="530" y="108" font-family="Arial, sans-serif" font-size="13" fill="#bcbcbc">OpenAI</text>
+  <rect x="530" y="128" width="48" height="26" rx="4" fill="#3a3a3a"/>
+  <text x="543" y="146" font-family="Arial, sans-serif" font-size="12" fill="#fff">禁用</text>
+  <rect x="588" y="128" width="48" height="26" rx="4" fill="#3a3a3a"/>
+  <text x="601" y="146" font-family="Arial, sans-serif" font-size="12" fill="#fff">卸载</text>
+  <rect x="646" y="128" width="78" height="26" rx="4" fill="#0e639c"/>
+  <text x="657" y="146" font-family="Arial, sans-serif" font-size="12" fill="#fff">切换到预发布</text>
+  <text x="392" y="210" font-family="Arial, sans-serif" font-size="15" fill="#d6d6d6">Codex is OpenAI's coding agent that helps you write, review,</text>
+  <text x="392" y="234" font-family="Arial, sans-serif" font-size="15" fill="#d6d6d6">and edit code faster. Use it side-by-side in your IDE.</text>
+  <text x="392" y="302" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#f0f0f0">Pair with Codex</text>
+  <text x="392" y="342" font-family="Arial, sans-serif" font-size="14" fill="#cfcfcf">Add Codex as a panel in VS Code to chat, edit, and preview.</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f03b2f"/>
+    </marker>
+  </defs>
+</svg>
