@@ -38,9 +38,9 @@ test('landing page carries the ciyuan.fast documentation hub content', () => {
   assert.doesNotMatch(html, /你要把哪个工具接入词元\.fast？/);
   assert.match(html, /词元\.fast/);
   assert.match(html, /https:\/\/ciyuan\.fast/);
-  assert.match(html, /<link rel="stylesheet" href="styles\.css\?v=20260513-smooth-map">/);
-  assert.match(html, /<script src="theme\.js\?v=20260513-smooth-map"><\/script>/);
-  assert.match(html, /<script src="app\.js\?v=20260513-smooth-map"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="styles\.css\?v=20260526-codex-clean">/);
+  assert.match(html, /<script src="theme\.js\?v=20260526-codex-clean"><\/script>/);
+  assert.match(html, /<script src="app\.js\?v=20260526-codex-clean"><\/script>/);
   for (const product of expectedProducts) {
     assert.match(html + app, new RegExp(product.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
@@ -160,7 +160,7 @@ test('site supports dark theme and embedded theme control', () => {
   assert.match(theme, /themeMedia\.addListener/);
   assert.match(css, /:root\[data-theme="dark"\]/);
   assert.match(css, /body\.theme-dark/);
-  assert.match(html, /styles\.css\?v=20260513-smooth-map/);
+  assert.match(html, /styles\.css\?v=20260526-codex-clean/);
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /\.theme-toggle/);
 });
@@ -661,6 +661,17 @@ test('tutorials include local screenshots and project resource links', () => {
   ]) {
     assert.match(html, new RegExp(image.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
+});
+
+test('codex landing card keeps product name clean and beginner wording direct', () => {
+  const app = readFileSync('app.js', 'utf8');
+  assert.match(app, /title: 'OpenAI Codex'/);
+  assert.doesNotMatch(app, /title: 'OpenAI Codex CLI'/);
+  assert.doesNotMatch(app, /指定知乎教程整理/);
+  assert.doesNotMatch(app, /Codex CLI 和 VS Code 客户端入口不同，但共用/);
+  assert.match(app, /终端和 VS Code 两个入口共用 \.codex、auth\.json、config\.toml/);
+  assert.match(app, /\{ heading: \/VS Code\/, indexes: \[2\] \}/);
+  assert.match(app, /\{ heading: \/\\.codex\|配置目录\/, indexes: \[1\] \}/);
 });
 
 test('tutorials are beginner friendly and support image zoom', () => {

@@ -363,7 +363,7 @@ openclaw gateway restart</code></pre>
   },
   {
     id: 'codex-cli', category: 'coding', title: 'OpenAI Codex', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['Codex', 'auth.json', 'config.toml'],
-    summary: 'Codex CLI 和 VS Code 客户端入口不同，但共用 .codex、auth.json、config.toml。',
+    summary: '终端和 VS Code 两个入口共用 .codex、auth.json、config.toml。',
     body: `
       <h2>OpenAI Codex CLI / Codex 客户端</h2>
       <p class="lead">先把两个概念分开：Codex CLI 是终端入口，VS Code Codex 客户端是图形入口；它们不是同一个界面，但都会读取用户目录下同一套 <code>.codex</code> 配置。</p>
@@ -948,8 +948,8 @@ const sectionStepMap = {
     { heading: /词元\.fast 接入方法|Provider|安装方式/, indexes: [0] }
   ],
   'codex-cli': [
-    { heading: /VS Code/, indexes: [1] },
-    { heading: /\.codex|配置目录/, indexes: [2] },
+    { heading: /VS Code/, indexes: [2] },
+    { heading: /\.codex|配置目录/, indexes: [1] },
     { heading: /auth\.json/, indexes: [0, 3] },
     { heading: /config\.toml/, indexes: [4] }
   ],
