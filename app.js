@@ -362,11 +362,11 @@ openclaw gateway restart</code></pre>
     `
   },
   {
-    id: 'codex-cli', category: 'coding', title: 'OpenAI Codex CLI', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['Codex', 'auth.json', 'config.toml'],
-    summary: '按指定知乎教程整理：Codex CLI 和客户端共用 .codex、auth.json、config.toml，模型使用 gpt-5.5。',
+    id: 'codex-cli', category: 'coding', title: 'OpenAI Codex', subtitle: 'OpenAI 终端 AI 编程助手', tags: ['Codex', 'auth.json', 'config.toml'],
+    summary: 'Codex CLI 和客户端共用 .codex、auth.json、config.toml，模型使用 gpt-5.5。',
     body: `
       <h2>OpenAI Codex CLI / Codex 客户端</h2>
-      <p class="lead">这部分按你指定的知乎教程重写：Codex CLI 和 VS Code Codex 客户端都是这个流程，核心是用户目录下的 <code>.codex</code> 文件夹，共用 <code>auth.json</code> 和 <code>config.toml</code>。默认模型按来源写 <code>gpt-5.5</code>。</p>
+      <p class="lead">Codex CLI 和 VS Code Codex 客户端都是这个流程，核心是用户目录下的 <code>.codex</code> 文件夹，共用 <code>auth.json</code> 和 <code>config.toml</code>。默认模型按来源写 <code>gpt-5.5</code>。</p>
       <h3>项目介绍</h3>
       <p>Codex CLI 是 OpenAI 的终端编码代理，可在本地项目中读代码、改文件、生成补丁并运行命令；Codex 客户端通过 VS Code 扩展提供图形化入口。两者接入词元.fast 时，统一检查 <code>.codex</code> 目录。</p>
       <h3>安装 Codex CLI</h3>

@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const expectedProducts = [
   'OpenClaw',
   'Claude Code',
-  'OpenAI Codex CLI',
+  'OpenAI Codex',
   'Cursor',
   'Factory Droid CLI',
   'CC Switch',
